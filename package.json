@@ -57,6 +57,8 @@
     "build": "node src/build.js",
     "audit": "node src/audit.js --write",
     "test": "node src/build.js && node src/validate.js && node src/audit.js",
-    "preview": "node src/preview.js"
+    "preview": "node src/preview.js",
+    "package": "npx --yes @vscode/vsce package",
+    "publish:marketplace": "npm test && npx --yes @vscode/vsce publish"
   }
 }

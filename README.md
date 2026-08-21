@@ -136,10 +136,12 @@ Then **Developer: Reload Window**, and pick the theme.
 ### As a VSIX
 
 ```bash
-npx @vscode/vsce package
+npm run package
 ```
 
 Then **Extensions ▸ ⋯ ▸ Install from VSIX…**
+
+(Publishing it to the Marketplace yourself: [docs/PUBLISHING.md](docs/PUBLISHING.md).)
 
 ### Settings worth having
 
