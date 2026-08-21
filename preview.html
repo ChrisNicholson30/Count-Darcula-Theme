@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="en" data-variant="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Count Darcula — a VS Code theme</title>
+  <meta name="description" content="Count Darcula: a hybrid of One Dark and Dracula. One perceptual lightness for every syntax colour, WCAG AA throughout, and a true-black Nocturne variant for OLED battery life.">
+  <style>
+    /* generated:vars */
+    :root, [data-variant="dark"] {
+      color-scheme: dark;
+      --deep: #0a0c13;
+      --chrome: #14171f;
+      --surface: #1d2029;
+      --editor: #282b35;
+      --raised: #30343f;
+      --overlay: #3b3f4c;
+      --line: #4b4f5d;
+      --subtle: #5f6370;
+      --comment: #8693b3;
+      --dim: #adb1bc;
+      --fg: #d4d7e0;
+      --bright: #eceef4;
+      --coral: #fb8c8d;
+      --coral-dim: #d17576;
+      --coral-bright: #ffadad;
+      --amber: #e4a15f;
+      --amber-dim: #be8650;
+      --amber-bright: #ffc082;
+      --gold: #d3ab54;
+      --gold-dim: #af8f48;
+      --gold-bright: #f0ca79;
+      --green: #86c47f;
+      --green-dim: #70a36b;
+      --green-bright: #a6e29f;
+      --teal: #4fc5cb;
+      --teal-dim: #45a4a9;
+      --teal-bright: #78e3e9;
+      --azure: #5dbbf8;
+      --azure-dim: #4f9ccf;
+      --azure-bright: #82daff;
+      --violet: #be9df7;
+      --violet-dim: #9e84ce;
+      --violet-bright: #dcbdff;
+      --rose: #e58ed9;
+      --rose-dim: #be77b4;
+      --rose-bright: #ffaef6;
+      --error: #ef7272;
+      --warning: #eca84a;
+      --info: #5cb4ef;
+      --success: #73c076;
+      --shadow: rgba(0,0,0,.45);
+    }
+    [data-variant="nocturne"] {
+      color-scheme: dark;
+      --deep: #000000;
+      --chrome: #000000;
+      --surface: #000000;
+      --editor: #000000;
+      --raised: #04050b;
+      --overlay: #0e1018;
+      --line: #1d202a;
+      --subtle: #3e424d;
+      --comment: #7884a4;
+      --dim: #9b9ea7;
+      --fg: #bbbdc6;
+      --bright: #d5d7dd;
+      --coral: #e37b7d;
+      --coral-dim: #be6869;
+      --coral-bright: #ff9a9a;
+      --amber: #ce8f51;
+      --amber-dim: #ac7845;
+      --amber-bright: #eaac72;
+      --gold: #be9946;
+      --gold-dim: #9f803c;
+      --gold-bright: #d9b569;
+      --green: #76b06f;
+      --green-dim: #63935e;
+      --green-bright: #94cc8e;
+      --teal: #40b1b7;
+      --teal-dim: #389499;
+      --teal-bright: #68cdd2;
+      --azure: #4fa8e1;
+      --azure-dim: #438cbc;
+      --azure-bright: #72c4fc;
+      --violet: #aa8ce0;
+      --violet-dim: #8f75bb;
+      --violet-bright: #c6a9fb;
+      --rose: #ce7dc3;
+      --rose-dim: #ac69a3;
+      --rose-bright: #ea9bdf;
+      --error: #db6465;
+      --warning: #d6963b;
+      --info: #4da1d8;
+      --success: #63ac66;
+      --shadow: rgba(0,0,0,.45);
+    }
+    [data-variant="daylight"] {
+      color-scheme: light;
+      --deep: #dbdee6;
+      --chrome: #e5e8ef;
+      --surface: #eef0f6;
+      --editor: #f5f7fb;
+      --raised: #eaedf3;
+      --overlay: #ffffff;
+      --line: #cdd1da;
+      --subtle: #a7aab7;
+      --comment: #5e6b8c;
+      --dim: #545864;
+      --fg: #2f323e;
+      --bright: #121521;
+      --coral: #ad2d3a;
+      --coral-dim: #c35b5e;
+      --coral-bright: #900020;
+      --amber: #984d00;
+      --amber-dim: #af702b;
+      --amber-bright: #7d3100;
+      --gold: #875a00;
+      --gold-dim: #a07a1a;
+      --gold-bright: #6d3f00;
+      --green: #297623;
+      --green-dim: #56914f;
+      --green-bright: #005c00;
+      --teal: #007780;
+      --teal-dim: #009299;
+      --teal-bright: #005d66;
+      --azure: #006ab0;
+      --azure-dim: #2388c3;
+      --azure-bright: #004f95;
+      --violet: #7348ae;
+      --violet-dim: #8d6cc2;
+      --violet-bright: #5a2a94;
+      --rose: #97338d;
+      --rose-dim: #af5da5;
+      --rose-bright: #7c0b73;
+      --error: #bc272c;
+      --warning: #aa5500;
+      --info: #006eb8;
+      --success: #077b30;
+      --shadow: rgba(20,22,30,.14);
+    }
+/* end:vars */
+
+    /* ── foundations ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", "Fira Code", "Roboto Mono", Menlo, Consolas, monospace;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --max: 1180px;
+      --gutter: clamp(20px, 5vw, 56px);
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.65;
+      background: var(--chrome);
+      color: var(--dim);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color .35s ease, color .35s ease;
+    }
+
+    h1, h2, h3, h4 { color: var(--bright); line-height: 1.2; margin: 0; font-weight: 650; letter-spacing: -.015em; }
+    h2 { font-size: clamp(24px, 3.2vw, 34px); }
+    h3 { font-size: 19px; }
+    p { margin: 0; }
+    a { color: var(--azure); text-decoration-color: color-mix(in srgb, var(--azure) 40%, transparent); text-underline-offset: 3px; }
+    a:hover { color: var(--azure-bright); }
+    code, kbd, pre { font-family: var(--font-mono); font-variant-ligatures: none; }
+
+    .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--rose); margin-bottom: 14px;
+    }
+    .lede { font-size: 17.5px; max-width: 62ch; color: var(--dim); }
+    .muted { color: var(--comment); }
+    .mono { font-family: var(--font-mono); }
+
+    section { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid color-mix(in srgb, var(--line) 45%, transparent); }
+    section:first-of-type { border-top: 0; }
+    .section-head { max-width: 66ch; margin-bottom: 40px; }
+    .section-head p { margin-top: 14px; }
+
+    /* ── hero ─────────────────────────────────────────────────────────── */
+    .hero { position: relative; overflow: hidden; padding-block: clamp(56px, 9vw, 104px) clamp(40px, 6vw, 64px); }
+    .hero::after {
+      content: ""; position: absolute; inset: -40% -10% auto; height: 420px; z-index: 0;
+      background:
+        radial-gradient(46% 60% at 22% 40%, color-mix(in srgb, var(--rose) 22%, transparent), transparent 70%),
+        radial-gradient(40% 55% at 74% 30%, color-mix(in srgb, var(--violet) 20%, transparent), transparent 72%);
+      filter: blur(10px); pointer-events: none;
+    }
+    .hero > * { position: relative; z-index: 1; }
+    .hero h1 {
+      font-size: clamp(40px, 7.5vw, 74px); letter-spacing: -.035em; margin-bottom: 18px;
+    }
+    .hero h1 .cd-a { color: var(--rose); }
+    .hero h1 .cd-b { color: var(--violet); }
+    .hero .lede { font-size: clamp(17px, 2.1vw, 21px); }
+
+    .stats { display: flex; flex-wrap: wrap; gap: 10px 34px; margin-top: 34px; }
+    .stat { min-width: 120px; }
+    .stat b { display: block; font-family: var(--font-mono); font-size: 25px; color: var(--fg); font-weight: 600; letter-spacing: -.02em; }
+    .stat span { font-size: 12.5px; color: var(--comment); }
+
+    /* ── variant switcher ─────────────────────────────────────────────── */
+    .switcher-bar {
+      position: sticky; top: 0; z-index: 40;
+      background: color-mix(in srgb, var(--chrome) 88%, transparent);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 45%, transparent);
+    }
+    .switcher-bar .wrap { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding-block: 11px; }
+    .switcher-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--comment); }
+    .switcher { display: flex; gap: 6px; padding: 4px; border-radius: 999px; background: color-mix(in srgb, var(--subtle) 14%, transparent); }
+    .switcher button {
+      font: inherit; font-size: 13.5px; font-weight: 550; cursor: pointer;
+      border: 0; border-radius: 999px; padding: 7px 15px; color: var(--dim); background: transparent;
+      display: inline-flex; align-items: center; gap: 8px; transition: color .2s, background-color .2s;
+    }
+    .switcher button:hover { color: var(--bright); }
+    .switcher button[aria-pressed="true"] { background: var(--editor); color: var(--bright); box-shadow: 0 1px 3px var(--shadow); }
+    .switcher .dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--subtle) 60%, transparent); }
+    .switcher-hint { margin-left: auto; font-size: 12.5px; color: var(--comment); }
+
+    /* ── buttons ──────────────────────────────────────────────────────── */
+    .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 9px; padding: 11px 19px;
+      border-radius: var(--radius); font-size: 14.5px; font-weight: 550; text-decoration: none;
+      border: 1px solid transparent; transition: transform .15s ease, background-color .2s, border-color .2s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: color-mix(in srgb, var(--violet) 22%, var(--editor)); color: var(--violet-bright); border-color: color-mix(in srgb, var(--violet) 40%, transparent); }
+    .btn-primary:hover { background: color-mix(in srgb, var(--violet) 32%, var(--editor)); color: var(--violet-bright); }
+    .btn-ghost { background: var(--editor); color: var(--fg); border-color: color-mix(in srgb, var(--line) 70%, transparent); }
+    .btn-ghost:hover { color: var(--bright); border-color: color-mix(in srgb, var(--rose) 45%, transparent); }
+
+    /* ── cards & grids ────────────────────────────────────────────────── */
+    .grid { display: grid; gap: 18px; }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .grid-install { grid-template-columns: minmax(260px, 0.82fr) minmax(340px, 1.18fr); }
+    @media (max-width: 900px) { .grid-install { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--editor); border: 1px solid color-mix(in srgb, var(--line) 45%, transparent);
+      border-radius: var(--radius-lg); padding: 24px;
+    }
+    .card h3 { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .card p { font-size: 14.5px; color: var(--comment); }
+    .card .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+    /* ── the editor mock ──────────────────────────────────────────────── */
+    .mock {
+      border-radius: 12px; overflow: hidden; background: var(--editor);
+      border: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+      box-shadow: 0 30px 70px -30px var(--shadow), 0 2px 8px -4px var(--shadow);
+      font-size: 13px; line-height: 1.55;
+    }
+    .mock-titlebar {
+      display: flex; align-items: center; gap: 12px; padding: 9px 14px;
+      background: var(--chrome); border-bottom: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
+    }
+    .lights { display: flex; gap: 7px; }
+    .lights i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+    .mock-title { font-size: 12px; color: var(--comment); margin-inline: auto; font-family: var(--font-mono); }
+    .mock-body { display: grid; grid-template-columns: 46px 214px minmax(0, 1fr); }
+
+    .mock-activity {
+      background: var(--chrome); display: flex; flex-direction: column; align-items: center;
+      gap: 4px; padding-block: 10px; border-right: 1px solid color-mix(in srgb, var(--line) 40%, transparent);
+    }
+    .mock-activity .ico { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 7px; color: var(--subtle); position: relative; }
+    .mock-activity .ico.on { color: var(--fg); background: color-mix(in srgb, var(--rose) 10%, transparent); }
+    .mock-activity .ico.on::before { content: ""; position: absolute; left: -10px; top: 6px; bottom: 6px; width: 2px; background: var(--rose); border-radius: 2px; }
+    .mock-activity .ico svg { width: 18px; height: 18px; }
+    .mock-activity .badge {
+      position: absolute; right: 2px; bottom: 2px; min-width: 15px; height: 15px; border-radius: 999px;
+      background: color-mix(in srgb, var(--rose) 28%, var(--chrome)); color: var(--rose-bright);
+      font-size: 9.5px; font-weight: 700; display: grid; place-items: center; font-family: var(--font-mono);
+    }
+
+    .mock-side { background: var(--surface); border-right: 1px solid color-mix(in srgb, var(--line) 40%, transparent); padding-bottom: 10px; overflow: hidden; }
+    .side-title { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); padding: 11px 14px 7px; }
+    .side-section { font-size: 11px; font-weight: 650; color: var(--fg); padding: 5px 14px; background: color-mix(in srgb, var(--deep) 32%, transparent); display: flex; align-items: center; gap: 5px; }
+    .side-row { display: flex; align-items: center; gap: 7px; padding: 3px 14px 3px 22px; color: var(--dim); font-size: 12.5px; white-space: nowrap; }
+    .side-row .tick { font-family: var(--font-mono); font-size: 11px; margin-left: auto; opacity: .95; }
+    .side-row.nested { padding-left: 34px; }
+    .side-row.active { background: color-mix(in srgb, var(--violet) 20%, transparent); color: var(--bright); }
+    .side-row.mod { color: var(--gold); } .side-row.mod .tick { color: var(--gold); }
+    .side-row.add { color: var(--green); } .side-row.add .tick { color: var(--green); }
+    .side-row.del { color: var(--error); } .side-row.del .tick { color: var(--error); }
+    .side-row svg { width: 13px; height: 13px; flex: none; opacity: .85; }
+
+    .mock-main { display: flex; flex-direction: column; min-width: 0; background: var(--editor); }
+    .mock-tabs { display: flex; background: var(--surface); border-bottom: 1px solid color-mix(in srgb, var(--line) 40%, transparent); overflow: hidden; }
+    .mock-tab {
+      font: inherit; font-size: 12.5px; cursor: pointer; border: 0; background: transparent;
+      padding: 8px 14px; color: color-mix(in srgb, var(--dim) 62%, transparent);
+      display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+      border-right: 1px solid color-mix(in srgb, var(--line) 30%, transparent); position: relative;
+    }
+    .mock-tab:hover { color: var(--fg); }
+    .mock-tab[aria-selected="true"] { background: var(--editor); color: var(--bright); }
+    .mock-tab[aria-selected="true"]::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: var(--rose); }
+    .mock-tab .dirty { width: 7px; height: 7px; border-radius: 50%; background: var(--fg); }
+    .mock-breadcrumb { padding: 5px 16px; font-size: 11.5px; color: color-mix(in srgb, var(--dim) 68%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 22%, transparent); display: flex; gap: 6px; }
+    .mock-breadcrumb .sep { opacity: .5; }
+    .mock-breadcrumb b { color: var(--rose-bright); font-weight: 550; }
+
+    .editor-area { display: grid; grid-template-columns: minmax(0,1fr) 62px; height: 372px; min-height: 0; }
+    .code-wrap { overflow: auto; position: relative; }
+    .sample { display: none; margin: 0; padding: 12px 0 22px; font-family: var(--font-mono); color: var(--fg); }
+    .sample.on { display: block; }
+    .sample .ln {
+      display: inline-block; width: 46px; padding-right: 14px; text-align: right;
+      color: color-mix(in srgb, var(--subtle) 72%, transparent); user-select: none;
+    }
+    .row { display: block; padding-inline: 2px; white-space: pre; min-height: 1.55em; }
+    .row.current { background: var(--raised); }
+    .row.current .ln { color: var(--fg); }
+
+    .minimap { background: var(--editor); border-left: 1px solid color-mix(in srgb, var(--line) 22%, transparent); padding: 12px 8px; overflow: hidden; position: relative; }
+    .minimap i { display: block; height: 2px; border-radius: 1px; margin-bottom: 3px; opacity: .55; }
+    .minimap .slider { position: absolute; inset: 12px 0 auto; height: 120px; background: color-mix(in srgb, var(--subtle) 14%, transparent); }
+
+    .mock-panel { border-top: 1px solid color-mix(in srgb, var(--line) 40%, transparent); background: var(--surface); }
+    .panel-tabs { display: flex; gap: 18px; padding: 7px 16px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: color-mix(in srgb, var(--dim) 60%, transparent); }
+    .panel-tabs b { color: var(--bright); font-weight: 600; position: relative; }
+    .panel-tabs b::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1.5px; background: var(--rose); }
+    .term { padding: 4px 16px 14px; font-family: var(--font-mono); font-size: 12.2px; line-height: 1.6; white-space: pre-wrap; }
+    .term .prompt { color: var(--violet); }
+    .term .path { color: var(--azure); }
+    .term .branch { color: var(--rose); }
+
+    .mock-status {
+      display: flex; align-items: center; gap: 16px; padding: 4px 14px; font-size: 11.5px;
+      background: var(--chrome); color: var(--dim); border-top: 1px solid color-mix(in srgb, var(--line) 40%, transparent);
+    }
+    .mock-status .right { margin-left: auto; display: flex; gap: 16px; }
+    .mock-status .chip { display: inline-flex; align-items: center; gap: 5px; }
+    .mock-status svg { width: 12px; height: 12px; }
+
+    /* ── syntax classes: these ARE the theme ──────────────────────────── */
+    .c   { color: var(--comment); font-style: italic; }
+    .s   { color: var(--green); }
+    .sp  { color: var(--green-dim); }
+    .esc { color: var(--teal); }
+    .n, .cst { color: var(--amber); }
+    .k, .st  { color: var(--rose); }
+    .f   { color: var(--violet); }
+    .o   { color: var(--teal); }
+    .fn  { color: var(--azure); }
+    .bi  { color: var(--teal); }
+    .t   { color: var(--gold); }
+    .tp  { color: var(--gold); font-style: italic; }
+    .v   { color: var(--fg); }
+    .pa  { color: var(--amber); font-style: italic; }
+    .self{ color: var(--rose); font-style: italic; }
+    .p   { color: var(--coral); }
+    .tag { color: var(--coral); }
+    .tagp{ color: color-mix(in srgb, var(--coral) 65%, transparent); }
+    .comp{ color: var(--gold); }
+    .attr{ color: var(--amber); font-style: italic; }
+    .punc{ color: var(--dim); }
+    .d, .lc { color: var(--violet); }
+    .b1 { color: var(--gold); } .b2 { color: var(--rose); } .b3 { color: var(--azure); }
+    .hint { color: var(--comment); font-style: italic; opacity: .9; }
+    .ghost { color: color-mix(in srgb, var(--comment) 80%, transparent); font-style: italic; }
+    .sel { background: color-mix(in srgb, var(--azure) 26%, transparent); border-radius: 2px; }
+    .squiggle { text-decoration: underline wavy var(--error); text-decoration-skip-ink: none; text-underline-offset: 3px; }
+    .md-h1 { color: var(--rose); font-weight: 700; } .md-h2 { color: var(--violet); font-weight: 700; }
+    .md-h3 { color: var(--azure); font-weight: 700; }
+    .md-b  { color: var(--amber); font-weight: 700; } .md-i { color: var(--amber); font-style: italic; }
+    .md-l  { color: var(--azure); text-decoration: underline; } .md-u { color: var(--teal); }
+
+    /* ── swatches ─────────────────────────────────────────────────────── */
+    .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 12px; }
+    .swatch {
+      border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 12px;
+      background: var(--editor); padding: 14px 16px; display: flex; gap: 14px; align-items: center;
+    }
+    .swatch .chip { width: 38px; height: 38px; border-radius: 9px; flex: none; border: 1px solid color-mix(in srgb, var(--subtle) 25%, transparent); }
+    .swatch .meta { min-width: 0; }
+    .swatch .meta > span { display: block; }
+    .swatch .name { font-size: 14px; color: var(--fg); font-weight: 600; text-transform: capitalize; }
+    .swatch .role { font-size: 11.5px; color: var(--comment); }
+    .swatch .nums { font-family: var(--font-mono); font-size: 11px; color: var(--dim); margin-top: 4px; letter-spacing: .01em; }
+    .swatch .nums b { color: var(--fg); font-weight: 500; }
+
+    /* ── data tables ──────────────────────────────────────────────────── */
+    .table-scroll { overflow-x: auto; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 12px; background: var(--editor); }
+    table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 560px; }
+    th, td { text-align: left; padding: 10px 16px; border-bottom: 1px solid color-mix(in srgb, var(--line) 28%, transparent); }
+    th { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--comment); font-weight: 600; }
+    tr:last-child td { border-bottom: 0; }
+    td.num { font-family: var(--font-mono); text-align: right; color: var(--fg); }
+    .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-family: var(--font-mono); }
+    .pill.aaa { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--success); }
+    .pill.aa  { background: color-mix(in srgb, var(--azure) 18%, transparent); color: var(--azure); }
+    .pill.ui  { background: color-mix(in srgb, var(--subtle) 22%, transparent); color: var(--dim); }
+
+    /* ── comparison bars ──────────────────────────────────────────────── */
+    .compare { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .compare-card { border-radius: 14px; padding: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); }
+    .compare-card h3 { font-size: 15px; margin-bottom: 3px; }
+    .compare-card .sub { font-size: 12px; font-family: var(--font-mono); margin-bottom: 16px; }
+    .bars { display: grid; gap: 7px; }
+    .bar-row { display: grid; grid-template-columns: 78px 1fr 44px; align-items: center; gap: 10px; font-size: 11.5px; }
+    .bar-row .lbl { font-family: var(--font-mono); opacity: .75; }
+    .bar-track { height: 9px; border-radius: 5px; position: relative; overflow: hidden; }
+    .bar-fill { position: absolute; inset-block: 0; border-radius: 5px; }
+    .bar-row .val { font-family: var(--font-mono); text-align: right; opacity: .8; }
+    .spread-note { margin-top: 16px; padding-top: 14px; border-top: 1px solid color-mix(in srgb, var(--line) 30%, transparent); font-size: 12.5px; display: flex; justify-content: space-between; gap: 12px; }
+    .spread-note b { font-family: var(--font-mono); }
+
+    /* ── power chart ──────────────────────────────────────────────────── */
+    .power-rows { display: grid; gap: 11px; }
+    .power-row { display: grid; grid-template-columns: minmax(140px, 190px) 1fr 74px; gap: 14px; align-items: center; font-size: 13.5px; }
+    .power-track { display: block; height: 26px; border-radius: 7px; background: color-mix(in srgb, var(--subtle) 12%, transparent); overflow: hidden; }
+    .power-fill { display: block; height: 100%; border-radius: 7px; background: linear-gradient(90deg, color-mix(in srgb, var(--violet) 55%, transparent), color-mix(in srgb, var(--rose) 55%, transparent)); }
+    .power-fill.over { border-radius: 7px 0 0 7px; position: relative; }
+    .power-fill.over::after {
+      content: "›››"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-mono); font-size: 12px; color: var(--editor); opacity: .75; letter-spacing: 1px;
+    }
+    .power-scale { display: grid; grid-template-columns: minmax(140px, 190px) 1fr 74px; gap: 14px; font-size: 11.5px; color: var(--comment); margin-top: 4px; }
+    .power-scale span:nth-child(2) { display: flex; justify-content: space-between; }
+    .power-row.own .power-fill { background: linear-gradient(90deg, var(--violet), var(--rose)); }
+    .power-row .amount { font-family: var(--font-mono); text-align: right; color: var(--fg); font-size: 12.5px; }
+    .power-row .who { display: flex; align-items: center; gap: 9px; }
+    .power-row .who i { width: 12px; height: 12px; border-radius: 3px; border: 1px solid color-mix(in srgb, var(--subtle) 30%, transparent); flex: none; }
+
+    /* ── code blocks in prose ─────────────────────────────────────────── */
+    .snippet { position: relative; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); background: var(--editor); overflow: hidden; }
+    .snippet-head { display: flex; align-items: center; gap: 10px; padding: 9px 14px; background: var(--surface); border-bottom: 1px solid color-mix(in srgb, var(--line) 35%, transparent); font-size: 11.5px; font-family: var(--font-mono); color: var(--comment); }
+    .snippet-head .copy { margin-left: auto; font: inherit; cursor: pointer; border: 1px solid color-mix(in srgb, var(--line) 60%, transparent); background: transparent; color: var(--dim); border-radius: 6px; padding: 3px 10px; }
+    .snippet-head .copy:hover { color: var(--bright); border-color: color-mix(in srgb, var(--rose) 50%, transparent); }
+    .snippet pre { margin: 0; padding: 16px; overflow-x: auto; font-size: 12.4px; line-height: 1.7; color: var(--fg); }
+
+    .steps { counter-reset: step; display: grid; gap: 14px; }
+    .step { display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: start; }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
+      font-family: var(--font-mono); font-size: 13px; color: var(--rose-bright);
+      background: color-mix(in srgb, var(--rose) 16%, transparent);
+      border: 1px solid color-mix(in srgb, var(--rose) 30%, transparent);
+    }
+    .step h3 { font-size: 15.5px; margin-bottom: 4px; }
+    .step p { font-size: 14px; color: var(--comment); }
+    kbd {
+      background: color-mix(in srgb, var(--subtle) 16%, transparent); border: 1px solid color-mix(in srgb, var(--subtle) 30%, transparent);
+      border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; font-size: 12px; color: var(--fg);
+    }
+
+    footer { padding-block: 46px; border-top: 1px solid color-mix(in srgb, var(--line) 45%, transparent); font-size: 13.5px; color: var(--comment); }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; }
+
+    /* screenshot mode: preview.html?shot=1&variant=nocturne renders just the window */
+    body.shot .hero, body.shot .switcher-bar, body.shot footer,
+    body.shot section:not(#look), body.shot .section-head { display: none; }
+    body.shot section#look { padding: 26px; border: 0; }
+    body.shot .wrap { max-width: none; padding-inline: 0; }
+
+    @media (max-width: 860px) {
+      .mock-body { grid-template-columns: 46px minmax(0, 1fr); }
+      .mock-side { display: none; }
+      .editor-area { grid-template-columns: minmax(0, 1fr); }
+      .minimap { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ hero ══════════════════════════════════════════════════════════ -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">A VS Code theme · One Dark × Dracula</div>
+      <h1><span class="cd-a">Count</span> <span class="cd-b">Darcula</span></h1>
+      <p class="lede">
+        Dracula’s hues, One Dark’s discipline. Every syntax colour is pinned to a single
+        perceptual lightness, so meaning is carried by hue and never by brightness — which is
+        what makes it survivable at hour nine. Three variants, including a true-black
+        <b style="color:var(--fg);font-weight:600">Nocturne</b> that turns most of your screen off.
+      </p>
+
+      <div class="stats" id="hero-stats"></div>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="#install">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Install
+        </a>
+        <a class="btn btn-ghost" href="#palette">See the palette</a>
+        <a class="btn btn-ghost" href="#why">Why it’s easier on the eyes</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ variant switcher ══════════════════════════════════════════════ -->
+  <div class="switcher-bar">
+    <div class="wrap">
+      <span class="switcher-label">Variant</span>
+      <div class="switcher" role="group" aria-label="Theme variant">
+        <button type="button" data-variant="dark" aria-pressed="true"><span class="dot" style="background:#282b35"></span>Count Darcula</button>
+        <button type="button" data-variant="nocturne" aria-pressed="false"><span class="dot" style="background:#000"></span>Nocturne</button>
+        <button type="button" data-variant="daylight" aria-pressed="false"><span class="dot" style="background:#f5f7fb"></span>Daylight</button>
+      </div>
+      <span class="switcher-hint" id="variant-tagline"></span>
+    </div>
+  </div>
+
+  <main>
+    <!-- ══ the window ══════════════════════════════════════════════════ -->
+    <section id="look">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">The window</div>
+          <h2>Everything, themed</h2>
+          <p class="lede">684 workbench colours per variant — not just the editor. Tabs, the
+            terminal’s sixteen ANSI slots, diffs, inlay hints, ghost text, bracket pairs, the
+            status bar’s error state. Switch variants above and this whole page follows.</p>
+        </div>
+
+        <div class="mock">
+          <div class="mock-titlebar">
+            <div class="lights"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+            <div class="mock-title" id="mock-title">GuestList.tsx — count-darcula</div>
+          </div>
+
+          <div class="mock-body">
+            <nav class="mock-activity">
+              <span class="ico on" title="Explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4l2 2.5h7A1.5 1.5 0 0 1 19 9v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 18z"/></svg></span>
+              <span class="ico" title="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg></span>
+              <span class="ico" title="Source control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="12" r="2.4"/><path d="M7 8.4v7.2M9.4 6h3.2a2 2 0 0 1 2 2v1.8"/></svg><i class="badge">3</i></span>
+              <span class="ico" title="Run and debug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 6.5v11l9-5.5z"/></svg></span>
+              <span class="ico" title="Extensions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="7" height="7" rx="1.2"/><rect x="13" y="4" width="7" height="7" rx="1.2"/><rect x="4" y="13" width="7" height="7" rx="1.2"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg></span>
+            </nav>
+
+            <aside class="mock-side">
+              <div class="side-title">Explorer</div>
+              <div class="side-section"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l8 7-8 7z"/></svg> COUNT-DARCULA</div>
+              <div class="side-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h6l1.5 2H20v9H4z"/></svg>src</div>
+              <div class="side-row nested mod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>palette.js<span class="tick">M</span></div>
+              <div class="side-row nested add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>power.js<span class="tick">U</span></div>
+              <div class="side-row nested"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>audit.js</div>
+              <div class="side-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h6l1.5 2H20v9H4z"/></svg>components</div>
+              <div class="side-row nested active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>GuestList.tsx</div>
+              <div class="side-row nested del"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>Legacy.tsx<span class="tick">D</span></div>
+              <div class="side-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>crypt.py</div>
+              <div class="side-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>oklch.rs</div>
+              <div class="side-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>theme.css</div>
+              <div class="side-row mod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>settings.json<span class="tick">M</span></div>
+              <div class="side-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h7l5 5v13H6z"/></svg>README.md</div>
+            </aside>
+
+            <div class="mock-main">
+              <div class="mock-tabs" role="tablist" aria-label="Sample files">
+                <button class="mock-tab" role="tab" aria-selected="true" data-sample="tsx" data-lang="TypeScript JSX" data-crumb="components › GuestList.tsx › GuestList">GuestList.tsx<span class="dirty"></span></button>
+                <button class="mock-tab" role="tab" aria-selected="false" data-sample="py" data-lang="Python" data-crumb="crypt.py › Coffin › epitaph">crypt.py</button>
+                <button class="mock-tab" role="tab" aria-selected="false" data-sample="rs" data-lang="Rust" data-crumb="oklch.rs › impl Oklch › at_band">oklch.rs</button>
+                <button class="mock-tab" role="tab" aria-selected="false" data-sample="css" data-lang="CSS" data-crumb="theme.css › :root">theme.css</button>
+                <button class="mock-tab" role="tab" aria-selected="false" data-sample="json" data-lang="JSON with Comments" data-crumb="settings.json › workbench">settings.json</button>
+                <button class="mock-tab" role="tab" aria-selected="false" data-sample="md" data-lang="Markdown" data-crumb="README.md › Count Darcula">README.md</button>
+              </div>
+              <div class="mock-breadcrumb"><span>src</span><span class="sep">›</span><span>components</span><span class="sep">›</span><b id="crumb">GuestList.tsx</b></div>
+
+              <div class="editor-area">
+                <div class="code-wrap">
+                  <div class="sample on" data-sample="tsx">
+<div class="row"><span class="ln">1</span><span class="k">import</span> <span class="punc">{</span> useMemo<span class="punc">,</span> useState <span class="punc">}</span> <span class="k">from</span> <span class="s">"react"</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">2</span><span class="k">import</span> <span class="k">type</span> <span class="punc">{</span> <span class="t">Crypt</span><span class="punc">,</span> <span class="t">Guest</span> <span class="punc">}</span> <span class="k">from</span> <span class="s">"@count/darcula"</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">3</span></div>
+<div class="row"><span class="ln">4</span><span class="c">/** Guests who have not yet been asked across the threshold. */</span></div>
+<div class="row"><span class="ln">5</span><span class="k">export</span> <span class="st">interface</span> <span class="t">Invitation</span> <span class="b1">{</span></div>
+<div class="row"><span class="ln">6</span>  <span class="st">readonly</span> <span class="p">id</span><span class="o">:</span> <span class="s">`guest_</span><span class="esc">${</span><span class="t">string</span><span class="esc">}</span><span class="s">`</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">7</span>  <span class="p">name</span><span class="o">:</span> <span class="t">string</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">8</span>  <span class="p">arrivesAt</span><span class="o">:</span> <span class="t">Date</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">9</span>  <span class="p">consent</span><span class="o">?:</span> <span class="t">boolean</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">10</span><span class="b1">}</span></div>
+<div class="row"><span class="ln">11</span></div>
+<div class="row"><span class="ln">12</span><span class="st">const</span> <span class="cst">BAND</span> <span class="o">=</span> <span class="n">0.76</span><span class="punc">;</span>  <span class="c">// one lightness for every accent</span></div>
+<div class="row"><span class="ln">13</span></div>
+<div class="row"><span class="ln">14</span><span class="k">export</span> <span class="st">function</span> <span class="fn">GuestList</span><span class="b1">(</span><span class="b2">{</span> <span class="pa">crypt</span><span class="punc">,</span> <span class="pa">onInvite</span> <span class="b2">}</span><span class="o">:</span> <span class="t">Props</span><span class="b1">)</span> <span class="b1">{</span></div>
+<div class="row"><span class="ln">15</span>  <span class="st">const</span> <span class="punc">[</span>query<span class="hint">: string</span><span class="punc">,</span> <span class="v">setQuery</span><span class="punc">]</span> <span class="o">=</span> <span class="fn">useState</span><span class="punc">(</span><span class="s">""</span><span class="punc">);</span></div>
+<div class="row"><span class="ln">16</span>  <span class="ghost">const isEmpty = guests.length === 0;</span></div>
+<div class="row"><span class="ln">17</span>  <span class="st">const</span> <span class="v">guests</span> <span class="o">=</span> <span class="fn">useMemo</span><span class="b1">(</span></div>
+<div class="row current"><span class="ln">18</span>    <span class="b2">()</span> <span class="o">=&gt;</span> <span class="v">crypt</span><span class="punc">.</span><span class="p">guests</span><span class="punc">.</span><span class="fn">filter</span><span class="b2">(</span><span class="b3">(</span><span class="pa">g</span><span class="b3">)</span> <span class="o">=&gt;</span> <span class="v">g</span><span class="punc">.</span><span class="p">name</span><span class="punc">.</span><span class="fn">toLowerCase</span><span class="b3">()</span><span class="punc">.</span><span class="fn">includes</span><span class="b3">(</span><span class="sel">query</span><span class="b3">)</span><span class="b2">)</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">19</span>    <span class="b2">[</span><span class="v">crypt</span><span class="punc">.</span><span class="p">guests</span><span class="punc">,</span> <span class="v">query</span><span class="b2">]</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">20</span>  <span class="b1">);</span></div>
+<div class="row"><span class="ln">21</span></div>
+<div class="row"><span class="ln">22</span>  <span class="f">if</span> <span class="punc">(</span><span class="o">!</span><span class="v">guests</span><span class="punc">.</span><span class="p">length</span><span class="punc">)</span> <span class="f">return</span> <span class="tagp">&lt;</span><span class="comp">Empty</span> <span class="attr">label</span><span class="o">=</span><span class="s">"Nobody at the door"</span> <span class="tagp">/&gt;</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">23</span></div>
+<div class="row"><span class="ln">24</span>  <span class="f">return</span> <span class="b1">(</span></div>
+<div class="row"><span class="ln">25</span>    <span class="tagp">&lt;</span><span class="tag">ul</span> <span class="attr">className</span><span class="o">=</span><span class="s">"guest-list"</span> <span class="attr">role</span><span class="o">=</span><span class="s">"list"</span><span class="tagp">&gt;</span></div>
+<div class="row"><span class="ln">26</span>      <span class="b2">{</span><span class="v">guests</span><span class="punc">.</span><span class="fn">map</span><span class="b3">(</span><span class="b1">(</span><span class="pa">guest</span><span class="b1">)</span> <span class="o">=&gt;</span> <span class="b1">(</span></div>
+<div class="row"><span class="ln">27</span>        <span class="tagp">&lt;</span><span class="tag">li</span> <span class="attr">key</span><span class="o">=</span><span class="b2">{</span><span class="v">guest</span><span class="punc">.</span><span class="p">id</span><span class="b2">}</span> <span class="attr">data-consent</span><span class="o">=</span><span class="b2">{</span><span class="v">guest</span><span class="punc">.</span><span class="p">consent</span> <span class="o">??</span> <span class="lc">false</span><span class="b2">}</span><span class="tagp">&gt;</span></div>
+<div class="row"><span class="ln">28</span>          <span class="tagp">&lt;</span><span class="comp">Avatar</span> <span class="attr">src</span><span class="o">=</span><span class="b2">{</span><span class="v">guest</span><span class="punc">.</span><span class="p squiggle">avatarUrl</span><span class="b2">}</span> <span class="attr">alt</span><span class="o">=</span><span class="b2">{</span><span class="s">`</span><span class="esc">${</span><span class="v">guest</span><span class="punc">.</span><span class="p">name</span><span class="esc">}</span><span class="s">'s portrait`</span><span class="b2">}</span> <span class="tagp">/&gt;</span></div>
+<div class="row"><span class="ln">29</span>          <span class="tagp">&lt;</span><span class="tag">button</span> <span class="attr">onClick</span><span class="o">=</span><span class="b2">{</span><span class="b3">()</span> <span class="o">=&gt;</span> <span class="fn">onInvite</span><span class="b3">(</span><span class="v">guest</span><span class="b3">)</span><span class="b2">}</span><span class="tagp">&gt;</span>Invite<span class="tagp">&lt;/</span><span class="tag">button</span><span class="tagp">&gt;</span></div>
+<div class="row"><span class="ln">30</span>        <span class="tagp">&lt;/</span><span class="tag">li</span><span class="tagp">&gt;</span></div>
+<div class="row"><span class="ln">31</span>      <span class="b1">)</span><span class="b3">)</span><span class="b2">}</span></div>
+<div class="row"><span class="ln">32</span>    <span class="tagp">&lt;/</span><span class="tag">ul</span><span class="tagp">&gt;</span></div>
+<div class="row"><span class="ln">33</span>  <span class="b1">);</span></div>
+<div class="row"><span class="ln">34</span><span class="b1">}</span></div>
+                  </div>
+
+                  <div class="sample" data-sample="py">
+<div class="row"><span class="ln">1</span><span class="k">from</span> <span class="v">dataclasses</span> <span class="k">import</span> <span class="v">dataclass</span><span class="punc">,</span> <span class="v">field</span></div>
+<div class="row"><span class="ln">2</span><span class="k">from</span> <span class="v">typing</span> <span class="k">import</span> <span class="t">Iterator</span></div>
+<div class="row"><span class="ln">3</span></div>
+<div class="row"><span class="ln">4</span><span class="cst">CRYPT_DEPTH</span><span class="o">:</span> <span class="t">int</span> <span class="o">=</span> <span class="n">13</span></div>
+<div class="row"><span class="ln">5</span></div>
+<div class="row"><span class="ln">6</span></div>
+<div class="row"><span class="ln">7</span><span class="d">@dataclass</span><span class="punc">(</span><span class="pa">slots</span><span class="o">=</span><span class="lc">True</span><span class="punc">)</span></div>
+<div class="row"><span class="ln">8</span><span class="st">class</span> <span class="t">Coffin</span><span class="punc">:</span></div>
+<div class="row"><span class="ln">9</span>    <span class="c">"""A resting place, indexed by the soil it was filled with."""</span></div>
+<div class="row"><span class="ln">10</span></div>
+<div class="row"><span class="ln">11</span>    <span class="p">occupant</span><span class="o">:</span> <span class="t">str</span></div>
+<div class="row"><span class="ln">12</span>    <span class="p">soil</span><span class="o">:</span> <span class="t">str</span> <span class="o">=</span> <span class="s">"Transylvanian"</span></div>
+<div class="row"><span class="ln">13</span>    <span class="p">sealed</span><span class="o">:</span> <span class="t">bool</span> <span class="o">=</span> <span class="lc">True</span></div>
+<div class="row"><span class="ln">14</span>    <span class="p">wards</span><span class="o">:</span> <span class="t">list</span><span class="punc">[</span><span class="t">str</span><span class="punc">]</span> <span class="o">=</span> <span class="fn">field</span><span class="punc">(</span><span class="pa">default_factory</span><span class="o">=</span><span class="t">list</span><span class="punc">)</span></div>
+<div class="row"><span class="ln">15</span></div>
+<div class="row"><span class="ln">16</span>    <span class="st">def</span> <span class="fn">__post_init__</span><span class="punc">(</span><span class="self">self</span><span class="punc">)</span> <span class="o">-&gt;</span> <span class="lc">None</span><span class="punc">:</span></div>
+<div class="row"><span class="ln">17</span>        <span class="f">if</span> <span class="k">not</span> <span class="self">self</span><span class="punc">.</span><span class="p">occupant</span><span class="punc">:</span></div>
+<div class="row current"><span class="ln">18</span>            <span class="f">raise</span> <span class="t">ValueError</span><span class="punc">(</span><span class="s">f"coffin at depth </span><span class="esc">{</span><span class="cst">CRYPT_DEPTH</span><span class="esc">}</span><span class="s"> has no occupant"</span><span class="punc">)</span></div>
+<div class="row"><span class="ln">19</span></div>
+<div class="row"><span class="ln">20</span>    <span class="d">@property</span></div>
+<div class="row"><span class="ln">21</span>    <span class="st">def</span> <span class="fn">epitaph</span><span class="punc">(</span><span class="self">self</span><span class="punc">)</span> <span class="o">-&gt;</span> <span class="t">str</span><span class="punc">:</span></div>
+<div class="row"><span class="ln">22</span>        <span class="f">return</span> <span class="s">f"</span><span class="esc">{</span><span class="self">self</span><span class="punc">.</span><span class="p">occupant</span><span class="esc">}</span><span class="s"> — rests in </span><span class="esc">{</span><span class="self">self</span><span class="punc">.</span><span class="p">soil</span><span class="esc">}</span><span class="s"> soil"</span></div>
+<div class="row"><span class="ln">23</span></div>
+<div class="row"><span class="ln">24</span></div>
+<div class="row"><span class="ln">25</span><span class="st">def</span> <span class="fn">wake</span><span class="punc">(</span><span class="pa">coffins</span><span class="o">:</span> <span class="t">list</span><span class="punc">[</span><span class="t">Coffin</span><span class="punc">],</span> <span class="o">*</span><span class="punc">,</span> <span class="pa">at_dusk</span><span class="o">:</span> <span class="t">bool</span> <span class="o">=</span> <span class="lc">True</span><span class="punc">)</span> <span class="o">-&gt;</span> <span class="t">Iterator</span><span class="punc">[</span><span class="t">str</span><span class="punc">]:</span></div>
+<div class="row"><span class="ln">26</span>    <span class="c">"""Yield the epitaph of every coffin that may be opened."""</span></div>
+<div class="row"><span class="ln">27</span>    <span class="f">for</span> <span class="v">coffin</span> <span class="k">in</span> <span class="v">coffins</span><span class="punc">:</span></div>
+<div class="row"><span class="ln">28</span>        <span class="f">if</span> <span class="v">coffin</span><span class="punc">.</span><span class="p">sealed</span> <span class="k">and</span> <span class="k">not</span> <span class="v">at_dusk</span><span class="punc">:</span></div>
+<div class="row"><span class="ln">29</span>            <span class="f">continue</span></div>
+<div class="row"><span class="ln">30</span>        <span class="f">yield</span> <span class="v">coffin</span><span class="punc">.</span><span class="p">epitaph</span><span class="punc">.</span><span class="fn">upper</span><span class="punc">()</span></div>
+                  </div>
+
+                  <div class="sample" data-sample="rs">
+<div class="row"><span class="ln">1</span><span class="k">use</span> <span class="v">std</span><span class="punc">::</span><span class="v">collections</span><span class="punc">::</span><span class="t">HashMap</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">2</span><span class="k">use</span> <span class="v">std</span><span class="punc">::</span><span class="v">fmt</span><span class="punc">::{</span><span class="self">self</span><span class="punc">,</span> <span class="t">Display</span><span class="punc">};</span></div>
+<div class="row"><span class="ln">3</span></div>
+<div class="row"><span class="ln">4</span><span class="c">/// A colour in OKLCH — the space this whole theme is designed in.</span></div>
+<div class="row"><span class="ln">5</span><span class="d">#[derive(Debug, Clone, Copy, PartialEq)]</span></div>
+<div class="row"><span class="ln">6</span><span class="k">pub</span> <span class="st">struct</span> <span class="t">Oklch</span> <span class="b1">{</span></div>
+<div class="row"><span class="ln">7</span>    <span class="k">pub</span> <span class="p">lightness</span><span class="o">:</span> <span class="t">f32</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">8</span>    <span class="k">pub</span> <span class="p">chroma</span><span class="o">:</span> <span class="t">f32</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">9</span>    <span class="k">pub</span> <span class="p">hue</span><span class="o">:</span> <span class="t">f32</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">10</span><span class="b1">}</span></div>
+<div class="row"><span class="ln">11</span></div>
+<div class="row"><span class="ln">12</span><span class="st">impl</span> <span class="t">Oklch</span> <span class="b1">{</span></div>
+<div class="row"><span class="ln">13</span>    <span class="c">/// Every syntax accent in the theme sits on this band.</span></div>
+<div class="row"><span class="ln">14</span>    <span class="k">pub</span> <span class="st">const</span> <span class="cst">BAND</span><span class="o">:</span> <span class="t">f32</span> <span class="o">=</span> <span class="n">0.76</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">15</span></div>
+<div class="row"><span class="ln">16</span>    <span class="k">pub</span> <span class="st">fn</span> <span class="fn">at_band</span><span class="b2">(</span><span class="pa">hue</span><span class="o">:</span> <span class="t">f32</span><span class="punc">,</span> <span class="pa">chroma</span><span class="o">:</span> <span class="t">f32</span><span class="b2">)</span> <span class="o">-&gt;</span> <span class="t">Self</span> <span class="b2">{</span></div>
+<div class="row current"><span class="ln">17</span>        <span class="t">Self</span> <span class="b3">{</span> <span class="p">lightness</span><span class="o">:</span> <span class="t">Self</span><span class="punc">::</span><span class="cst">BAND</span><span class="punc">,</span> <span class="p">chroma</span><span class="punc">,</span> <span class="p">hue</span> <span class="b3">}</span></div>
+<div class="row"><span class="ln">18</span>    <span class="b2">}</span></div>
+<div class="row"><span class="ln">19</span></div>
+<div class="row"><span class="ln">20</span>    <span class="k">pub</span> <span class="st">fn</span> <span class="fn">contrast</span><span class="o">&lt;</span><span class="tp">'a</span><span class="o">&gt;</span><span class="b2">(</span><span class="o">&amp;</span><span class="tp">'a</span> <span class="self">self</span><span class="punc">,</span> <span class="pa">bg</span><span class="o">:</span> <span class="o">&amp;</span><span class="tp">'a</span> <span class="t">Self</span><span class="b2">)</span> <span class="o">-&gt;</span> <span class="t">f32</span> <span class="b2">{</span></div>
+<div class="row"><span class="ln">21</span>        <span class="st">let</span> <span class="b3">(</span><span class="v">hi</span><span class="punc">,</span> <span class="v">lo</span><span class="b3">)</span> <span class="o">=</span> <span class="f">match</span> <span class="self">self</span><span class="punc">.</span><span class="p">lightness</span> <span class="o">&gt;</span> <span class="v">bg</span><span class="punc">.</span><span class="p">lightness</span> <span class="b3">{</span></div>
+<div class="row"><span class="ln">22</span>            <span class="lc">true</span> <span class="o">=&gt;</span> <span class="b1">(</span><span class="self">self</span><span class="punc">.</span><span class="p">lightness</span><span class="punc">,</span> <span class="v">bg</span><span class="punc">.</span><span class="p">lightness</span><span class="b1">)</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">23</span>            <span class="lc">false</span> <span class="o">=&gt;</span> <span class="b1">(</span><span class="v">bg</span><span class="punc">.</span><span class="p">lightness</span><span class="punc">,</span> <span class="self">self</span><span class="punc">.</span><span class="p">lightness</span><span class="b1">)</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">24</span>        <span class="b3">};</span></div>
+<div class="row"><span class="ln">25</span>        <span class="b3">(</span><span class="v">hi</span> <span class="o">+</span> <span class="n">0.05</span><span class="b3">)</span> <span class="o">/</span> <span class="b3">(</span><span class="v">lo</span> <span class="o">+</span> <span class="n">0.05</span><span class="b3">)</span></div>
+<div class="row"><span class="ln">26</span>    <span class="b2">}</span></div>
+<div class="row"><span class="ln">27</span><span class="b1">}</span></div>
+<div class="row"><span class="ln">28</span></div>
+<div class="row"><span class="ln">29</span><span class="st">impl</span> <span class="t">Display</span> <span class="k">for</span> <span class="t">Oklch</span> <span class="b1">{</span></div>
+<div class="row"><span class="ln">30</span>    <span class="st">fn</span> <span class="fn">fmt</span><span class="b2">(</span><span class="o">&amp;</span><span class="self">self</span><span class="punc">,</span> <span class="pa">f</span><span class="o">:</span> <span class="o">&amp;</span><span class="st">mut</span> <span class="v">fmt</span><span class="punc">::</span><span class="t">Formatter</span><span class="o">&lt;</span><span class="tp">'_</span><span class="o">&gt;</span><span class="b2">)</span> <span class="o">-&gt;</span> <span class="v">fmt</span><span class="punc">::</span><span class="t">Result</span> <span class="b2">{</span></div>
+<div class="row"><span class="ln">31</span>        <span class="d">write!</span><span class="b3">(</span><span class="v">f</span><span class="punc">,</span> <span class="s">"oklch(</span><span class="esc">{:.0}</span><span class="s">% </span><span class="esc">{:.3}</span><span class="s"> </span><span class="esc">{:.0}</span><span class="s">)"</span><span class="punc">,</span> <span class="self">self</span><span class="punc">.</span><span class="p">lightness</span><span class="punc">,</span> <span class="self">self</span><span class="punc">.</span><span class="p">chroma</span><span class="punc">,</span> <span class="self">self</span><span class="punc">.</span><span class="p">hue</span><span class="b3">)</span></div>
+<div class="row"><span class="ln">32</span>    <span class="b2">}</span></div>
+<div class="row"><span class="ln">33</span><span class="b1">}</span></div>
+                  </div>
+
+                  <div class="sample" data-sample="css">
+<div class="row"><span class="ln">1</span><span class="c">/* Count Darcula — the neutral ramp and the syntax band. */</span></div>
+<div class="row"><span class="ln">2</span><span class="d">:root</span> <span class="b1">{</span></div>
+<div class="row"><span class="ln">3</span>  <span class="bi">--editor</span><span class="punc">:</span> <span class="cst">#282b35</span><span class="punc">;</span>   <span class="c">/* the midpoint of One Dark and Dracula */</span></div>
+<div class="row"><span class="ln">4</span>  <span class="bi">--fg</span><span class="punc">:</span>     <span class="cst">#d4d7e0</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">5</span>  <span class="bi">--rose</span><span class="punc">:</span>   <span class="cst">#e58ed9</span><span class="punc">;</span>   <span class="c">/* keywords   L 76  C .140  H 332 */</span></div>
+<div class="row"><span class="ln">6</span>  <span class="bi">--azure</span><span class="punc">:</span>  <span class="cst">#5dbbf8</span><span class="punc">;</span>   <span class="c">/* functions  L 76  C .125  H 240 */</span></div>
+<div class="row"><span class="ln">7</span>  <span class="bi">--green</span><span class="punc">:</span>  <span class="cst">#86c47f</span><span class="punc">;</span>   <span class="c">/* strings    L 76  C .115  H 142 */</span></div>
+<div class="row"><span class="ln">8</span><span class="b1">}</span></div>
+<div class="row"><span class="ln">9</span></div>
+<div class="row"><span class="ln">10</span><span class="t">.token</span><span class="punc">[</span><span class="attr">data-role</span><span class="o">=</span><span class="s">"keyword"</span><span class="punc">]</span> <span class="b1">{</span></div>
+<div class="row current"><span class="ln">11</span>  <span class="p">color</span><span class="punc">:</span> <span class="fn">var</span><span class="punc">(</span><span class="bi">--rose</span><span class="punc">);</span></div>
+<div class="row"><span class="ln">12</span>  <span class="p">font-feature-settings</span><span class="punc">:</span> <span class="s">"calt"</span> <span class="n">1</span><span class="punc">,</span> <span class="s">"liga"</span> <span class="n">0</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">13</span>  <span class="p">transition</span><span class="punc">:</span> <span class="cst">color</span> <span class="n">240ms</span> <span class="fn">cubic-bezier</span><span class="punc">(</span><span class="n">0.2</span><span class="punc">,</span> <span class="n">0</span><span class="punc">,</span> <span class="n">0</span><span class="punc">,</span> <span class="n">1</span><span class="punc">);</span></div>
+<div class="row"><span class="ln">14</span><span class="b1">}</span></div>
+<div class="row"><span class="ln">15</span></div>
+<div class="row"><span class="ln">16</span><span class="t">.editor</span> <span class="o">&gt;</span> <span class="t">.line</span><span class="d">:nth-child</span><span class="punc">(</span><span class="cst">odd</span><span class="punc">)</span><span class="d">::before</span> <span class="b1">{</span></div>
+<div class="row"><span class="ln">17</span>  <span class="p">content</span><span class="punc">:</span> <span class="fn">attr</span><span class="punc">(</span><span class="cst">data-line</span><span class="punc">);</span></div>
+<div class="row"><span class="ln">18</span>  <span class="p">inline-size</span><span class="punc">:</span> <span class="n">3.5ch</span><span class="punc">;</span></div>
+<div class="row"><span class="ln">19</span>  <span class="p">color</span><span class="punc">:</span> <span class="fn">rgb</span><span class="punc">(</span><span class="n">130</span> <span class="n">145</span> <span class="n">178</span> <span class="o">/</span> <span class="n">0.72</span><span class="punc">);</span></div>
+<div class="row"><span class="ln">20</span><span class="b1">}</span></div>
+<div class="row"><span class="ln">21</span></div>
+<div class="row"><span class="ln">22</span><span class="k">@media</span> <span class="punc">(</span><span class="p">prefers-color-scheme</span><span class="punc">:</span> <span class="cst">dark</span><span class="punc">)</span> <span class="k">and</span> <span class="punc">(</span><span class="p">min-width</span><span class="punc">:</span> <span class="n">60rem</span><span class="punc">)</span> <span class="b1">{</span></div>
+<div class="row"><span class="ln">23</span>  <span class="t">.editor</span> <span class="b2">{</span> <span class="p">background</span><span class="punc">:</span> <span class="fn">var</span><span class="punc">(</span><span class="bi">--editor</span><span class="punc">);</span> <span class="p">padding-block</span><span class="punc">:</span> <span class="fn">clamp</span><span class="punc">(</span><span class="n">8px</span><span class="punc">,</span> <span class="n">1vw</span><span class="punc">,</span> <span class="n">16px</span><span class="punc">);</span> <span class="b2">}</span></div>
+<div class="row"><span class="ln">24</span><span class="b1">}</span></div>
+                  </div>
+
+                  <div class="sample" data-sample="json">
+<div class="row"><span class="ln">1</span><span class="b1">{</span></div>
+<div class="row"><span class="ln">2</span>  <span class="c">// Recommended companions — the README has the full set.</span></div>
+<div class="row"><span class="ln">3</span>  <span class="p">"workbench.colorTheme"</span><span class="punc">:</span> <span class="s">"Count Darcula"</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">4</span>  <span class="p">"workbench.preferredDarkColorTheme"</span><span class="punc">:</span> <span class="s">"Count Darcula Nocturne"</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">5</span>  <span class="p">"workbench.preferredLightColorTheme"</span><span class="punc">:</span> <span class="s">"Count Darcula Daylight"</span><span class="punc">,</span></div>
+<div class="row current"><span class="ln">6</span>  <span class="p">"window.autoDetectColorScheme"</span><span class="punc">:</span> <span class="lc">true</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">7</span></div>
+<div class="row"><span class="ln">8</span>  <span class="p">"editor.fontFamily"</span><span class="punc">:</span> <span class="s">"JetBrains Mono, SF Mono, Menlo, monospace"</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">9</span>  <span class="p">"editor.fontSize"</span><span class="punc">:</span> <span class="n">13.5</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">10</span>  <span class="p">"editor.lineHeight"</span><span class="punc">:</span> <span class="n">1.6</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">11</span>  <span class="p">"editor.fontLigatures"</span><span class="punc">:</span> <span class="lc">false</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">12</span>  <span class="p">"editor.semanticHighlighting.enabled"</span><span class="punc">:</span> <span class="lc">true</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">13</span>  <span class="p">"editor.bracketPairColorization.enabled"</span><span class="punc">:</span> <span class="lc">true</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">14</span>  <span class="p">"editor.guides.bracketPairs"</span><span class="punc">:</span> <span class="s">"active"</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">15</span>  <span class="p">"editor.renderWhitespace"</span><span class="punc">:</span> <span class="s">"boundary"</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">16</span>  <span class="p">"editor.cursorBlinking"</span><span class="punc">:</span> <span class="s">"smooth"</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">17</span></div>
+<div class="row"><span class="ln">18</span>  <span class="p">"terminal.integrated.minimumContrastRatio"</span><span class="punc">:</span> <span class="n">1</span><span class="punc">,</span></div>
+<div class="row"><span class="ln">19</span>  <span class="p">"workbench.list.smoothScrolling"</span><span class="punc">:</span> <span class="lc">true</span></div>
+<div class="row"><span class="ln">20</span><span class="b1">}</span></div>
+                  </div>
+
+                  <div class="sample" data-sample="md">
+<div class="row"><span class="ln">1</span><span class="md-h1"># Count Darcula</span></div>
+<div class="row"><span class="ln">2</span></div>
+<div class="row"><span class="ln">3</span>A hybrid of <span class="md-b">**One Dark**</span> and <span class="md-b">**Dracula**</span>, built in OKLCH.</div>
+<div class="row"><span class="ln">4</span></div>
+<div class="row"><span class="ln">5</span><span class="md-h2">## Why another dark theme</span></div>
+<div class="row"><span class="ln">6</span></div>
+<div class="row"><span class="ln">7</span>Every accent sits at <span class="md-i">*one*</span> perceptual lightness, so a line of code</div>
+<div class="row"><span class="ln">8</span>no longer flickers between near-white and mid-tone.</div>
+<div class="row"><span class="ln">9</span></div>
+<div class="row"><span class="ln">10</span><span class="k">-</span> <span class="s">`rose`</span> — keywords and storage</div>
+<div class="row"><span class="ln">11</span><span class="k">-</span> <span class="s">`azure`</span> — functions and methods</div>
+<div class="row"><span class="ln">12</span><span class="k">-</span> <span class="s">`green`</span> — strings</div>
+<div class="row"><span class="ln">13</span></div>
+<div class="row current"><span class="ln">14</span><span class="c">&gt; Meaning is carried by hue. Never by brightness.</span></div>
+<div class="row"><span class="ln">15</span></div>
+<div class="row"><span class="ln">16</span><span class="sp">```</span><span class="bi">ts</span></div>
+<div class="row"><span class="ln">17</span><span class="st">const</span> <span class="v">band</span> <span class="o">=</span> <span class="n">0.76</span><span class="punc">;</span> <span class="c">// L*, every accent</span></div>
+<div class="row"><span class="ln">18</span><span class="sp">```</span></div>
+<div class="row"><span class="ln">19</span></div>
+<div class="row"><span class="ln">20</span>See the <span class="md-u">[accessibility report]</span><span class="md-l">(docs/ACCESSIBILITY.md)</span> for all 51 measurements.</div>
+<div class="row"><span class="ln">21</span></div>
+<div class="row"><span class="ln">22</span><span class="punc">| variant  | canvas   | AA |</span></div>
+<div class="row"><span class="ln">23</span><span class="punc">| -------- | -------- | -- |</span></div>
+<div class="row"><span class="ln">24</span><span class="punc">|</span> Darcula  <span class="punc">|</span> #282b35  <span class="punc">|</span> ✓  <span class="punc">|</span></div>
+<div class="row"><span class="ln">25</span><span class="punc">|</span> Nocturne <span class="punc">|</span> #000000  <span class="punc">|</span> ✓  <span class="punc">|</span></div>
+                  </div>
+                </div>
+                <div class="minimap" id="minimap"><div class="slider"></div></div>
+              </div>
+
+              <div class="mock-panel">
+                <div class="panel-tabs"><span>Problems <span style="color:var(--error)">1</span></span><span>Output</span><b>Terminal</b><span>Ports</span></div>
+                <div class="term"><span class="prompt">➜</span>  <span class="path">count-darcula</span> <span class="branch">git:(main)</span> npm test
+<span style="color:var(--success)">  ✓</span> Count Darcula            <span style="color:var(--comment)">684 colours, 124 rules, 49 semantic</span>
+<span style="color:var(--success)">  ✓</span> Count Darcula Nocturne   <span style="color:var(--comment)">684 colours, 124 rules, 49 semantic</span>
+<span style="color:var(--success)">  ✓</span> Count Darcula Daylight   <span style="color:var(--comment)">684 colours, 124 rules, 49 semantic</span>
+<span style="color:var(--success)">  ✓</span> all <span style="color:var(--gold)">51</span> text colours meet WCAG AA <span style="color:var(--comment)">(&gt;= 4.5:1) on their own surfaces</span>
+<span style="color:var(--error)">  ✗</span> <span style="color:var(--coral)">GuestList.tsx:28</span> — Property <span style="color:var(--green)">'avatarUrl'</span> does not exist on type <span style="color:var(--gold)">'Guest'</span>.</div>
+              </div>
+
+              <div class="mock-status">
+                <span class="chip" style="color:var(--rose)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="12" r="2.4"/><path d="M7 8.4v7.2M9.4 6h3.2a2 2 0 0 1 2 2v1.8"/></svg>main*</span>
+                <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20z"/></svg>0 &nbsp;<span style="color:var(--error)">✗ 1</span></span>
+                <span class="right">
+                  <span>Ln 18, Col 42</span><span>Spaces: 2</span><span>UTF-8</span><span id="status-lang">TypeScript JSX</span>
+                  <span class="chip" style="color:var(--violet)">Count Darcula</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ palette ═════════════════════════════════════════════════════ -->
+    <section id="palette">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">The palette</div>
+          <h2>Eight hues, one lightness</h2>
+          <p class="lede">Colour carries meaning here, brightness never does. Every accent is
+            generated from an OKLCH coordinate at the same L*, with per-hue chroma tuned so
+            none of them looks louder than the others. Contrast is measured, not guessed.</p>
+        </div>
+
+        <div class="swatches" id="accent-swatches"></div>
+
+        <h3 style="margin:36px 0 14px;font-size:15px">The neutral ramp</h3>
+        <div class="swatches" id="neutral-swatches"></div>
+      </div>
+    </section>
+
+    <!-- ══ why ════════════════════════════════════════════════════════ -->
+    <section id="why">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">The argument</div>
+          <h2>Why it’s easier on the eyes</h2>
+          <p class="lede">Both parents let their token colours drift across the lightness scale.
+            The eye re-adapts at every jump, and after a few hours that costs you. Here is the
+            same eight roles in all three themes, plotted by perceptual lightness — longer bar,
+            brighter token.</p>
+        </div>
+
+        <div class="compare" id="compare"></div>
+
+        <div class="grid grid-3" style="margin-top:26px">
+          <div class="card">
+            <h3><span class="kicker" style="color:var(--rose)">01</span> One background</h3>
+            <p><span class="mono" style="color:var(--fg)">#282b35</span> is the literal perceptual
+              midpoint of One Dark’s <span class="mono">#282c34</span> and Dracula’s
+              <span class="mono">#282a36</span> — not a compromise, an average.</p>
+          </div>
+          <div class="card">
+            <h3><span class="kicker" style="color:var(--violet)">02</span> No pure white</h3>
+            <p>The foreground stops at <span class="mono" style="color:var(--fg)">#d4d7e0</span>
+              — bright enough to read at 9.8:1, dim enough not to bloom against a dark canvas at
+              two in the morning.</p>
+          </div>
+          <div class="card">
+            <h3><span class="kicker" style="color:var(--azure)">03</span> Quiet punctuation</h3>
+            <p>Commas, semicolons and accessors sit one step below the foreground. You stop
+              reading the scaffolding and start reading the code.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ accessibility ══════════════════════════════════════════════ -->
+    <section id="accessibility">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Accessibility</div>
+          <h2>Every text colour, measured</h2>
+          <p class="lede">Checked against WCAG 2.1 contrast ratios and APCA Lc — which models
+            light-on-dark text far better than WCAG 2.x does, and a dark theme is nothing but
+            light-on-dark text. <code>npm run audit</code> fails the build if any colour
+            slips below AA on the surface it actually renders on.</p>
+        </div>
+        <div class="table-scroll">
+          <table id="contrast-table">
+            <thead><tr><th>Role</th><th>Hex</th><th>OKLCH</th><th class="num">WCAG</th><th class="num">APCA Lc</th><th>Rating</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="muted" style="margin-top:16px;font-size:13.5px">
+          Rated against the editor canvas for the selected variant. AAA is ≥ 7:1, AA is ≥ 4.5:1.
+          Comments are deliberately kept above AA too — a comment is still text, and a comment
+          you cannot read is a comment nobody maintains.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══ power ══════════════════════════════════════════════════════ -->
+    <section id="battery">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Battery</div>
+          <h2>Nocturne turns most of the screen off</h2>
+          <p class="lede">On an OLED laptop panel every subpixel makes its own light, so panel
+            power follows the image. Nocturne paints every large surface pure black and steps the
+            whole foreground down ~8 L*, which the model below puts at
+            <b id="power-headline" style="color:var(--fg)">—</b> less panel power than the
+            flagship.</p>
+        </div>
+
+        <div class="power-rows" id="power-rows"></div>
+
+        <div class="grid grid-2" style="margin-top:30px">
+          <div class="card">
+            <h3 style="color:var(--gold)">How this is estimated</h3>
+            <p>Per-channel OLED power model (Dong, Choi &amp; Zhong, DAC 2009), blue weighted
+              1.56× green because blue emitters are the least efficient, applied to a modelled
+              full-screen VS Code window: 60% editor, side bar, terminal, chrome, and ~10% glyph
+              coverage distributed across real token frequencies. Code in
+              <code>src/power.js</code> — read it and disagree with it.</p>
+          </div>
+          <div class="card">
+            <h3 style="color:var(--teal)">What it will not do</h3>
+            <p>On a conventional LCD the backlight is on regardless of what you display, so a
+              dark theme saves you essentially nothing directly. The honest win there is
+              indirect: a dimmer image is comfortable at a lower brightness setting, and
+              backlight power scales steeply with brightness.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ install ════════════════════════════════════════════════════ -->
+    <section id="install">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Installation</div>
+          <h2>Two minutes, three ways</h2>
+        </div>
+
+        <div class="grid grid-2 grid-install">
+          <div class="card">
+            <h3 style="margin-bottom:18px">From the Marketplace</h3>
+            <div class="steps">
+              <div class="step">
+                <div><h3>Open Extensions</h3><p><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>X</kbd> — or <kbd>⌘</kbd> <kbd>Shift</kbd> <kbd>X</kbd> on macOS.</p></div>
+              </div>
+              <div class="step">
+                <div><h3>Search “Count Darcula”</h3><p>Then hit <b style="color:var(--fg)">Install</b>.</p></div>
+              </div>
+              <div class="step">
+                <div><h3>Pick your variant</h3><p><kbd>Ctrl</kbd> <kbd>K</kbd> then <kbd>Ctrl</kbd> <kbd>T</kbd>, and choose Count Darcula, Nocturne or Daylight.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:18px">From source</h3>
+            <div class="snippet" style="border:0">
+              <div class="snippet-head">bash<button class="copy" type="button">Copy</button></div>
+              <pre><span class="c"># clone, then link it into VS Code's extensions folder</span>
+<span class="fn">git</span> clone https://github.com/ChrisNicholson30/Count-Darcula-Theme.git
+<span class="fn">cd</span> Count-Darcula-Theme
+<span class="fn">npm</span> test              <span class="c"># build + validate + audit (no dependencies)</span>
+
+<span class="c"># macOS / Linux</span>
+<span class="fn">ln</span> <span class="cst">-s</span> <span class="s">"$PWD"</span> ~/.vscode/extensions/count-darcula
+
+<span class="c"># Windows (PowerShell)</span>
+<span class="c"># New-Item -ItemType SymbolicLink `</span>
+<span class="c">#   -Path "$HOME\.vscode\extensions\count-darcula" -Target $PWD</span>
+
+<span class="c"># then: Developer: Reload Window</span></pre>
+            </div>
+            <p style="margin-top:16px">Or package it: <code>npx @vscode/vsce package</code>, then
+              <b style="color:var(--fg)">Extensions ▸ … ▸ Install from VSIX</b>.</p>
+          </div>
+        </div>
+
+        <h3 style="margin:36px 0 14px;font-size:15px">Settings worth having</h3>
+        <div class="grid grid-2">
+          <div class="snippet">
+            <div class="snippet-head">settings.json — follow the system<button class="copy" type="button">Copy</button></div>
+            <pre><span class="b1">{</span>
+  <span class="p">"workbench.preferredDarkColorTheme"</span><span class="punc">:</span> <span class="s">"Count Darcula"</span><span class="punc">,</span>
+  <span class="p">"workbench.preferredLightColorTheme"</span><span class="punc">:</span> <span class="s">"Count Darcula Daylight"</span><span class="punc">,</span>
+  <span class="p">"window.autoDetectColorScheme"</span><span class="punc">:</span> <span class="lc">true</span>
+<span class="b1">}</span></pre>
+          </div>
+          <div class="snippet">
+            <div class="snippet-head">settings.json — italic keywords, if you want them<button class="copy" type="button">Copy</button></div>
+            <pre><span class="b1">{</span>
+  <span class="p">"editor.tokenColorCustomizations"</span><span class="punc">:</span> <span class="b2">{</span>
+    <span class="p">"[Count Darcula*]"</span><span class="punc">:</span> <span class="b3">{</span>
+      <span class="p">"textMateRules"</span><span class="punc">:</span> <span class="b1">[</span>
+        <span class="b2">{</span> <span class="p">"scope"</span><span class="punc">:</span> <span class="b3">[</span><span class="s">"keyword"</span><span class="punc">,</span> <span class="s">"storage"</span><span class="b3">]</span><span class="punc">,</span> <span class="p">"settings"</span><span class="punc">:</span> <span class="b3">{</span> <span class="p">"fontStyle"</span><span class="punc">:</span> <span class="s">"italic"</span> <span class="b3">}</span> <span class="b2">}</span>
+      <span class="b1">]</span>
+    <span class="b3">}</span>
+  <span class="b2">}</span>
+<span class="b1">}</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Count Darcula — MIT.</span>
+      <span class="muted">Generated from <code>src/palette.js</code>; this page cannot drift from the themes it advertises.</span>
+      <a href="https://github.com/ChrisNicholson30/Count-Darcula-Theme" style="margin-left:auto">GitHub ↗</a>
+    </div>
+  </footer>
+
+  <!-- generated:data -->
+    <script id="theme-data" type="application/json">{"variants":{"dark":{"id":"count-darcula","label":"Count Darcula","type":"dark","tagline":"The everyday. One Dark’s calm, Dracula’s character, measured.","bg":"#282b35","accents":[{"name":"coral","role":"properties · tags","hex":"#fb8c8d","L":76,"C":0.135,"H":20,"ratio":6.21,"lc":53.6},{"name":"amber","role":"numbers · params","hex":"#e4a15f","L":76,"C":0.115,"H":64,"ratio":6.43,"lc":55},{"name":"gold","role":"types · classes","hex":"#d3ab54","L":76,"C":0.115,"H":85,"ratio":6.54,"lc":55.8},{"name":"green","role":"strings","hex":"#86c47f","L":76.1,"C":0.115,"H":142,"ratio":6.87,"lc":58.3},{"name":"teal","role":"operators · built-ins","hex":"#4fc5cb","L":76,"C":0.105,"H":200,"ratio":6.85,"lc":58.3},{"name":"azure","role":"functions · methods","hex":"#5dbbf8","L":76,"C":0.125,"H":240,"ratio":6.68,"lc":57},{"name":"violet","role":"flow · decorators","hex":"#be9df7","L":75.9,"C":0.13,"H":300,"ratio":6.29,"lc":53.9},{"name":"rose","role":"keywords · storage","hex":"#e58ed9","L":76.1,"C":0.141,"H":332,"ratio":6.19,"lc":53.3}],"neutrals":[{"name":"chrome","role":"activity bar · status bar","hex":"#14171f","L":20.5,"C":0.017,"H":269,"ratio":1.27,"lc":0},{"name":"surface","role":"side bar · panel","hex":"#1d2029","L":24.4,"C":0.018,"H":271,"ratio":1.15,"lc":0},{"name":"editor","role":"editor canvas","hex":"#282b35","L":29,"C":0.019,"H":272,"ratio":1,"lc":0},{"name":"raised","role":"current line · hover","hex":"#30343f","L":32.6,"C":0.02,"H":270,"ratio":1.14,"lc":0},{"name":"overlay","role":"widgets · inputs","hex":"#3b3f4c","L":36.9,"C":0.023,"H":272,"ratio":1.35,"lc":0},{"name":"line","role":"borders · selection","hex":"#4b4f5d","L":42.9,"C":0.024,"H":273,"ratio":1.73,"lc":9.9},{"name":"subtle","role":"indent guides","hex":"#5f6370","L":50.1,"C":0.021,"H":272,"ratio":2.36,"lc":17.8},{"name":"comment","role":"comments","hex":"#8693b3","L":66.4,"C":0.05,"H":268,"ratio":4.6,"lc":40.1},{"name":"dim","role":"secondary text","hex":"#adb1bc","L":76.1,"C":0.016,"H":270,"ratio":6.58,"lc":56},{"name":"fg","role":"foreground","hex":"#d4d7e0","L":87.9,"C":0.013,"H":271,"ratio":9.81,"lc":78.3},{"name":"bright","role":"emphasis","hex":"#eceef4","L":94.9,"C":0.008,"H":271,"ratio":12.17,"lc":92.7}],"status":[{"name":"error","hex":"#ef7272","L":70,"C":0.155,"H":22,"ratio":4.92,"lc":43.4},{"name":"warning","hex":"#eca84a","L":78,"C":0.135,"H":72,"ratio":6.9,"lc":58.6},{"name":"info","hex":"#5cb4ef","L":74,"C":0.12,"H":240,"ratio":6.21,"lc":53.4},{"name":"success","hex":"#73c076","L":73.9,"C":0.13,"H":145,"ratio":6.41,"lc":54.9}],"band":{"minRatio":6.19,"maxRatio":6.87,"spread":0.68,"minL":75.9,"maxL":76.1,"lSpread":0.1}},"nocturne":{"id":"count-darcula-nocturne","label":"Count Darcula Nocturne","type":"dark","tagline":"True black. Every large surface is #000000 — pixels off, power down.","bg":"#000000","accents":[{"name":"coral","role":"properties · tags","hex":"#e37b7d","L":69.9,"C":0.129,"H":20,"ratio":7.4,"lc":47.7},{"name":"amber","role":"numbers · params","hex":"#ce8f51","L":70,"C":0.11,"H":64,"ratio":7.67,"lc":49.1},{"name":"gold","role":"types · classes","hex":"#be9946","L":70.1,"C":0.11,"H":85,"ratio":7.83,"lc":49.9},{"name":"green","role":"strings","hex":"#76b06f","L":70.1,"C":0.111,"H":142,"ratio":8.21,"lc":52},{"name":"teal","role":"operators · built-ins","hex":"#40b1b7","L":70,"C":0.1,"H":200,"ratio":8.19,"lc":52.1},{"name":"azure","role":"functions · methods","hex":"#4fa8e1","L":70.1,"C":0.119,"H":240,"ratio":8.02,"lc":51.1},{"name":"violet","role":"flow · decorators","hex":"#aa8ce0","L":70,"C":0.124,"H":300,"ratio":7.54,"lc":48.2},{"name":"rose","role":"keywords · storage","hex":"#ce7dc3","L":69.9,"C":0.134,"H":332,"ratio":7.35,"lc":47.3}],"neutrals":[{"name":"chrome","role":"activity bar · status bar","hex":"#000000","L":0,"C":0,"H":0,"ratio":1,"lc":0},{"name":"surface","role":"side bar · panel","hex":"#000000","L":0,"C":0,"H":0,"ratio":1,"lc":0},{"name":"editor","role":"editor canvas","hex":"#000000","L":0,"C":0,"H":0,"ratio":1,"lc":0},{"name":"raised","role":"current line · hover","hex":"#04050b","L":11.7,"C":0.016,"H":274,"ratio":1.03,"lc":0},{"name":"overlay","role":"widgets · inputs","hex":"#0e1018","L":17.5,"C":0.017,"H":274,"ratio":1.11,"lc":0},{"name":"line","role":"borders · selection","hex":"#1d202a","L":24.5,"C":0.02,"H":272,"ratio":1.29,"lc":0},{"name":"subtle","role":"indent guides","hex":"#3e424d","L":38,"C":0.02,"H":270,"ratio":2.09,"lc":9.2},{"name":"comment","role":"comments","hex":"#7884a4","L":61.5,"C":0.051,"H":269,"ratio":5.64,"lc":36.8},{"name":"dim","role":"secondary text","hex":"#9b9ea7","L":70,"C":0.014,"H":271,"ratio":7.84,"lc":49.8},{"name":"fg","role":"foreground","hex":"#bbbdc6","L":80,"C":0.013,"H":276,"ratio":11.21,"lc":67},{"name":"bright","role":"emphasis","hex":"#d5d7dd","L":87.9,"C":0.008,"H":271,"ratio":14.59,"lc":82.3}],"status":[{"name":"error","hex":"#db6465","L":64.9,"C":0.15,"H":22,"ratio":6.02,"lc":39.8},{"name":"warning","hex":"#d6963b","L":72,"C":0.13,"H":72,"ratio":8.28,"lc":52.5},{"name":"info","hex":"#4da1d8","L":68,"C":0.115,"H":240,"ratio":7.41,"lc":47.7},{"name":"success","hex":"#63ac66","L":67.9,"C":0.125,"H":145,"ratio":7.62,"lc":48.8}],"band":{"minRatio":7.35,"maxRatio":8.21,"spread":0.86,"minL":69.9,"maxL":70.1,"lSpread":0.2}},"daylight":{"id":"count-darcula-daylight","label":"Count Darcula Daylight","type":"light","tagline":"Paper, not paper-white. Same hues, tuned for daylight and LCDs.","bg":"#f5f7fb","accents":[{"name":"coral","role":"properties · tags","hex":"#ad2d3a","L":50,"C":0.164,"H":20,"ratio":6.09,"lc":76.3},{"name":"amber","role":"numbers · params","hex":"#984d00","L":50.3,"C":0.124,"H":55,"ratio":5.76,"lc":75.4},{"name":"gold","role":"types · classes","hex":"#875a00","L":50.4,"C":0.106,"H":75,"ratio":5.61,"lc":74.9},{"name":"green","role":"strings","hex":"#297623","L":50,"C":0.14,"H":142,"ratio":5.28,"lc":73.1},{"name":"teal","role":"operators · built-ins","hex":"#007780","L":51.9,"C":0.088,"H":204,"ratio":4.96,"lc":71},{"name":"azure","role":"functions · methods","hex":"#006ab0","L":51.1,"C":0.137,"H":248,"ratio":5.31,"lc":72.9},{"name":"violet","role":"flow · decorators","hex":"#7348ae","L":50.1,"C":0.157,"H":300,"ratio":5.99,"lc":76.7},{"name":"rose","role":"keywords · storage","hex":"#97338d","L":49.9,"C":0.17,"H":332,"ratio":6.17,"lc":77}],"neutrals":[{"name":"chrome","role":"activity bar · status bar","hex":"#e5e8ef","L":93.1,"C":0.01,"H":267,"ratio":1.14,"lc":0},{"name":"surface","role":"side bar · panel","hex":"#eef0f6","L":95.5,"C":0.008,"H":271,"ratio":1.06,"lc":0},{"name":"editor","role":"editor canvas","hex":"#f5f7fb","L":97.6,"C":0.006,"H":265,"ratio":1,"lc":0},{"name":"raised","role":"current line · hover","hex":"#eaedf3","L":94.6,"C":0.009,"H":265,"ratio":1.09,"lc":0},{"name":"overlay","role":"widgets · inputs","hex":"#ffffff","L":100,"C":0,"H":90,"ratio":1.07,"lc":0},{"name":"line","role":"borders · selection","hex":"#cdd1da","L":86,"C":0.013,"H":267,"ratio":1.43,"lc":19.7},{"name":"subtle","role":"indent guides","hex":"#a7aab7","L":74,"C":0.019,"H":276,"ratio":2.16,"lc":40.8},{"name":"comment","role":"comments","hex":"#5e6b8c","L":53,"C":0.055,"H":268,"ratio":4.95,"lc":71.5},{"name":"dim","role":"secondary text","hex":"#545864","L":46.1,"C":0.02,"H":271,"ratio":6.62,"lc":79.8},{"name":"fg","role":"foreground","hex":"#2f323e","L":31.9,"C":0.022,"H":274,"ratio":11.89,"lc":94},{"name":"bright","role":"emphasis","hex":"#121521","L":19.9,"C":0.025,"H":273,"ratio":16.95,"lc":100}],"status":[{"name":"error","hex":"#bc272c","L":52,"C":0.185,"H":25,"ratio":5.65,"lc":73.8},{"name":"warning","hex":"#aa5500","L":54.3,"C":0.136,"H":54,"ratio":4.88,"lc":70.6},{"name":"info","hex":"#006eb8","L":52.6,"C":0.143,"H":248,"ratio":4.99,"lc":71.1},{"name":"success","hex":"#077b30","L":50.9,"C":0.145,"H":148,"ratio":5.04,"lc":71.5}],"band":{"minRatio":4.96,"maxRatio":6.17,"spread":1.21,"minL":49.9,"maxL":51.9,"lSpread":2}}},"comparison":{"Count Darcula":{"bg":"#282b35","roles":{"keyword":"#e58ed9","function":"#5dbbf8","type":"#d3ab54","property":"#fb8c8d","string":"#86c47f","number":"#e4a15f","operator":"#4fc5cb","foreground":"#d4d7e0"},"swatches":[{"role":"keyword","hex":"#e58ed9","L":76.1,"C":0.141,"H":332,"ratio":6.19,"lc":53.3},{"role":"function","hex":"#5dbbf8","L":76,"C":0.125,"H":240,"ratio":6.68,"lc":57},{"role":"type","hex":"#d3ab54","L":76,"C":0.115,"H":85,"ratio":6.54,"lc":55.8},{"role":"property","hex":"#fb8c8d","L":76,"C":0.135,"H":20,"ratio":6.21,"lc":53.6},{"role":"string","hex":"#86c47f","L":76.1,"C":0.115,"H":142,"ratio":6.87,"lc":58.3},{"role":"number","hex":"#e4a15f","L":76,"C":0.115,"H":64,"ratio":6.43,"lc":55},{"role":"operator","hex":"#4fc5cb","L":76,"C":0.105,"H":200,"ratio":6.85,"lc":58.3},{"role":"foreground","hex":"#d4d7e0","L":87.9,"C":0.013,"H":271,"ratio":9.81,"lc":78.3}],"lSpread":0.1,"minRatio":6.19,"failsAA":0},"One Dark Pro":{"bg":"#282c34","roles":{"keyword":"#c678dd","function":"#61afef","type":"#e5c07b","property":"#e06c75","string":"#98c379","number":"#d19a66","operator":"#56b6c2","foreground":"#abb2bf"},"swatches":[{"role":"keyword","hex":"#c678dd","L":69.4,"C":0.164,"H":318,"ratio":4.75,"lc":41.9},{"role":"function","hex":"#61afef","L":73,"C":0.121,"H":245,"ratio":5.92,"lc":51.5},{"role":"type","hex":"#e5c07b","L":82.5,"C":0.097,"H":82,"ratio":8.1,"lc":67.4},{"role":"property","hex":"#e06c75","L":67.1,"C":0.145,"H":17,"ratio":4.38,"lc":38.9},{"role":"string","hex":"#98c379","L":76.8,"C":0.11,"H":133,"ratio":6.94,"lc":59.1},{"role":"number","hex":"#d19a66","L":72.7,"C":0.095,"H":64,"ratio":5.68,"lc":49.5},{"role":"operator","hex":"#56b6c2","L":72.3,"C":0.092,"H":206,"ratio":5.91,"lc":51.4},{"role":"foreground","hex":"#abb2bf","L":76.2,"C":0.02,"H":263,"ratio":6.57,"lc":56.2}],"lSpread":15.4,"minRatio":4.38,"failsAA":1},"Dracula":{"bg":"#282a36","roles":{"keyword":"#ff79c6","function":"#50fa7b","type":"#8be9fd","property":"#f8f8f2","string":"#f1fa8c","number":"#bd93f9","operator":"#ff79c6","foreground":"#f8f8f2"},"swatches":[{"role":"keyword","hex":"#ff79c6","L":75.5,"C":0.183,"H":347,"ratio":5.97,"lc":51.6},{"role":"function","hex":"#50fa7b","L":87.1,"C":0.22,"H":148,"ratio":10.38,"lc":81.9},{"role":"type","hex":"#8be9fd","L":88.3,"C":0.093,"H":213,"ratio":10.29,"lc":81},{"role":"property","hex":"#f8f8f2","L":97.7,"C":0.008,"H":107,"ratio":13.36,"lc":99},{"role":"string","hex":"#f1fa8c","L":95.5,"C":0.134,"H":113,"ratio":12.74,"lc":95.6},{"role":"number","hex":"#bd93f9","L":74.2,"C":0.149,"H":302,"ratio":5.9,"lc":50.7},{"role":"operator","hex":"#ff79c6","L":75.5,"C":0.183,"H":347,"ratio":5.97,"lc":51.6},{"role":"foreground","hex":"#f8f8f2","L":97.7,"C":0.008,"H":107,"ratio":13.36,"lc":99}],"lSpread":23.5,"minRatio":5.9,"failsAA":0}},"power":[{"name":"Count Darcula","bg":"#282b35","own":true,"power":0.0674,"relative":100,"vsFlagship":0},{"name":"Count Darcula Nocturne","bg":"#000000","own":true,"power":0.0347,"relative":51.5,"vsFlagship":-48.5},{"name":"Count Darcula Daylight","bg":"#f5f7fb","own":true,"power":0.8527,"relative":1264.7,"vsFlagship":1164.7},{"name":"One Dark Pro","bg":"#282c34","own":false,"power":0.0565,"relative":83.7,"vsFlagship":-16.3},{"name":"Dracula","bg":"#282a36","own":false,"power":0.0816,"relative":121,"vsFlagship":21},{"name":"A stock light theme","bg":"#ffffff","own":false,"power":0.908,"relative":1346.8,"vsFlagship":1246.8}],"powerNote":{"nocturneVsFlagship":48.5,"nocturneVsDracula":57.4,"nocturneVsLight":96.2},"totals":{"colorKeys":684,"textColorsChecked":51,"variants":3}}</script>
+<!-- end:data -->
+
+  <script>
+    (() => {
+      'use strict';
+      const data = JSON.parse(document.getElementById('theme-data').textContent);
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+      const el = (tag, cls, html) => {
+        const node = document.createElement(tag);
+        if (cls) node.className = cls;
+        if (html !== undefined) node.innerHTML = html;
+        return node;
+      };
+
+      /* ── hero stats ─────────────────────────────────────────────── */
+      const flagship = data.variants.dark;
+      const stats = [
+        [flagship.band.lSpread.toFixed(1) + ' L*', 'lightness spread across all eight accents'],
+        [flagship.band.minRatio + '–' + flagship.band.maxRatio + ':1', 'contrast band, every syntax colour'],
+        [data.totals.textColorsChecked, 'text colours measured, none below AA'],
+        ['−' + data.powerNote.nocturneVsFlagship + '%', 'OLED panel power in Nocturne'],
+      ];
+      $('#hero-stats').append(...stats.map(([b, s]) => el('div', 'stat', `<b>${b}</b><span>${s}</span>`)));
+
+      /* ── variant switching ──────────────────────────────────────── */
+      const params = new URLSearchParams(location.search);
+      if (params.has('shot')) document.body.classList.add('shot');
+      let current = data.variants[params.get('variant')] ? params.get('variant') : 'dark';
+      $$('.switcher button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.variant === current)));
+      const render = () => {
+        const v = data.variants[current];
+        document.documentElement.dataset.variant = current;
+        $('#variant-tagline').textContent = v.tagline;
+
+        $('#accent-swatches').replaceChildren(...v.accents.map(swatch));
+        $('#neutral-swatches').replaceChildren(...v.neutrals.map(swatch));
+
+        const rows = [
+          ...v.neutrals.filter((n) => ['fg', 'dim', 'comment'].includes(n.name)),
+          ...v.accents,
+          ...v.status,
+        ];
+        $('#contrast-table tbody').replaceChildren(...rows.map((r) => {
+          const rating = r.ratio >= 7 ? ['aaa', 'AAA'] : r.ratio >= 4.5 ? ['aa', 'AA'] : ['ui', 'ui only'];
+          const tr = el('tr');
+          tr.innerHTML =
+            `<td><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${r.hex};margin-right:9px"></span>` +
+            `${r.role ? `${r.name} <span class="muted">· ${r.role}</span>` : r.name}</td>` +
+            `<td class="mono">${r.hex}</td>` +
+            `<td class="mono muted">${r.L} ${r.C.toFixed(3)} ${r.H}°</td>` +
+            `<td class="num">${r.ratio.toFixed(2)}:1</td><td class="num">${r.lc.toFixed(1)}</td>` +
+            `<td><span class="pill ${rating[0]}">${rating[1]}</span></td>`;
+          return tr;
+        }));
+      };
+
+      function swatch(c) {
+        const node = el('div', 'swatch');
+        node.innerHTML =
+          `<span class="chip" style="background:${c.hex}"></span>` +
+          `<span class="meta"><span class="name">${c.name}</span>` +
+          `<span class="role">${c.role}</span>` +
+          `<span class="nums"><b>${c.hex}</b> · L ${c.L} · ${c.ratio.toFixed(2)}:1</span></span>`;
+        return node;
+      }
+
+      $$('.switcher button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          current = btn.dataset.variant;
+          $$('.switcher button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+          render();
+        });
+      });
+
+      /* ── comparison bars (static: this is the fixed argument) ───── */
+      const compare = $('#compare');
+      const order = ['keyword', 'function', 'type', 'property', 'string', 'number', 'operator', 'foreground'];
+      Object.entries(data.comparison).forEach(([name, entry]) => {
+        const card = el('div', 'compare-card');
+        card.style.background = entry.bg;
+        card.style.borderColor = 'rgba(255,255,255,.09)';
+        const bars = entry.swatches
+          .sort((a, b) => order.indexOf(a.role) - order.indexOf(b.role))
+          .map((s) => `
+            <div class="bar-row" style="color:${s.hex}">
+              <span class="lbl">${s.role}</span>
+              <span class="bar-track" style="background:rgba(128,128,128,.16)">
+                <span class="bar-fill" style="width:${s.L}%;background:${s.hex}"></span>
+              </span>
+              <span class="val">${s.L}</span>
+            </div>`).join('');
+        const own = name === 'Count Darcula';
+        card.innerHTML =
+          `<h3 style="color:${entry.swatches.find((s) => s.role === 'foreground').hex}">${name}${own ? ' ✦' : ''}</h3>` +
+          `<div class="sub" style="color:${entry.roles.keyword}">${entry.bg}</div>` +
+          `<div class="bars">${bars}</div>` +
+          `<div class="spread-note" style="color:${entry.roles.foreground}">` +
+          `<span>lightness spread <b>${entry.lSpread} L*</b></span>` +
+          `<span>lowest contrast <b>${entry.minRatio}:1</b>${entry.failsAA ? ` · <b style="color:${entry.roles.property}">${entry.failsAA} below AA</b>` : ''}</span>` +
+          `</div>`;
+        compare.append(card);
+      });
+
+      /* ── power chart ────────────────────────────────────────────── */
+      /* Light themes are 12x off the top of any linear scale, so the axis stops
+         at 140% of the flagship and anything past it is marked as overflowing. */
+      const CEILING = 140;
+      $('#power-headline').textContent = data.powerNote.nocturneVsFlagship + '%';
+      const rows = data.power.map((r) => {
+        const over = r.relative > CEILING;
+        const row = el('div', 'power-row' + (r.own ? ' own' : ''));
+        row.innerHTML =
+          `<span class="who"><i style="background:${r.bg}"></i>${r.name}</span>` +
+          `<span class="power-track"><span class="power-fill${over ? ' over' : ''}" ` +
+          `style="width:${over ? 100 : Math.max(1.5, (r.relative / CEILING) * 100)}%"></span></span>` +
+          `<span class="amount">${r.relative >= 100 ? Math.round(r.relative) : r.relative}%</span>`;
+        return row;
+      });
+      const scale = el('div', 'power-scale', '<span></span><span><i>0</i><i>70%</i><i>140% of the flagship ›</i></span><span></span>');
+      $('#power-rows').replaceChildren(...rows, scale);
+
+      /* ── sample tabs + minimap ──────────────────────────────────── */
+      const minimapPalette = ['--rose', '--azure', '--gold', '--green', '--amber', '--teal', '--violet', '--coral', '--dim'];
+      const paintMinimap = (sample) => {
+        const rows = $$('.row', sample);
+        const map = $('#minimap');
+        map.replaceChildren(el('span', 'slider'));
+        map.firstChild.className = 'slider';
+        rows.slice(0, 46).forEach((row, i) => {
+          const text = row.textContent.replace(/^\s*\d+/, '');
+          const bar = el('i');
+          bar.style.width = Math.min(100, Math.max(6, (text.trim().length / 84) * 100)) + '%';
+          bar.style.marginLeft = Math.min(40, (text.length - text.trimStart().length) * 2.2) + '%';
+          bar.style.background = `var(${minimapPalette[i % minimapPalette.length]})`;
+          if (!text.trim()) bar.style.background = 'transparent';
+          map.append(bar);
+        });
+      };
+
+      $$('.mock-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          $$('.mock-tab').forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+          $$('.sample').forEach((s) => s.classList.toggle('on', s.dataset.sample === tab.dataset.sample));
+          $('#status-lang').textContent = tab.dataset.lang;
+          $('#crumb').textContent = tab.textContent.trim();
+          $('#mock-title').textContent = tab.textContent.trim() + ' — count-darcula';
+          paintMinimap($('.sample.on'));
+        });
+      });
+
+      /* ── copy buttons ───────────────────────────────────────────── */
+      $$('.copy').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const text = btn.closest('.snippet').querySelector('pre').innerText;
+          try {
+            await navigator.clipboard.writeText(text);
+            btn.textContent = 'Copied';
+          } catch {
+            btn.textContent = 'Select it';
+          }
+          setTimeout(() => (btn.textContent = 'Copy'), 1600);
+        });
+      });
+
+      render();
+      paintMinimap($('.sample.on'));
+
+      /* deep link after render, so the layout has settled: preview.html?to=palette */
+      const to = params.get('to');
+      if (to) requestAnimationFrame(() => $('#' + to)?.scrollIntoView());
+    })();
+  </script>
+</body>
+</html>

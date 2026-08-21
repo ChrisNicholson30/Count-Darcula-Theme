@@ -4,3 +4,5 @@
 docs/**
 src/**
 preview.html
+assets/screenshot-*.png
+assets/icon.svg
