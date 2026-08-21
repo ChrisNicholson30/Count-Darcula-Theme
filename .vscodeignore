@@ -1,0 +1,6 @@
+.github/**
+.gitignore
+.vscodeignore
+docs/**
+src/**
+preview.html
