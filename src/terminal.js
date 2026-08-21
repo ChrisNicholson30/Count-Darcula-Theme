@@ -15,7 +15,9 @@ module.exports = function terminal(p) {
   const { ui, base, bright, strong, status, a } = p;
   const light = p.isLight;
 
-  const normal = light ? base : base;
+  // On the light variant "bright" means *more saturated*, not lighter: a lighter
+  // bright-yellow on paper is unreadable, and that is where most light themes fall over.
+  const normal = base;
   const vivid = light ? strong : bright;
 
   return {
@@ -42,21 +44,21 @@ module.exports = function terminal(p) {
     'terminalStickyScrollHover.background': ui.raised,
     'terminalCommandGuide.foreground': a(base.rose, 0.35),
 
-    'terminal.ansiBlack': light ? ui.bright : ui.overlay,
+    'terminal.ansiBlack': light ? ui.fg : ui.overlay,
     'terminal.ansiRed': normal.coral,
     'terminal.ansiGreen': normal.green,
     'terminal.ansiYellow': normal.gold,
     'terminal.ansiBlue': normal.azure,
     'terminal.ansiMagenta': normal.rose,
     'terminal.ansiCyan': normal.teal,
-    'terminal.ansiWhite': light ? ui.dim : ui.dim,
-    'terminal.ansiBrightBlack': light ? ui.dim : ui.comment,
+    'terminal.ansiWhite': ui.dim,
+    'terminal.ansiBrightBlack': ui.comment,
     'terminal.ansiBrightRed': vivid.coral,
     'terminal.ansiBrightGreen': vivid.green,
     'terminal.ansiBrightYellow': vivid.gold,
     'terminal.ansiBrightBlue': vivid.azure,
     'terminal.ansiBrightMagenta': vivid.rose,
     'terminal.ansiBrightCyan': vivid.teal,
-    'terminal.ansiBrightWhite': light ? ui.bright : ui.bright,
+    'terminal.ansiBrightWhite': ui.bright,
   };
 };

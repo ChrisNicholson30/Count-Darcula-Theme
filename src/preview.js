@@ -17,6 +17,7 @@
 const fs = require('fs');
 const path = require('path');
 const { buildPalette, VARIANTS, HUE } = require('./palette.js');
+const { buildTheme } = require('./build.js');
 const { contrastRatio, apca, hexToOklch } = require('./color.js');
 const { screenPower } = require('./power.js');
 
@@ -198,8 +199,11 @@ data.powerNote = {
   nocturneVsLight: round((1 - powerRows[1].power / powerRows[5].power) * 100, 1),
 };
 
+const built = buildTheme('dark').theme;
 data.totals = {
-  colorKeys: 684,
+  colorKeys: Object.keys(built.colors).length,
+  tokenRules: built.tokenColors.length,
+  semanticTokens: Object.keys(built.semanticTokenColors).length,
   textColorsChecked: 51,
   variants: Object.keys(VARIANTS).length,
 };

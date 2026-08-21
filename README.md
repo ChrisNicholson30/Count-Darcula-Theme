@@ -85,7 +85,8 @@ chroma tuned so none looks louder than the others.
 | ⚗️ teal | `#4fc5cb` | operators, built-ins | `#56b6c2` 206° | `#8be9fd` 213° | 6.85:1 |
 
 Plus a twelve-step neutral ramp on a single hue (272°, midway between One Dark's 264° and
-Dracula's 277°) — `#1d2029` chrome, `#282b35` canvas, `#8693b3` comments, `#d4d7e0` foreground.
+Dracula's 277°) — `#14171f` activity bar, `#1d2029` side bar, `#282b35` canvas, `#8693b3`
+comments, `#d4d7e0` foreground, `#eceef4` emphasis.
 
 ### Colour means one thing everywhere
 
@@ -248,9 +249,9 @@ rendered to sRGB at build time.
 ```
 src/palette.js     the single source of truth: OKLCH coordinates for all three variants
 src/color.js       sRGB ⇄ OKLab ⇄ OKLCH, WCAG 2.1 contrast, APCA 0.1.9 Lc  (no dependencies)
-src/workbench.js   684 UI colours per variant, derived from the palette
+src/workbench.js   690 UI colours per variant, derived from the palette
 src/terminal.js    the terminal, including the 16 ANSI slots
-src/syntax.js      124 TextMate rules + 49 semantic tokens, built from a role table
+src/syntax.js      124 TextMate rules + 47 semantic tokens, built from a role table
 src/power.js       the OLED power model
 src/build.js       renders themes/*.json
 src/validate.js    malformed values, illegal fontStyle, shadowed scopes, src ⇄ themes drift

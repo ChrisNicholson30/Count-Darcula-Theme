@@ -26,7 +26,7 @@
 'use strict';
 
 module.exports = function syntax(p) {
-  const { ui, base, muted, bright, status } = p;
+  const { ui, base, muted, status } = p;
 
   /* ── roles ─────────────────────────────────────────────────────────── */
   const r = {
@@ -629,11 +629,9 @@ module.exports = function syntax(p) {
     generic: base.gold,
     typeAlias: base.gold,
     boolean: base.violet,
-    '*.deprecated': { strikethrough: true },
+    '*.deprecated': { fontStyle: 'strikethrough' },
     '*.abstract': { fontStyle: 'italic' },
     '*.async': { foreground: base.violet },
-    '*.static': { fontStyle: 'italic' },
-    'variable.constant': base.amber,
   };
 
   return { tokenColors, semanticTokenColors };

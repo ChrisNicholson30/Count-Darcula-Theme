@@ -16,10 +16,10 @@ First release.
   flagship.
 - **Count Darcula Daylight** — light variant on the same eight hues, at `#f5f7fb` rather than
   pure white.
-- 684 workbench colours per variant, covering the full editor, terminal (all 16 ANSI slots),
+- 690 workbench colours per variant, covering the full editor, terminal (all 16 ANSI slots),
   diffs, merge editor, notebooks, testing, debug, peek views, inlay hints, ghost text, bracket
   pair colourisation and the command centre.
-- 124 TextMate rules and 49 semantic token colours, built from a single role table so colour
+- 124 TextMate rules and 47 semantic token colours, built from a single role table so colour
   means the same thing in every language.
 - Generated entirely from OKLCH coordinates in `src/palette.js`: every syntax colour sits at one
   perceptual lightness (L\* 76 in the flagship, spread 0.1), landing all eight accents in a

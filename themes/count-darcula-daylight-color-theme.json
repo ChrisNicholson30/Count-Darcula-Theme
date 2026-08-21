@@ -202,7 +202,9 @@
     "editorHoverWidget.foreground": "#2f323e",
     "editorHoverWidget.highlightForeground": "#7c0b73",
     "editorHoverWidget.statusBarBackground": "#eaedf3b3",
+    "editorIndentGuide.activeBackground": "#a7aab799",
     "editorIndentGuide.activeBackground1": "#a7aab799",
+    "editorIndentGuide.background": "#a7aab747",
     "editorIndentGuide.background1": "#a7aab747",
     "editorInfo.background": "#006eb80f",
     "editorInfo.foreground": "#006eb8",
@@ -583,6 +585,7 @@
     "tab.activeBorder": "#f5f7fb",
     "tab.activeBorderTop": "#97338d",
     "tab.activeForeground": "#121521",
+    "tab.activeModifiedBorder": "#875a00",
     "tab.border": "#cdd1da59",
     "tab.dragAndDropBorder": "#97338d",
     "tab.hoverBackground": "#eaedf3b3",
@@ -590,16 +593,19 @@
     "tab.hoverForeground": "#2f323e",
     "tab.inactiveBackground": "#eef0f6",
     "tab.inactiveForeground": "#5458649e",
+    "tab.inactiveModifiedBorder": "#875a0073",
     "tab.lastPinnedBorder": "#cdd1dab3",
     "tab.unfocusedActiveBackground": "#f5f7fb",
     "tab.unfocusedActiveBorderTop": "#97338d59",
     "tab.unfocusedActiveForeground": "#545864",
+    "tab.unfocusedActiveModifiedBorder": "#875a0099",
     "tab.unfocusedHoverBackground": "#eaedf380",
     "tab.unfocusedInactiveBackground": "#eef0f6",
     "tab.unfocusedInactiveForeground": "#54586473",
-    "terminal.ansiBlack": "#121521",
+    "tab.unfocusedInactiveModifiedBorder": "#875a004d",
+    "terminal.ansiBlack": "#2f323e",
     "terminal.ansiBlue": "#006ab0",
-    "terminal.ansiBrightBlack": "#545864",
+    "terminal.ansiBrightBlack": "#5e6b8c",
     "terminal.ansiBrightBlue": "#0076cb",
     "terminal.ansiBrightCyan": "#008691",
     "terminal.ansiBrightGreen": "#23851b",
@@ -750,18 +756,14 @@
     "typeAlias": "#875a00",
     "boolean": "#7348ae",
     "*.deprecated": {
-      "strikethrough": true
+      "fontStyle": "strikethrough"
     },
     "*.abstract": {
       "fontStyle": "italic"
     },
     "*.async": {
       "foreground": "#7348ae"
-    },
-    "*.static": {
-      "fontStyle": "italic"
-    },
-    "variable.constant": "#984d00"
+    }
   },
   "tokenColors": [
     {

@@ -13,7 +13,7 @@
 'use strict';
 
 module.exports = function workbench(p) {
-  const { ui, base, bright, muted, strong, status, a } = p;
+  const { ui, base, bright, muted, status, a } = p;
   const light = p.isLight;
 
   // Contrast-correct text to sit on top of a filled accent (badges, buttons).
@@ -194,6 +194,10 @@ module.exports = function workbench(p) {
     'tab.unfocusedHoverBackground': a(ui.raised, 0.5),
     'tab.lastPinnedBorder': a(ui.line, 0.7),
     'tab.dragAndDropBorder': base.rose,
+    'tab.activeModifiedBorder': base.gold,
+    'tab.inactiveModifiedBorder': a(base.gold, 0.45),
+    'tab.unfocusedActiveModifiedBorder': a(base.gold, 0.6),
+    'tab.unfocusedInactiveModifiedBorder': a(base.gold, 0.3),
     'editorPane.background': ui.editor,
 
     /* ── the canvas ───────────────────────────────────────────────────── */
@@ -234,6 +238,9 @@ module.exports = function workbench(p) {
     'editorWhitespace.foreground': a(ui.subtle, light ? 0.4 : 0.32),
     'editorIndentGuide.background1': a(ui.subtle, light ? 0.28 : 0.22),
     'editorIndentGuide.activeBackground1': a(ui.subtle, light ? 0.6 : 0.55),
+    // deprecated keys, kept so the engine floor (1.74) still shows guides
+    'editorIndentGuide.background': a(ui.subtle, light ? 0.28 : 0.22),
+    'editorIndentGuide.activeBackground': a(ui.subtle, light ? 0.6 : 0.55),
     'editorInlayHint.background': a(ui.overlay, light ? 0.55 : 0.55),
     'editorInlayHint.foreground': ui.comment,
     'editorInlayHint.typeBackground': a(ui.overlay, 0.55),
