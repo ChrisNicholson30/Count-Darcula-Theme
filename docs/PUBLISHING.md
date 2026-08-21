@@ -80,9 +80,15 @@ with broken images.
 
 ## Also worth doing
 
-**Open VSX** — the registry VSCodium, Gitpod, Cursor and Windsurf pull from. Same VSIX, separate
-account at <https://open-vsx.org>:
+**Publish to Open VSX too.** This is not optional if you care about reach: Cursor, Windsurf,
+VSCodium, Gitpod and code-server cannot use Microsoft's Marketplace, so Open VSX is the *only*
+registry they search. It is the same VSIX and a separate, free account at <https://open-vsx.org>
+(sign in with GitHub, then create a namespace matching your `publisher` field):
 
 ```bash
+npx ovsx create-namespace your-publisher-id -p "$OVSX_PAT"
 npx ovsx publish count-darcula-1.0.0.vsix -p "$OVSX_PAT"
 ```
+
+Publishing to both registries from the same `package.json` is normal and expected — keep the
+version numbers in step so the two listings don't drift.

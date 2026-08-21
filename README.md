@@ -143,6 +143,42 @@ Then **Extensions ▸ ⋯ ▸ Install from VSIX…**
 
 (Publishing it to the Marketplace yourself: [docs/PUBLISHING.md](docs/PUBLISHING.md).)
 
+### Cursor, Windsurf, VSCodium and friends
+
+Yes. This is a *declarative* extension — no entry point, no activation events, no dependencies,
+just `contributes.themes` and three JSON files. Anything that renders the VS Code workbench
+renders it identically: Cursor, Windsurf, VSCodium, Positron, code-server, Gitpod, Trae.
+
+The catch is distribution, not compatibility. The forks can't use Microsoft's Marketplace — its
+terms restrict it to Microsoft products — so they pull from [Open VSX](https://open-vsx.org)
+instead. Two routes that always work:
+
+```bash
+# from the packaged VSIX — the version-proof route
+npm run package
+cursor --install-extension count-darcula-1.0.0.vsix
+# windsurf --install-extension … / codium --install-extension …
+```
+
+Or **Extensions ▸ ⋯ ▸ Install from VSIX…** in the UI. To develop against it live, symlink into
+the fork's extensions folder instead of `~/.vscode/extensions`:
+
+| editor | extensions folder |
+|---|---|
+| VS Code | `~/.vscode/extensions` |
+| Cursor | `~/.cursor/extensions` |
+| Windsurf | `~/.windsurf/extensions` |
+| VSCodium | `~/.vscode-oss/extensions` |
+
+Once it's on Open VSX (see [docs/PUBLISHING.md](docs/PUBLISHING.md)) it shows up in their
+in-editor extension search too, and `Ctrl`+`K` `Ctrl`+`T` lists all three variants.
+
+One honest caveat: the forks add their own chrome — Cursor's AI pane and inline-edit widget,
+for instance. Where those reuse standard VS Code colour tokens they're themed (this theme sets
+`inlineChat.*`, `chat.*`, `editorGhostText.*` among the 690), but any surface a fork invents
+outside that vocabulary falls back to its own dark defaults. The editor, terminal, side bar,
+tabs and status bar are exact.
+
 ### Settings worth having
 
 Follow the system, dark by night and light by day:
