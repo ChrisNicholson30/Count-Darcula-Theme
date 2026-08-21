@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/icon.png" width="104" alt="Count Darcula">
+<img src="assets/logo.png" width="220" alt="Count Darcula">
 
 # Count Darcula
 

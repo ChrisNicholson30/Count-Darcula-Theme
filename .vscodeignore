@@ -4,5 +4,7 @@
 docs/**
 src/**
 preview.html
+# vsce rewrites relative README links to raw.githubusercontent.com, so the
+# large images are fetched from GitHub rather than shipped in the VSIX
 assets/screenshot-*.png
-assets/icon.svg
+assets/logo.png
