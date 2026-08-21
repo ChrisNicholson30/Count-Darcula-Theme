@@ -463,6 +463,21 @@
       white-space: pre-wrap; overflow-wrap: anywhere;
     }
 
+    .editor-picker {
+      display: inline-flex; flex-wrap: wrap; gap: 6px; padding: 4px; margin-bottom: 22px;
+      border-radius: 999px; background: color-mix(in srgb, var(--subtle) 14%, transparent);
+    }
+    .editor-picker button {
+      font: inherit; font-size: 13.5px; font-weight: 550; cursor: pointer; border: 0;
+      border-radius: 999px; padding: 7px 16px; color: var(--dim); background: transparent;
+      transition: color .2s, background-color .2s;
+    }
+    .editor-picker button:hover { color: var(--bright); }
+    .editor-picker button[aria-pressed="true"] {
+      background: var(--editor); color: var(--bright); box-shadow: 0 1px 3px var(--shadow);
+    }
+    .ed-cli, .ed-dir, .ed-windir { transition: color .2s; }
+
     .steps { counter-reset: step; display: grid; gap: 14px; }
     .step { display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: start; }
     .step::before {
@@ -935,9 +950,16 @@
         <div class="section-head">
           <div class="eyebrow">Installation</div>
           <h2>Two ways, about a minute</h2>
-          <p class="lede">Not on any marketplace — it installs by hand. Both routes work
-            identically in VS Code, Cursor, Windsurf and VSCodium, because a colour theme is
+          <p class="lede">Not on any marketplace — it installs by hand. Pick your editor below and
+            the commands follow it; the steps are identical everywhere, because a colour theme is
             data the workbench reads, not code it runs.</p>
+        </div>
+
+        <div class="editor-picker" role="group" aria-label="Editor">
+          <button type="button" aria-pressed="true"  data-cli="code"     data-dir="~/.vscode/extensions"     data-windir="$HOME\.vscode\extensions">VS&nbsp;Code</button>
+          <button type="button" aria-pressed="false" data-cli="cursor"   data-dir="~/.cursor/extensions"     data-windir="$HOME\.cursor\extensions">Cursor</button>
+          <button type="button" aria-pressed="false" data-cli="windsurf" data-dir="~/.windsurf/extensions"   data-windir="$HOME\.windsurf\extensions">Windsurf</button>
+          <button type="button" aria-pressed="false" data-cli="codium"   data-dir="~/.vscode-oss/extensions" data-windir="$HOME\.vscode-oss\extensions">VSCodium</button>
         </div>
 
         <div class="grid grid-2 grid-install">
@@ -950,24 +972,15 @@
 <span class="fn">cd</span> Count-Darcula-Theme
 <span class="fn">npm</span> test              <span class="c"># build + validate + audit (no dependencies)</span>
 
-<span class="c"># macOS / Linux — swap the folder for your editor</span>
-<span class="fn">ln</span> <span class="cst">-s</span> <span class="s">"$PWD"</span> ~/.vscode/extensions/count-darcula
+<span class="c"># macOS / Linux</span>
+<span class="fn">ln</span> <span class="cst">-s</span> <span class="s">"$PWD"</span> <span class="ed-dir">~/.vscode/extensions</span>/count-darcula
 
 <span class="c"># Windows (PowerShell)</span>
 <span class="c"># New-Item -ItemType SymbolicLink `</span>
-<span class="c">#   -Path "$HOME\.vscode\extensions\count-darcula" -Target $PWD</span></pre>
+<span class="c">#   -Path "<span class="ed-windir">$HOME\.vscode\extensions</span>\count-darcula" -Target $PWD</span></pre>
             </div>
-            <div class="table-scroll" style="margin-top:16px">
-              <table style="min-width:0">
-                <thead><tr><th>Editor</th><th>Extensions folder</th></tr></thead>
-                <tbody>
-                  <tr><td>VS Code</td><td class="mono muted">~/.vscode/extensions</td></tr>
-                  <tr><td>Cursor</td><td class="mono muted">~/.cursor/extensions</td></tr>
-                  <tr><td>Windsurf</td><td class="mono muted">~/.windsurf/extensions</td></tr>
-                  <tr><td>VSCodium</td><td class="mono muted">~/.vscode-oss/extensions</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <p style="margin-top:16px">Then <b style="color:var(--fg)">Developer: Reload Window</b>.
+              Every later <code>git pull</code> needs the same reload.</p>
           </div>
 
           <div class="card">
@@ -977,19 +990,18 @@
               <div class="snippet-head">bash<button class="copy" type="button">Copy</button></div>
               <pre><span class="fn">npm</span> run package   <span class="c"># count-darcula-1.0.0.vsix, ~120 KB</span>
 
-<span class="fn">code</span> <span class="cst">--install-extension</span> count-darcula-1.0.0.vsix
-<span class="c"># cursor  --install-extension …</span>
-<span class="c"># windsurf --install-extension …</span>
-<span class="c"># codium  --install-extension …</span></pre>
+<span class="fn ed-cli">code</span> <span class="cst">--install-extension</span> count-darcula-1.0.0.vsix</pre>
             </div>
-            <p style="margin-top:16px">Or in the UI:
+            <p style="margin-top:16px">No <code class="ed-cli">code</code> command on your
+              <code>PATH</code>? Run <b style="color:var(--fg)">Shell Command: Install
+              '<span class="ed-cli">code</span>' command</b> from the Command Palette — or skip the
+              terminal entirely and use
               <b style="color:var(--fg)">Extensions ▸ … ▸ Install from VSIX</b>.</p>
 
             <h3 style="margin:26px 0 6px;font-size:15px">Then pick a variant</h3>
             <p><kbd>Ctrl</kbd> <kbd>K</kbd> then <kbd>Ctrl</kbd> <kbd>T</kbd> —
               <kbd>⌘</kbd> <kbd>K</kbd> <kbd>⌘</kbd> <kbd>T</kbd> on macOS — and choose
-              Count Darcula, Nocturne or Daylight. After a <code>git pull</code>, run
-              <b style="color:var(--fg)">Developer: Reload Window</b>.</p>
+              Count Darcula, Nocturne or Daylight.</p>
           </div>
         </div>
 
@@ -1180,6 +1192,15 @@
           paintMinimap($('.sample.on'));
         });
       });
+
+      /* ── editor picker: rewrites the CLI name and extensions folder ── */
+      const pickEditor = (btn) => {
+        $$('.editor-picker button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        $$('.ed-cli').forEach((n) => (n.textContent = btn.dataset.cli));
+        $$('.ed-dir').forEach((n) => (n.textContent = btn.dataset.dir));
+        $$('.ed-windir').forEach((n) => (n.textContent = btn.dataset.windir));
+      };
+      $$('.editor-picker button').forEach((btn) => btn.addEventListener('click', () => pickEditor(btn)));
 
       /* ── copy buttons ───────────────────────────────────────────── */
       $$('.copy').forEach((btn) => {

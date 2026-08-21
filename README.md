@@ -152,6 +152,33 @@ code --install-extension count-darcula-1.0.0.vsix
 
 Or in the UI: **Extensions ▸ ⋯ ▸ Install from VSIX…**
 
+### Cursor
+
+Identical, with `cursor` in place of `code` and `~/.cursor/extensions` in place of
+`~/.vscode/extensions`:
+
+```bash
+git clone https://github.com/ChrisNicholson30/Count-Darcula-Theme.git
+cd Count-Darcula-Theme
+npm test
+
+# either link it…
+ln -s "$PWD" ~/.cursor/extensions/count-darcula
+
+# …or install a VSIX
+npm run package
+cursor --install-extension count-darcula-1.0.0.vsix
+```
+
+Then **Developer: Reload Window**.
+
+If `cursor` isn't on your `PATH`, run **Shell Command: Install 'cursor' command** from the
+Command Palette — or skip the terminal entirely and use **Extensions ▸ ⋯ ▸ Install from VSIX…**,
+which is always available.
+
+Windsurf and VSCodium follow the same shape with their own binary and folder, per the table
+above.
+
 ### Pick a variant
 
 <kbd>Ctrl</kbd>+<kbd>K</kbd> then <kbd>Ctrl</kbd>+<kbd>T</kbd> (<kbd>⌘</kbd>+<kbd>K</kbd>
