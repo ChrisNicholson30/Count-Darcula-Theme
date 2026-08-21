@@ -111,57 +111,26 @@ up over a day. There's a snippet below if you disagree.
 
 ## Installation
 
-### From the Marketplace
+Count Darcula isn't on any marketplace — it installs by hand, in about a minute. Both routes
+below work identically in **VS Code, Cursor, Windsurf and VSCodium**: a colour theme is
+declarative, so any editor that renders the VS Code workbench renders this.
 
-1. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> (<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> on macOS)
-2. Search **Count Darcula**, hit **Install**
-3. <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>T</kbd> and pick a variant
-
-### From source
+### Link it — best if you want updates
 
 ```bash
 git clone https://github.com/ChrisNicholson30/Count-Darcula-Theme.git
 cd Count-Darcula-Theme
 npm test    # build + validate + audit — no dependencies, nothing to install
 
-# macOS / Linux
+# macOS / Linux — swap the folder for your editor (table below)
 ln -s "$PWD" ~/.vscode/extensions/count-darcula
 
 # Windows (PowerShell)
-# New-Item -ItemType SymbolicLink -Path "$HOME\.vscode\extensions\count-darcula" -Target $PWD
+# New-Item -ItemType SymbolicLink `
+#   -Path "$HOME\.vscode\extensions\count-darcula" -Target $PWD
 ```
 
-Then **Developer: Reload Window**, and pick the theme.
-
-### As a VSIX
-
-```bash
-npm run package
-```
-
-Then **Extensions ▸ ⋯ ▸ Install from VSIX…**
-
-(Publishing it to the Marketplace yourself: [docs/PUBLISHING.md](docs/PUBLISHING.md).)
-
-### Cursor, Windsurf, VSCodium and friends
-
-Yes. This is a *declarative* extension — no entry point, no activation events, no dependencies,
-just `contributes.themes` and three JSON files. Anything that renders the VS Code workbench
-renders it identically: Cursor, Windsurf, VSCodium, Positron, code-server, Gitpod, Trae.
-
-The catch is distribution, not compatibility. The forks can't use Microsoft's Marketplace — its
-terms restrict it to Microsoft products — so they pull from [Open VSX](https://open-vsx.org)
-instead. Two routes that always work:
-
-```bash
-# from the packaged VSIX — the version-proof route
-npm run package
-cursor --install-extension count-darcula-1.0.0.vsix
-# windsurf --install-extension … / codium --install-extension …
-```
-
-Or **Extensions ▸ ⋯ ▸ Install from VSIX…** in the UI. To develop against it live, symlink into
-the fork's extensions folder instead of `~/.vscode/extensions`:
+`git pull` then brings you any changes; run **Developer: Reload Window** to pick them up.
 
 | editor | extensions folder |
 |---|---|
@@ -170,14 +139,30 @@ the fork's extensions folder instead of `~/.vscode/extensions`:
 | Windsurf | `~/.windsurf/extensions` |
 | VSCodium | `~/.vscode-oss/extensions` |
 
-Once it's on Open VSX (see [docs/PUBLISHING.md](docs/PUBLISHING.md)) it shows up in their
-in-editor extension search too, and `Ctrl`+`K` `Ctrl`+`T` lists all three variants.
+### Package a VSIX — best for another machine
 
-One honest caveat: the forks add their own chrome — Cursor's AI pane and inline-edit widget,
-for instance. Where those reuse standard VS Code colour tokens they're themed (this theme sets
-`inlineChat.*`, `chat.*`, `editorGhostText.*` among the 690), but any surface a fork invents
-outside that vocabulary falls back to its own dark defaults. The editor, terminal, side bar,
-tabs and status bar are exact.
+```bash
+npm run package    # writes count-darcula-1.0.0.vsix, ~120 KB
+
+code --install-extension count-darcula-1.0.0.vsix
+# cursor   --install-extension count-darcula-1.0.0.vsix
+# windsurf --install-extension count-darcula-1.0.0.vsix
+# codium   --install-extension count-darcula-1.0.0.vsix
+```
+
+Or in the UI: **Extensions ▸ ⋯ ▸ Install from VSIX…**
+
+### Pick a variant
+
+<kbd>Ctrl</kbd>+<kbd>K</kbd> then <kbd>Ctrl</kbd>+<kbd>T</kbd> (<kbd>⌘</kbd>+<kbd>K</kbd>
+<kbd>⌘</kbd>+<kbd>T</kbd> on macOS), and choose Count Darcula, Count Darcula Nocturne or
+Count Darcula Daylight.
+
+One caveat on the forks: they add chrome VS Code doesn't have — Cursor's AI pane and inline-edit
+widget, for instance. Where those reuse standard VS Code colour tokens they're themed (this sets
+`inlineChat.*`, `chat.*` and `editorGhostText.*` among the 690), but any surface a fork invents
+outside that vocabulary falls back to its own dark defaults. The editor, terminal, side bar, tabs
+and status bar are exact.
 
 ### Settings worth having
 
@@ -302,6 +287,7 @@ npm run build      # regenerate themes/*.json
 npm test           # build + validate + audit
 npm run audit      # write docs/ACCESSIBILITY.md
 npm run preview    # refresh preview.html from the palette
+npm run package    # build a VSIX for installing elsewhere
 ```
 
 Change one number in `src/palette.js` and all three variants stay consistent, the audit

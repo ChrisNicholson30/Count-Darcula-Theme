@@ -261,7 +261,7 @@
     .grid > *, .step > div, .power-row > *, .bar-row > * { min-width: 0; }
     .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
     .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-    .grid-install { grid-template-columns: minmax(260px, 0.82fr) minmax(340px, 1.18fr); }
+    .grid-install { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     @media (max-width: 900px) { .grid-install { grid-template-columns: 1fr; } }
     .card {
       background: var(--editor); border: 1px solid color-mix(in srgb, var(--line) 45%, transparent);
@@ -458,7 +458,10 @@
     .snippet-head { display: flex; align-items: center; gap: 10px; padding: 9px 14px; background: var(--surface); border-bottom: 1px solid color-mix(in srgb, var(--line) 35%, transparent); font-size: 11.5px; font-family: var(--font-mono); color: var(--comment); }
     .snippet-head .copy { margin-left: auto; font: inherit; cursor: pointer; border: 1px solid color-mix(in srgb, var(--line) 60%, transparent); background: transparent; color: var(--dim); border-radius: 6px; padding: 3px 10px; }
     .snippet-head .copy:hover { color: var(--bright); border-color: color-mix(in srgb, var(--rose) 50%, transparent); }
-    .snippet pre { margin: 0; padding: 16px; overflow-x: auto; font-size: 12.4px; line-height: 1.7; color: var(--fg); }
+    .snippet pre {
+      margin: 0; padding: 16px; overflow-x: auto; font-size: 12.4px; line-height: 1.7; color: var(--fg);
+      white-space: pre-wrap; overflow-wrap: anywhere;
+    }
 
     .steps { counter-reset: step; display: grid; gap: 14px; }
     .step { display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: start; }
@@ -931,45 +934,62 @@
       <div class="wrap">
         <div class="section-head">
           <div class="eyebrow">Installation</div>
-          <h2>Two minutes, three ways</h2>
+          <h2>Two ways, about a minute</h2>
+          <p class="lede">Not on any marketplace — it installs by hand. Both routes work
+            identically in VS Code, Cursor, Windsurf and VSCodium, because a colour theme is
+            data the workbench reads, not code it runs.</p>
         </div>
 
         <div class="grid grid-2 grid-install">
           <div class="card">
-            <h3 style="margin-bottom:18px">From the Marketplace</h3>
-            <div class="steps">
-              <div class="step">
-                <div><h3>Open Extensions</h3><p><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>X</kbd> — or <kbd>⌘</kbd> <kbd>Shift</kbd> <kbd>X</kbd> on macOS.</p></div>
-              </div>
-              <div class="step">
-                <div><h3>Search “Count Darcula”</h3><p>Then hit <b style="color:var(--fg)">Install</b>.</p></div>
-              </div>
-              <div class="step">
-                <div><h3>Pick your variant</h3><p><kbd>Ctrl</kbd> <kbd>K</kbd> then <kbd>Ctrl</kbd> <kbd>T</kbd>, and choose Count Darcula, Nocturne or Daylight.</p></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 style="margin-bottom:18px">From source</h3>
+            <h3 style="margin-bottom:6px">Link it</h3>
+            <p style="margin-bottom:16px">Best if you want <code>git pull</code> to bring you updates.</p>
             <div class="snippet" style="border:0">
               <div class="snippet-head">bash<button class="copy" type="button">Copy</button></div>
-              <pre><span class="c"># clone, then link it into VS Code's extensions folder</span>
-<span class="fn">git</span> clone https://github.com/ChrisNicholson30/Count-Darcula-Theme.git
+              <pre><span class="fn">git</span> clone https://github.com/ChrisNicholson30/Count-Darcula-Theme.git
 <span class="fn">cd</span> Count-Darcula-Theme
 <span class="fn">npm</span> test              <span class="c"># build + validate + audit (no dependencies)</span>
 
-<span class="c"># macOS / Linux</span>
+<span class="c"># macOS / Linux — swap the folder for your editor</span>
 <span class="fn">ln</span> <span class="cst">-s</span> <span class="s">"$PWD"</span> ~/.vscode/extensions/count-darcula
 
 <span class="c"># Windows (PowerShell)</span>
 <span class="c"># New-Item -ItemType SymbolicLink `</span>
-<span class="c">#   -Path "$HOME\.vscode\extensions\count-darcula" -Target $PWD</span>
-
-<span class="c"># then: Developer: Reload Window</span></pre>
+<span class="c">#   -Path "$HOME\.vscode\extensions\count-darcula" -Target $PWD</span></pre>
             </div>
-            <p style="margin-top:16px">Or package it: <code>npx @vscode/vsce package</code>, then
+            <div class="table-scroll" style="margin-top:16px">
+              <table style="min-width:0">
+                <thead><tr><th>Editor</th><th>Extensions folder</th></tr></thead>
+                <tbody>
+                  <tr><td>VS Code</td><td class="mono muted">~/.vscode/extensions</td></tr>
+                  <tr><td>Cursor</td><td class="mono muted">~/.cursor/extensions</td></tr>
+                  <tr><td>Windsurf</td><td class="mono muted">~/.windsurf/extensions</td></tr>
+                  <tr><td>VSCodium</td><td class="mono muted">~/.vscode-oss/extensions</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:6px">Package a VSIX</h3>
+            <p style="margin-bottom:16px">Best for putting it on another machine, or sharing it.</p>
+            <div class="snippet" style="border:0">
+              <div class="snippet-head">bash<button class="copy" type="button">Copy</button></div>
+              <pre><span class="fn">npm</span> run package   <span class="c"># count-darcula-1.0.0.vsix, ~120 KB</span>
+
+<span class="fn">code</span> <span class="cst">--install-extension</span> count-darcula-1.0.0.vsix
+<span class="c"># cursor  --install-extension …</span>
+<span class="c"># windsurf --install-extension …</span>
+<span class="c"># codium  --install-extension …</span></pre>
+            </div>
+            <p style="margin-top:16px">Or in the UI:
               <b style="color:var(--fg)">Extensions ▸ … ▸ Install from VSIX</b>.</p>
+
+            <h3 style="margin:26px 0 6px;font-size:15px">Then pick a variant</h3>
+            <p><kbd>Ctrl</kbd> <kbd>K</kbd> then <kbd>Ctrl</kbd> <kbd>T</kbd> —
+              <kbd>⌘</kbd> <kbd>K</kbd> <kbd>⌘</kbd> <kbd>T</kbd> on macOS — and choose
+              Count Darcula, Nocturne or Daylight. After a <code>git pull</code>, run
+              <b style="color:var(--fg)">Developer: Reload Window</b>.</p>
           </div>
         </div>
 
