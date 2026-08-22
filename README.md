@@ -120,7 +120,7 @@ declarative, so any editor that renders the VS Code workbench renders this.
 ```bash
 git clone https://github.com/ChrisNicholson30/Count-Darcula-Theme.git
 cd Count-Darcula-Theme
-npm test    # build + validate + audit — no dependencies, nothing to install
+npm test    # validate + audit — no dependencies, nothing to install
 
 # macOS / Linux — swap the folder for your editor (table below)
 ln -s "$PWD" ~/.vscode/extensions/count-darcula
@@ -142,12 +142,12 @@ ln -s "$PWD" ~/.vscode/extensions/count-darcula
 ### Package a VSIX — best for another machine
 
 ```bash
-npm run package    # writes count-darcula-1.0.0.vsix, ~120 KB
+npm run package    # writes count-darcula-1.0.1.vsix, ~120 KB
 
-code --install-extension count-darcula-1.0.0.vsix
-# cursor   --install-extension count-darcula-1.0.0.vsix
-# windsurf --install-extension count-darcula-1.0.0.vsix
-# codium   --install-extension count-darcula-1.0.0.vsix
+code --install-extension count-darcula-1.0.1.vsix
+# cursor   --install-extension count-darcula-1.0.1.vsix
+# windsurf --install-extension count-darcula-1.0.1.vsix
+# codium   --install-extension count-darcula-1.0.1.vsix
 ```
 
 Or in the UI: **Extensions ▸ ⋯ ▸ Install from VSIX…**
@@ -167,7 +167,7 @@ ln -s "$PWD" ~/.cursor/extensions/count-darcula
 
 # …or install a VSIX
 npm run package
-cursor --install-extension count-darcula-1.0.0.vsix
+cursor --install-extension count-darcula-1.0.1.vsix
 ```
 
 Then **Developer: Reload Window**.
@@ -187,7 +187,7 @@ Count Darcula Daylight.
 
 One caveat on the forks: they add chrome VS Code doesn't have — Cursor's AI pane and inline-edit
 widget, for instance. Where those reuse standard VS Code colour tokens they're themed (this sets
-`inlineChat.*`, `chat.*` and `editorGhostText.*` among the 690), but any surface a fork invents
+`inlineChat.*`, `chat.*` and `editorGhostText.*` among the 687), but any surface a fork invents
 outside that vocabulary falls back to its own dark defaults. The editor, terminal, side bar, tabs
 and status bar are exact.
 
@@ -235,19 +235,48 @@ Want italic keywords after all:
 
 ## Accessibility
 
-Every text colour is measured against **WCAG 2.1** contrast and **APCA Lc** — which models
-light-on-dark text far better than WCAG 2.x does, and a dark theme is nothing but light-on-dark
-text. `npm run audit` fails the build if any colour drops below AA on the surface it actually
-renders on.
+Contrast is measured in two passes, and `npm test` fails on either.
+
+**The palette** — the twelve neutrals, eight accents and four status colours, against the canvas,
+in WCAG 2.1 ratios and APCA Lc. APCA models light-on-dark text far better than WCAG 2.x does, and
+a dark theme is nothing but light-on-dark text.
 
 ```
-✓ all 51 text colours meet WCAG AA (>= 4.5:1) on their own surfaces
+✓ all 51 palette colours meet WCAG AA (>= 4.5:1)
   syntax band: contrast 6.19–6.87:1 (spread 0.68), lightness 75.9–76.1 L*
 ```
 
-Comments are held above AA too, at 4.60:1. A comment is still text, and a comment nobody can
-read is a comment nobody maintains — the recession comes from lower chroma and italics, not
-from making it dim.
+**The generated theme** — because a swatch that passes on the canvas can still fail inside a
+widget or on a filled badge, and the palette pass would never see it. So every foreground key in
+the built JSON is re-measured against the surface it actually renders on, compositing alpha on
+both sides: 221 keys per variant, 17 of them translucent.
+
+```
+variant                  measured   body text   ui/icons   de-emphasised   fails
+Count Darcula                 221         111         88              22       0
+Count Darcula Nocturne        221         111         88              22       0
+Count Darcula Daylight        221         111         88              22       0
+```
+
+Not everything is held to the same bar, because WCAG doesn't:
+
+| tier | what | required |
+|---|---|---|
+| body text | editor, lists, tabs, terminal, menus, widgets | **4.5:1** (1.4.3) |
+| icons & controls | fold chevrons, breakpoints, cursors, brackets | **3:1** (1.4.11) |
+| de-emphasised | disabled, inactive, placeholders, inline suggestions | reported, not required |
+| decoration | scrollbar marks, indent guides, rules, sliders | not text, not measured |
+
+The de-emphasised tier is where honesty matters, so the audit prints every one of those 22 with
+its measured ratio rather than quietly excluding them. WCAG 1.4.3 exempts disabled controls, and
+an inline AI suggestion that met 4.5:1 would read as code you'd already written. Inactive line
+numbers sit at 3.31:1 and inline suggestions at 3.48:1; the floor is 1.46:1, for the line numbers
+VS Code itself dims further in relative-number mode. The *active* line number — the one you are
+actually reading — stays at 9.8:1.
+
+Comments are deliberately **not** in that tier: they're held above AA at 4.60:1. A comment is
+still text, and a comment nobody can read is a comment nobody maintains — the recession comes
+from lower chroma and italics, not from making it dim.
 
 Full per-colour numbers for all three variants: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
 
@@ -299,19 +328,20 @@ rendered to sRGB at build time.
 ```
 src/palette.js     the single source of truth: OKLCH coordinates for all three variants
 src/color.js       sRGB ⇄ OKLab ⇄ OKLCH, WCAG 2.1 contrast, APCA 0.1.9 Lc  (no dependencies)
-src/workbench.js   690 UI colours per variant, derived from the palette
+src/workbench.js   687 UI colours per variant, derived from the palette
 src/terminal.js    the terminal, including the 16 ANSI slots
 src/syntax.js      124 TextMate rules + 47 semantic tokens, built from a role table
 src/power.js       the OLED power model
 src/build.js       renders themes/*.json
 src/validate.js    malformed values, illegal fontStyle, shadowed scopes, src ⇄ themes drift
+src/coverage.js    resolves every foreground to its real surface and composites alpha
 src/audit.js       contrast + power report; non-zero exit if anything drops below AA
 src/preview.js     regenerates the data baked into preview.html
 ```
 
 ```bash
 npm run build      # regenerate themes/*.json
-npm test           # build + validate + audit
+npm test           # validate + audit (deliberately does NOT build first)
 npm run audit      # write docs/ACCESSIBILITY.md
 npm run preview    # refresh preview.html from the palette
 npm run package    # build a VSIX for installing elsewhere
@@ -322,6 +352,11 @@ re-measures itself, and the preview page cannot drift from the theme it is adver
 
 The generated `themes/*.json` are committed, so the extension works with no build step.
 If you change `src/`, run `npm run build` and commit the result — `npm test` fails otherwise.
+
+That ordering is deliberate: `npm test` validates *before* building, so it compares the committed
+JSON against a fresh in-memory build and can actually see drift. Running the build first would
+overwrite the very thing the check exists to catch, and the check would be dead. CI re-proves it
+from the other side with `npm run build && git diff --exit-code themes/`.
 
 ## Credits
 

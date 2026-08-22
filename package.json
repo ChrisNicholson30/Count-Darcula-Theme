@@ -2,7 +2,7 @@
   "name": "count-darcula",
   "displayName": "Count Darcula",
   "description": "A hybrid of One Dark and Dracula, engineered for long sessions: every syntax colour sits at one perceptual lightness, every text colour passes WCAG AA, and a true-black Nocturne variant cuts OLED panel power ~48%.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "cn-design",
   "license": "MIT",
   "engines": {
@@ -56,8 +56,8 @@
   "scripts": {
     "build": "node src/build.js",
     "audit": "node src/audit.js --write",
-    "test": "node src/build.js && node src/validate.js && node src/audit.js",
+    "test": "node src/validate.js && node src/audit.js",
     "preview": "node src/preview.js",
-    "package": "npx --yes @vscode/vsce package"
+    "package": "npx --yes @vscode/vsce@3.9.2 package"
   }
 }

@@ -14,8 +14,10 @@
 
 const fs = require('fs');
 const path = require('path');
-const { contrastRatio, apca, hexToOklch, blend } = require('./color.js');
+const { contrastRatio, apca, hexToOklch } = require('./color.js');
 const { buildPalette } = require('./palette.js');
+const { buildTheme } = require('./build.js');
+const { auditTheme } = require('./coverage.js');
 const { screenPower, pixelPower } = require('./power.js');
 
 const AA = 4.5;
@@ -116,6 +118,52 @@ for (const key of VARIANTS) {
   );
 }
 
+/* ── generated-theme coverage ───────────────────────────────────────────── */
+
+/* The block above measures the palette. This one measures what actually shipped:
+   every foreground key in the built JSON, composited against the surface it
+   really renders on. A swatch that passes on the canvas can still fail inside a
+   widget or on a filled badge, and only this pass would catch it. */
+
+say('');
+say('');
+say('  Generated theme — every foreground, on its real surface');
+say('  ' + '─'.repeat(74));
+say('  variant                  measured   body text   ui/icons   de-emphasised   fails');
+
+const deemphasised = [];
+for (const key of VARIANTS) {
+  const { theme } = buildTheme(key);
+  const { rows, failures: bad, counts } = auditTheme(theme);
+  const measured = rows.filter((r) => !r.skipped).length;
+  say(
+    `  ${theme.name.padEnd(24)} ${String(measured).padStart(6)}   ` +
+    `${String(counts.text).padStart(9)}   ${String(counts.nonText).padStart(8)}   ` +
+    `${String(counts.deemphasised).padStart(13)}   ${String(bad.length).padStart(5)}`
+  );
+  bad.forEach((f) =>
+    failures.push(
+      `${theme.name}: ${f.key} ${f.raw} on ${f.bgKey} = ${f.ratio.toFixed(2)}:1 (needs ${f.required}:1)`
+    )
+  );
+  if (key === 'dark') {
+    rows
+      .filter((r) => r.tier === 'deemphasised')
+      .sort((a, b) => a.ratio - b.ratio)
+      .forEach((r) => deemphasised.push(r));
+  }
+}
+
+say('');
+say('  Body text is held to WCAG AA (4.5:1), icons and controls to 1.4.11 (3:1).');
+say('  Scrollbar marks, guides and rules are not text and are not measured.');
+say('');
+say('  Deliberately below AA — disabled and inactive states, which WCAG 1.4.3');
+say('  exempts, plus inline suggestions that are meant to read as not-yet-yours:');
+for (const r of deemphasised) {
+  say(`    ${r.key.padEnd(44)} ${r.ratio.toFixed(2).padStart(5)}:1`);
+}
+
 /* ── power model ────────────────────────────────────────────────────────── */
 
 say('');
@@ -157,7 +205,8 @@ if (failures.length) {
   say(`  ${failures.length} colour(s) below WCAG AA:`);
   failures.forEach((f) => say(`    ✗ ${f}`));
 } else {
-  say(`  ✓ all ${rows.filter((r) => r.text).length} text colours meet WCAG AA (>= ${AA}:1) on their own surfaces.`);
+  say(`  ✓ ${rows.filter((r) => r.text).length} palette colours and every body-text key in all three`);
+  say(`    generated themes meet WCAG AA (>= ${AA}:1) on the surface they render on.`);
 }
 say('');
 
