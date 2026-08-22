@@ -9,7 +9,7 @@
 Every syntax colour sits at one perceptual lightness, every text colour passes WCAG AA,
 and the true-black *Nocturne* variant cuts modelled OLED panel power by ~48%.
 
-[Look at it](#the-three-variants) · [Install](#installation) · [Why](#why-another-dark-theme) · [Interactive preview](#preview-page)
+**[countdarcula.com](https://countdarcula.com)** · [Install](#installation) · [Why](#why-another-dark-theme) · [Palette](#the-palette)
 
 <img src="assets/screenshot-dark.png" alt="Count Darcula in VS Code" width="900">
 
@@ -309,15 +309,14 @@ These are modelled figures, not measurements of your laptop. The model lives in
 
 ## Preview page
 
-[`preview.html`](preview.html) is a self-contained showcase: a live VS Code mockup in six
-languages, a variant switcher that re-themes the whole page, the palette with measured contrast,
-the lightness-spread comparison against both parents, the power chart, and install instructions.
-No build step, no network requests, no dependencies.
+**[countdarcula.com](https://countdarcula.com)** — a live VS Code mockup across six languages, a
+variant switcher that re-themes the whole page, the palette with measured contrast, the
+lightness-spread comparison against both parents, the OLED power chart, and install instructions.
 
-- **Locally:** `open preview.html` (or just double-click it)
-- **Rendered from GitHub:** [htmlpreview.github.io](https://htmlpreview.github.io/?https://raw.githubusercontent.com/ChrisNicholson30/Count-Darcula-Theme/main/preview.html)
-- **GitHub Pages:** enable Pages for this repo (Settings ▸ Pages ▸ deploy from `main`), then
-  `https://chrisnicholson30.github.io/Count-Darcula-Theme/preview.html`
+The same page ships in this repo as [`preview.html`](preview.html), so it works offline and
+cannot drift from the theme: it is generated from `src/palette.js` by `npm run preview`. It is
+self-contained — no build step, no network requests, no dependencies — so `open preview.html`
+is all it takes.
 
 ## How it's built
 
