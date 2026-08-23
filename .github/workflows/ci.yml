@@ -23,8 +23,8 @@ jobs:
       - name: Generated themes are up to date
         run: |
           npm run build
-          git diff --exit-code -- themes/ \
-            || { echo "::error::themes/ is stale — run 'npm run build' and commit"; exit 1; }
+          git diff --exit-code -- vscode/ zed/ \
+            || { echo "::error::generated output is stale — run 'npm run build' and commit"; exit 1; }
 
       # Packaging is part of the contract, so break the build here rather than
       # at release time. The vsce version is pinned in package.json.

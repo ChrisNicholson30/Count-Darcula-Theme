@@ -3,6 +3,41 @@
 All notable changes to Count Darcula are documented here.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-08-23
+
+### Added
+
+- **Zed support.** The same OKLCH palette in Zed's vocabulary: 139 style keys, 46 tree-sitter
+  syntax captures and 8 collaborator cursors, with all three variants in one theme family.
+  `zed/` is a valid Zed extension, so **Install Dev Extension** works as well as dropping the
+  JSON in `~/.config/zed/themes/`.
+- `src/zed-schema.js` snapshots Zed's key vocabulary from the built-in One theme. Zed ignores
+  keys it doesn't recognise instead of erroring, so a typo would cost a colour and say nothing;
+  the validator now checks every emitted key and reports anything left to defaults.
+- The audit covers Zed too: 44 syntax captures, 21 text keys and 14 ANSI slots per variant,
+  measured against the surfaces Zed actually draws them on.
+
+### Changed
+
+- **Repository split by editor.** `vscode/` is a self-contained, packageable extension;
+  `zed/` is a Zed extension; `src/` is the shared generator both come out of. The licence and
+  icon are copied into `vscode/` at build time, since `vsce` cannot reach outside the manifest
+  directory — they are generated, not maintained twice.
+
+### Fixed
+
+- Terminal ANSI colours were never audited in either editor: the keys don't end in
+  "Foreground", so the coverage pass walked straight past all sixteen. Now measured — which
+  caught the light variant's bright ANSI set, where "bright" meant *more saturated* rather than
+  darker and three slots sat at 3.8–4.5:1.
+- `tokenColors` and `semanticTokenColors` were unaudited too. The palette pass only ever measured
+  the eight base accents, so the muted tier used for doc tags, fence markers and string
+  punctuation went unchecked — and on the light variant "muted" meant lighter, i.e. worse. The
+  muted tier is now derived by dropping chroma rather than contrast, and passes AA on all three.
+- A prototype leak in the Zed audit: `constructor` is a real tree-sitter capture, and a
+  plain-object surface lookup returned `Object.prototype.constructor` for it. The same class of
+  lookup in `src/coverage.js` is hardened with `Object.hasOwn`.
+
 ## [1.0.1] — 2026-08-22
 
 ### Fixed

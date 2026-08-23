@@ -97,7 +97,7 @@ const VARIANTS = {
     },
     // Syntax band: one lightness for every hue.
     accent: { L: 0.76, C: 0.115 },
-    accentMuted: { L: 0.665, C: 0.098 },
+    accentMuted: { L: 0.69, C: 0.1 },
     accentBright: { L: 0.855, C: 0.109 },
     accentStrong: { L: 0.68, C: 0.14 }, // squiggles, badges, ANSI
     status: {
@@ -134,7 +134,7 @@ const VARIANTS = {
       bright: [0.88, 0.008],
     },
     accent: { L: 0.7, C: 0.11 },
-    accentMuted: { L: 0.615, C: 0.094 },
+    accentMuted: { L: 0.635, C: 0.096 },
     accentBright: { L: 0.79, C: 0.104 },
     accentStrong: { L: 0.63, C: 0.135 },
     status: {
@@ -168,7 +168,7 @@ const VARIANTS = {
       bright: [0.2, 0.024],
     },
     accent: { L: 0.5, C: 0.14 },
-    accentMuted: { L: 0.6, C: 0.115 },
+    accentMuted: { L: 0.54, C: 0.09 },
     accentBright: { L: 0.41, C: 0.145 },
     accentStrong: { L: 0.54, C: 0.165 },
     status: {

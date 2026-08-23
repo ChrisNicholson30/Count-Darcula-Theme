@@ -15,10 +15,11 @@ module.exports = function terminal(p) {
   const { ui, base, bright, strong, status, a } = p;
   const light = p.isLight;
 
-  // On the light variant "bright" means *more saturated*, not lighter: a lighter
-  // bright-yellow on paper is unreadable, and that is where most light themes fall over.
+  // On the light variant "bright" means *darker*, not lighter or merely more
+  // saturated: a lighter bright-yellow on paper is unreadable, and a more saturated
+  // one still misses AA. That is where most light themes fall over.
   const normal = base;
-  const vivid = light ? strong : bright;
+  const vivid = bright;
 
   return {
     'terminal.background': ui.surface,

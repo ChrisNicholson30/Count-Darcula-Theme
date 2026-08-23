@@ -25,6 +25,7 @@ const { contrastRatio, apca, blend } = require('./color.js');
 
 /** Foregrounds whose namespace has no background of its own. Longest match wins. */
 const SURFACE_TABLE = [
+  ['terminal.ansi', 'terminal.background'],
   ['editorGroupHeader', 'editorGroupHeader.tabsBackground'],
   ['editorStickyScroll', 'editorStickyScroll.background'],
   ['editorSuggestWidget', 'editorSuggestWidget.background'],
@@ -179,7 +180,7 @@ const CONTAINER = {
  * they'd be worse at 4.5:1. Reported with their measured value, not failed.
  */
 const DEEMPHASISED =
-  /(disabled|inactive|placeholder|ghost ?text|watermark|dimmed|ignoredresource|deemphasized|unfocused|unverified|foldplaceholder|commentrange|linenumber\.foreground)/i;
+  /(ansiblack|ansibrightblack|disabled|inactive|placeholder|ghost ?text|watermark|dimmed|ignoredresource|deemphasized|unfocused|unverified|foldplaceholder|commentrange|linenumber\.foreground)/i;
 
 /** Positional marks, not text: scrollbar ticks, guides, rules, sliders. */
 const DECORATION =
@@ -191,11 +192,13 @@ const NON_TEXT = /(icon|cursor|bracket|highlight|decoration|control|foldingcontr
 const AA_TEXT = 4.5;
 const AA_NON_TEXT = 3.0;
 
-const isForeground = (key) => /[Ff]oreground$/.test(key);
+/* Terminal ANSI slots are text — programs print words in them — but they do not
+   end in "Foreground", so a naive suffix match walks straight past all sixteen. */
+const isForeground = (key) => /[Ff]oreground$/.test(key) || /^terminal\.ansi/.test(key);
 
 /** The background a foreground actually sits on. */
 function surfaceFor(key, colors) {
-  if (CONTAINER[key]) return CONTAINER[key];
+  if (Object.hasOwn(CONTAINER, key)) return CONTAINER[key];
   const sibling = key.replace(/([Ff])oreground$/, (_, c) => (c === 'F' ? 'Background' : 'background'));
   if (sibling !== key && colors[sibling]) return sibling;
   for (const [prefix, bg] of SURFACE_TABLE) {
@@ -208,7 +211,7 @@ function surfaceFor(key, colors) {
 
 /** Flatten a possibly-translucent colour key down to what the eye receives. */
 function opaque(key, colors, root, seen = new Set()) {
-  const value = colors[key];
+  const value = Object.hasOwn(colors, key) ? colors[key] : undefined;
   if (!value) return root;
   if (value.length === 7) return value;
   const alpha = parseInt(value.slice(7, 9), 16) / 255;
@@ -256,6 +259,35 @@ function auditTheme(theme) {
       required,
       pass: ratio + 1e-9 >= required,
     });
+  }
+
+  /* Syntax is text too. tokenColors and semanticTokenColors render on the canvas,
+     and the palette pass only ever measured the eight base accents — the muted and
+     bright tiers used for doc tags, fence markers and string punctuation went
+     unchecked, and on the light variant "muted" means lighter. */
+  const seenSyntax = new Set();
+  /* Faded delimiters — the angle brackets around a tag, the `#` before a heading,
+     a markdown rule — are a hierarchy cue, not content: the words they delimit are
+     at full strength beside them. Reported, like every other de-emphasised state. */
+  const FADED_PUNCTUATION = /^tokenColors · (punctuation\.definition|meta\.separator|punctuation\.accessor)/;
+  const addSyntax = (label, hex) => {
+    if (!hex || seenSyntax.has(hex)) return;
+    seenSyntax.add(hex);
+    const faded = hex.length === 9 && FADED_PUNCTUATION.test(label);
+    const fg = hex.length === 9 ? blend(hex.slice(0, 7), root, parseInt(hex.slice(7, 9), 16) / 255) : hex;
+    const ratio = contrastRatio(fg, root);
+    rows.push({
+      key: label, tier: faded ? 'deemphasised' : 'text', bgKey: 'editor.background', fg, bg: root, raw: hex,
+      translucent: hex.length === 9, ratio, lc: Math.abs(apca(fg, root)),
+      required: faded ? 0 : AA_TEXT, pass: faded || ratio + 1e-9 >= AA_TEXT,
+    });
+  };
+  for (const rule of theme.tokenColors || []) {
+    const scope = Array.isArray(rule.scope) ? rule.scope[0] : rule.scope;
+    addSyntax(`tokenColors · ${scope}`, rule.settings && rule.settings.foreground);
+  }
+  for (const [name, value] of Object.entries(theme.semanticTokenColors || {})) {
+    addSyntax(`semantic · ${name}`, typeof value === 'string' ? value : value.foreground);
   }
 
   const counts = { text: 0, nonText: 0, deemphasised: 0, decoration: 0, translucent: 0 };

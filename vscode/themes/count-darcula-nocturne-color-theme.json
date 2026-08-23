@@ -11,7 +11,7 @@
     "activityBar.border": "#1d202a52",
     "activityBar.foreground": "#bbbdc6",
     "activityBar.inactiveForeground": "#3e424dcc",
-    "activityBarBadge.background": "#ac69a3",
+    "activityBarBadge.background": "#b46faa",
     "activityBarBadge.foreground": "#000000",
     "activityBarTop.activeBorder": "#ce7dc3",
     "activityBarTop.background": "#000000",
@@ -28,7 +28,7 @@
     "breadcrumb.focusForeground": "#bbbdc6",
     "breadcrumb.foreground": "#9b9ea7e0",
     "breadcrumbPicker.background": "#0e1018",
-    "button.background": "#8f75bb",
+    "button.background": "#957bc3",
     "button.border": "#aa8ce059",
     "button.foreground": "#000000",
     "button.hoverBackground": "#aa8ce0",
@@ -272,7 +272,7 @@
     "errorForeground": "#db6465",
     "extensionBadge.remoteBackground": "#40b1b74d",
     "extensionBadge.remoteForeground": "#68cdd2",
-    "extensionButton.prominentBackground": "#8f75bb",
+    "extensionButton.prominentBackground": "#957bc3",
     "extensionButton.prominentForeground": "#000000",
     "extensionButton.prominentHoverBackground": "#aa8ce0",
     "extensionIcon.preReleaseForeground": "#aa8ce0",
@@ -517,7 +517,7 @@
     "sideBarTitle.foreground": "#bbbdc6",
     "statusBar.background": "#000000",
     "statusBar.border": "#1d202a52",
-    "statusBar.debuggingBackground": "#ac7845",
+    "statusBar.debuggingBackground": "#b37e49",
     "statusBar.debuggingBorder": "#00000000",
     "statusBar.debuggingForeground": "#000000",
     "statusBar.focusBorder": "#ce7dc399",
@@ -808,7 +808,7 @@
         "entity.name.tag.doc"
       ],
       "settings": {
-        "foreground": "#389499",
+        "foreground": "#3d9b9f",
         "fontStyle": "italic"
       }
     },
@@ -818,7 +818,7 @@
         "comment.block.documentation variable.other"
       ],
       "settings": {
-        "foreground": "#ac7845",
+        "foreground": "#b37e49",
         "fontStyle": "italic"
       }
     },
@@ -829,7 +829,7 @@
         "meta.preprocessor.region"
       ],
       "settings": {
-        "foreground": "#8f75bb",
+        "foreground": "#957bc3",
         "fontStyle": "italic"
       }
     },
@@ -862,7 +862,7 @@
         "punctuation.definition.string.template.end"
       ],
       "settings": {
-        "foreground": "#63935e"
+        "foreground": "#689a63"
       }
     },
     {
@@ -1347,7 +1347,7 @@
         "meta.tag.metadata.doctype"
       ],
       "settings": {
-        "foreground": "#8f75bb",
+        "foreground": "#957bc3",
         "fontStyle": "italic"
       }
     },
@@ -1711,7 +1711,7 @@
         "punctuation.definition.markdown"
       ],
       "settings": {
-        "foreground": "#63935e"
+        "foreground": "#689a63"
       }
     },
     {
@@ -1720,7 +1720,7 @@
         "markup.fenced_code.block.markdown support"
       ],
       "settings": {
-        "foreground": "#389499",
+        "foreground": "#3d9b9f",
         "fontStyle": "italic"
       }
     },

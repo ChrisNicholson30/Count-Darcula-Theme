@@ -1,63 +1,22 @@
 {
   "name": "count-darcula",
-  "displayName": "Count Darcula",
-  "description": "A hybrid of One Dark and Dracula, engineered for long sessions: every syntax colour sits at one perceptual lightness, every text colour passes WCAG AA, and a true-black Nocturne variant cuts OLED panel power ~48%.",
-  "version": "1.0.1",
-  "publisher": "cn-design",
+  "private": true,
+  "version": "1.1.0",
+  "description": "Build tooling for the Count Darcula themes — one OKLCH palette, VS Code and Zed.",
   "license": "MIT",
-  "engines": {
-    "vscode": "^1.74.0"
-  },
-  "categories": [
-    "Themes"
-  ],
-  "keywords": [
-    "theme",
-    "dark",
-    "one dark",
-    "dracula",
-    "oled",
-    "accessibility",
-    "battery",
-    "light"
-  ],
-  "icon": "assets/icon.png",
-  "galleryBanner": {
-    "color": "#282b35",
-    "theme": "dark"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ChrisNicholson30/Count-Darcula-Theme.git"
   },
+  "homepage": "https://countdarcula.com",
   "bugs": {
     "url": "https://github.com/ChrisNicholson30/Count-Darcula-Theme/issues"
-  },
-  "homepage": "https://countdarcula.com",
-  "contributes": {
-    "themes": [
-      {
-        "label": "Count Darcula",
-        "uiTheme": "vs-dark",
-        "path": "./themes/count-darcula-color-theme.json"
-      },
-      {
-        "label": "Count Darcula Nocturne",
-        "uiTheme": "vs-dark",
-        "path": "./themes/count-darcula-nocturne-color-theme.json"
-      },
-      {
-        "label": "Count Darcula Daylight",
-        "uiTheme": "vs",
-        "path": "./themes/count-darcula-daylight-color-theme.json"
-      }
-    ]
   },
   "scripts": {
     "build": "node src/build.js",
     "audit": "node src/audit.js --write",
     "test": "node src/validate.js && node src/audit.js",
     "preview": "node src/preview.js",
-    "package": "npx --yes @vscode/vsce@3.9.2 package"
+    "package": "node src/build.js && cd vscode && npx --yes @vscode/vsce@3.9.2 package --out .."
   }
 }

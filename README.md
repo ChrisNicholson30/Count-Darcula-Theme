@@ -123,11 +123,11 @@ cd Count-Darcula-Theme
 npm test    # validate + audit — no dependencies, nothing to install
 
 # macOS / Linux — swap the folder for your editor (table below)
-ln -s "$PWD" ~/.vscode/extensions/count-darcula
+ln -s "$PWD/vscode" ~/.vscode/extensions/count-darcula
 
 # Windows (PowerShell)
 # New-Item -ItemType SymbolicLink `
-#   -Path "$HOME\.vscode\extensions\count-darcula" -Target $PWD
+#   -Path "$HOME\.vscode\extensions\count-darcula" -Target "$PWD\vscode"
 ```
 
 `git pull` then brings you any changes; run **Developer: Reload Window** to pick them up.
@@ -142,12 +142,12 @@ ln -s "$PWD" ~/.vscode/extensions/count-darcula
 ### Package a VSIX — best for another machine
 
 ```bash
-npm run package    # writes count-darcula-1.0.1.vsix, ~120 KB
+npm run package    # writes count-darcula-1.1.0.vsix, ~120 KB
 
-code --install-extension count-darcula-1.0.1.vsix
-# cursor   --install-extension count-darcula-1.0.1.vsix
-# windsurf --install-extension count-darcula-1.0.1.vsix
-# codium   --install-extension count-darcula-1.0.1.vsix
+code --install-extension count-darcula-1.1.0.vsix
+# cursor   --install-extension count-darcula-1.1.0.vsix
+# windsurf --install-extension count-darcula-1.1.0.vsix
+# codium   --install-extension count-darcula-1.1.0.vsix
 ```
 
 Or in the UI: **Extensions ▸ ⋯ ▸ Install from VSIX…**
@@ -163,11 +163,11 @@ cd Count-Darcula-Theme
 npm test
 
 # either link it…
-ln -s "$PWD" ~/.cursor/extensions/count-darcula
+ln -s "$PWD/vscode" ~/.cursor/extensions/count-darcula
 
 # …or install a VSIX
 npm run package
-cursor --install-extension count-darcula-1.0.1.vsix
+cursor --install-extension count-darcula-1.1.0.vsix
 ```
 
 Then **Developer: Reload Window**.
@@ -232,6 +232,43 @@ Want italic keywords after all:
   }
 }
 ```
+
+## Zed
+
+The same theme, generated from the same palette, in Zed's own vocabulary — 139 style keys, 46
+tree-sitter syntax captures and 8 collaborator cursors. `keyword` is rose in both editors because
+it is rose in `src/palette.js`, not because it was typed twice.
+
+All three variants ship in one file; Zed lists each as a separate entry in its theme picker.
+
+```bash
+mkdir -p ~/.config/zed/themes
+curl -o ~/.config/zed/themes/count-darcula.json \
+  https://raw.githubusercontent.com/ChrisNicholson30/Count-Darcula-Theme/main/zed/themes/count-darcula.json
+```
+
+Then <kbd>Cmd</kbd>+<kbd>K</kbd> <kbd>Cmd</kbd>+<kbd>T</kbd> and pick a variant. Zed watches the
+file, so there is no restart — and if you cloned the repo, symlink instead and `git pull` keeps
+it current:
+
+```bash
+ln -s "$PWD/zed/themes/count-darcula.json" ~/.config/zed/themes/count-darcula.json
+```
+
+`zed/` is also a valid Zed extension — `extension.toml` plus `themes/` — so
+**Extensions ▸ Install Dev Extension** pointed at that folder works too.
+
+### What differs from the VS Code build
+
+Not the colours. Zed's surface is smaller and flatter, so some things simply have no counterpart:
+there are no bracket-pair colours, no per-language semantic tokens, no inlay-hint chips. Where
+Zed has something VS Code doesn't, it's wired up: the eight collaborator cursors get one accent
+hue each, and the terminal's `dim_*` ANSI tier is filled rather than left to default.
+
+The contrast standard is the same and audited the same way — `npm test` measures all 44 syntax
+captures, 21 text keys and 14 ANSI slots per variant against the surfaces Zed actually draws them
+on. Zed accepts unknown keys silently rather than erroring, so `src/validate.js` also checks every
+key emitted against a snapshot of Zed's schema and reports anything left to defaults.
 
 ## Accessibility
 
@@ -325,13 +362,22 @@ perceptually uniform, so "same lightness" actually means same *apparent* lightne
 rendered to sRGB at build time.
 
 ```
+vscode/            a self-contained, packageable VS Code extension
+zed/               a Zed extension: extension.toml + themes/
+src/               the shared generator — both editors come out of here
+assets/  docs/  preview.html
+```
+
+```
 src/palette.js     the single source of truth: OKLCH coordinates for all three variants
 src/color.js       sRGB ⇄ OKLab ⇄ OKLCH, WCAG 2.1 contrast, APCA 0.1.9 Lc  (no dependencies)
 src/workbench.js   687 UI colours per variant, derived from the palette
 src/terminal.js    the terminal, including the 16 ANSI slots
 src/syntax.js      124 TextMate rules + 47 semantic tokens, built from a role table
+src/zed.js         the same role table in Zed's tree-sitter vocabulary
+src/zed-schema.js  a snapshot of Zed's key list, so a typo fails the build
 src/power.js       the OLED power model
-src/build.js       renders themes/*.json
+src/build.js       renders vscode/themes/*.json and zed/themes/count-darcula.json
 src/validate.js    malformed values, illegal fontStyle, shadowed scopes, src ⇄ themes drift
 src/coverage.js    resolves every foreground to its real surface and composites alpha
 src/audit.js       contrast + power report; non-zero exit if anything drops below AA
@@ -339,7 +385,7 @@ src/preview.js     regenerates the data baked into preview.html
 ```
 
 ```bash
-npm run build      # regenerate themes/*.json
+npm run build      # regenerate both editors' themes
 npm test           # validate + audit (deliberately does NOT build first)
 npm run audit      # write docs/ACCESSIBILITY.md
 npm run preview    # refresh preview.html from the palette
@@ -349,13 +395,13 @@ npm run package    # build a VSIX for installing elsewhere
 Change one number in `src/palette.js` and all three variants stay consistent, the audit
 re-measures itself, and the preview page cannot drift from the theme it is advertising.
 
-The generated `themes/*.json` are committed, so the extension works with no build step.
+The generated theme files are committed, so both editors work with no build step.
 If you change `src/`, run `npm run build` and commit the result — `npm test` fails otherwise.
 
 That ordering is deliberate: `npm test` validates *before* building, so it compares the committed
 JSON against a fresh in-memory build and can actually see drift. Running the build first would
 overwrite the very thing the check exists to catch, and the check would be dead. CI re-proves it
-from the other side with `npm run build && git diff --exit-code themes/`.
+from the other side with `npm run build && git diff --exit-code`.
 
 ## Credits
 

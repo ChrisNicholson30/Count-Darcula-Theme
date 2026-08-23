@@ -14,10 +14,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const { contrastRatio, apca, hexToOklch } = require('./color.js');
+const { contrastRatio, apca, hexToOklch, blend } = require('./color.js');
 const { buildPalette } = require('./palette.js');
 const { buildTheme } = require('./build.js');
 const { auditTheme } = require('./coverage.js');
+const { buildZed } = require('./zed.js');
 const { screenPower, pixelPower } = require('./power.js');
 
 const AA = 4.5;
@@ -162,6 +163,91 @@ say('  Deliberately below AA — disabled and inactive states, which WCAG 1.4.3'
 say('  exempts, plus inline suggestions that are meant to read as not-yet-yours:');
 for (const r of deemphasised) {
   say(`    ${r.key.padEnd(44)} ${r.ratio.toFixed(2).padStart(5)}:1`);
+}
+
+/* ── Zed ────────────────────────────────────────────────────────────────── */
+
+/* Zed's vocabulary is its own, so coverage.js does not apply — but the standard
+   does. Every syntax capture and every text tier, on the surface Zed draws it on. */
+
+say('');
+say('');
+say('  Zed themes — syntax and text, on their real surfaces');
+say('  ' + '─'.repeat(74));
+say('  variant                  syntax   text keys   ANSI   de-emphasised   fails');
+
+/* Foreground key -> the style key holding the background it renders against.
+   A Map, not an object literal: `constructor` is a real Zed syntax capture, and a
+   plain-object lookup would hand back Object.prototype.constructor for it. */
+const ZED_SURFACE = new Map(Object.entries({
+  'editor.foreground': 'editor.background',
+  'editor.line_number': 'editor.background',
+  'editor.active_line_number': 'editor.background',
+  'editor.hover_line_number': 'editor.background',
+  text: 'surface.background',
+  'text.muted': 'surface.background',
+  'text.accent': 'surface.background',
+  'text.placeholder': 'surface.background',
+  'text.disabled': 'surface.background',
+  icon: 'surface.background',
+  'icon.muted': 'surface.background',
+  'icon.accent': 'surface.background',
+  'terminal.foreground': 'terminal.background',
+  'terminal.bright_foreground': 'terminal.background',
+  'terminal.dim_foreground': 'terminal.background',
+  error: 'editor.background',
+  warning: 'editor.background',
+  info: 'editor.background',
+  success: 'editor.background',
+  created: 'editor.background',
+  modified: 'editor.background',
+  deleted: 'editor.background',
+  conflict: 'editor.background',
+  renamed: 'editor.background',
+  hint: 'editor.background',
+  predictive: 'editor.background',
+  ignored: 'editor.background',
+  hidden: 'editor.background',
+  unreachable: 'editor.background',
+}));
+
+/* deliberately quiet: WCAG exempts disabled, and a prediction that met AA would
+   read as code you had already written */
+const ZED_DIM = /^(text\.placeholder|text\.disabled|predictive|hint|ignored|hidden|unreachable|editor\.line_number|terminal\.ansi\.dim_|icon\.disabled)/;
+
+const flatten = (hex, over) =>
+  hex.length === 9 && hex.slice(7) !== 'ff'
+    ? blend(hex.slice(0, 7), over, parseInt(hex.slice(7, 9), 16) / 255)
+    : hex.slice(0, 7);
+
+for (const theme of buildZed().themes) {
+  const { players, syntax, ...style } = theme.style;
+  const surfaceOf = (key) => {
+    const bgKey =
+      ZED_SURFACE.get(key) || (key.startsWith('terminal.ansi.') ? 'terminal.background' : 'editor.background');
+    return flatten(style[bgKey], flatten(style.background, '#000000'));
+  };
+
+  let counts = { syntax: 0, text: 0, ansi: 0, dim: 0 };
+  const bad = [];
+  const check = (key, hex, kind) => {
+    const bg = surfaceOf(key);
+    const fg = flatten(hex, bg);
+    const ratio = contrastRatio(fg, bg);
+    if (ZED_DIM.test(key)) { counts.dim++; return; }
+    counts[kind]++;
+    if (ratio < AA) bad.push(`${theme.name}: ${key} ${fg} on ${bg} = ${ratio.toFixed(2)}:1`);
+  };
+
+  for (const [k, v] of Object.entries(syntax)) check(k, v.color, 'syntax');
+  for (const k of ZED_SURFACE.keys()) if (style[k]) check(k, style[k], 'text');
+  for (const k of Object.keys(style)) if (k.startsWith('terminal.ansi.') && !k.includes('black')) check(k, style[k], 'ansi');
+
+  say(
+    `  ${theme.name.padEnd(24)} ${String(counts.syntax).padStart(6)}   ${String(counts.text).padStart(9)}   ` +
+    `${String(counts.ansi).padStart(4)}   ${String(counts.dim).padStart(13)}   ${String(bad.length).padStart(5)}`
+  );
+  bad.forEach((b) => failures.push(b));
 }
 
 /* ── power model ────────────────────────────────────────────────────────── */

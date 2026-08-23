@@ -29,28 +29,28 @@
       --fg: #d4d7e0;
       --bright: #eceef4;
       --coral: #fb8c8d;
-      --coral-dim: #d17576;
+      --coral-dim: #da7c7d;
       --coral-bright: #ffadad;
       --amber: #e4a15f;
-      --amber-dim: #be8650;
+      --amber-dim: #c78e56;
       --amber-bright: #ffc082;
       --gold: #d3ab54;
-      --gold-dim: #af8f48;
+      --gold-dim: #b8964e;
       --gold-bright: #f0ca79;
       --green: #86c47f;
-      --green-dim: #70a36b;
+      --green-dim: #77ab71;
       --green-bright: #a6e29f;
       --teal: #4fc5cb;
-      --teal-dim: #45a4a9;
+      --teal-dim: #4bacb2;
       --teal-bright: #78e3e9;
       --azure: #5dbbf8;
-      --azure-dim: #4f9ccf;
+      --azure-dim: #56a4d8;
       --azure-bright: #82daff;
       --violet: #be9df7;
-      --violet-dim: #9e84ce;
+      --violet-dim: #a68bd7;
       --violet-bright: #dcbdff;
       --rose: #e58ed9;
-      --rose-dim: #be77b4;
+      --rose-dim: #c77ebd;
       --rose-bright: #ffaef6;
       --error: #ef7272;
       --warning: #eca84a;
@@ -73,28 +73,28 @@
       --fg: #bbbdc6;
       --bright: #d5d7dd;
       --coral: #e37b7d;
-      --coral-dim: #be6869;
+      --coral-dim: #c56d6e;
       --coral-bright: #ff9a9a;
       --amber: #ce8f51;
-      --amber-dim: #ac7845;
+      --amber-dim: #b37e49;
       --amber-bright: #eaac72;
       --gold: #be9946;
-      --gold-dim: #9f803c;
+      --gold-dim: #a58641;
       --gold-bright: #d9b569;
       --green: #76b06f;
-      --green-dim: #63935e;
+      --green-dim: #689a63;
       --green-bright: #94cc8e;
       --teal: #40b1b7;
-      --teal-dim: #389499;
+      --teal-dim: #3d9b9f;
       --teal-bright: #68cdd2;
       --azure: #4fa8e1;
-      --azure-dim: #438cbc;
+      --azure-dim: #4893c4;
       --azure-bright: #72c4fc;
       --violet: #aa8ce0;
-      --violet-dim: #8f75bb;
+      --violet-dim: #957bc3;
       --violet-bright: #c6a9fb;
       --rose: #ce7dc3;
-      --rose-dim: #ac69a3;
+      --rose-dim: #b46faa;
       --rose-bright: #ea9bdf;
       --error: #db6465;
       --warning: #d6963b;
@@ -117,28 +117,28 @@
       --fg: #2f323e;
       --bright: #121521;
       --coral: #ad2d3a;
-      --coral-dim: #c35b5e;
+      --coral-dim: #a35355;
       --coral-bright: #900020;
       --amber: #984d00;
-      --amber-dim: #af702b;
+      --amber-dim: #936332;
       --amber-bright: #7d3100;
       --gold: #875a00;
-      --gold-dim: #a07a1a;
+      --gold-dim: #876a29;
       --gold-bright: #6d3f00;
       --green: #297623;
-      --green-dim: #56914f;
+      --green-dim: #4f7c4a;
       --green-bright: #005c00;
       --teal: #007780;
-      --teal-dim: #009299;
+      --teal-dim: #227d81;
       --teal-bright: #005d66;
       --azure: #006ab0;
-      --azure-dim: #2388c3;
+      --azure-dim: #2f75a2;
       --azure-bright: #004f95;
       --violet: #7348ae;
-      --violet-dim: #8d6cc2;
+      --violet-dim: #7860a1;
       --violet-bright: #5a2a94;
       --rose: #97338d;
-      --rose-dim: #af5da5;
+      --rose-dim: #93558b;
       --rose-bright: #7c0b73;
       --error: #bc272c;
       --warning: #aa5500;
@@ -958,8 +958,9 @@
           <div class="eyebrow">Installation</div>
           <h2>Two ways, about a minute</h2>
           <p class="lede">Not on any marketplace — it installs by hand. Pick your editor below and
-            the commands follow it; the steps are identical everywhere, because a colour theme is
-            data the workbench reads, not code it runs.</p>
+            the commands follow it; the steps are identical across the VS Code family, because a
+            colour theme is data the workbench reads, not code it runs.
+            <a href="#zed-install">Zed is further down</a> — same palette, its own format.</p>
         </div>
 
         <div class="editor-picker" role="group" aria-label="Editor">
@@ -995,9 +996,9 @@
             <p style="margin-bottom:16px">Best for putting it on another machine, or sharing it.</p>
             <div class="snippet" style="border:0">
               <div class="snippet-head">bash<button class="copy" type="button">Copy</button></div>
-              <pre><span class="fn">npm</span> run package   <span class="c"># count-darcula-1.0.1.vsix, ~120 KB</span>
+              <pre><span class="fn">npm</span> run package   <span class="c"># count-darcula-1.1.0.vsix, ~120 KB</span>
 
-<span class="fn ed-cli">code</span> <span class="cst">--install-extension</span> count-darcula-1.0.1.vsix</pre>
+<span class="fn ed-cli">code</span> <span class="cst">--install-extension</span> count-darcula-1.1.0.vsix</pre>
             </div>
             <p style="margin-top:16px">No <code class="ed-cli">code</code> command on your
               <code>PATH</code>? Run <b style="color:var(--fg)">Shell Command: Install
@@ -1009,6 +1010,53 @@
             <p><kbd>Ctrl</kbd> <kbd>K</kbd> then <kbd>Ctrl</kbd> <kbd>T</kbd> —
               <kbd>⌘</kbd> <kbd>K</kbd> <kbd>⌘</kbd> <kbd>T</kbd> on macOS — and choose
               Count Darcula, Nocturne or Daylight.</p>
+          </div>
+        </div>
+
+        <h3 id="zed-install" style="margin:36px 0 14px;font-size:15px">Zed</h3>
+        <div class="grid grid-2 grid-install">
+          <div class="card">
+            <h3 style="margin-bottom:6px">Drop in the theme</h3>
+            <p style="margin-bottom:16px">All three variants live in one file. Zed watches it, so
+              there is no restart.</p>
+            <div class="snippet" style="border:0">
+              <div class="snippet-head">bash<button class="copy" type="button">Copy</button></div>
+              <pre><span class="fn">mkdir</span> <span class="cst">-p</span> ~/.config/zed/themes
+<span class="fn">curl</span> <span class="cst">-o</span> ~/.config/zed/themes/count-darcula.json <span class="o">\</span>
+  https://raw.githubusercontent.com/ChrisNicholson30/Count-Darcula-Theme/main/zed/themes/count-darcula.json
+
+<span class="c"># or, from a clone, so git pull keeps it current</span>
+<span class="fn">ln</span> <span class="cst">-s</span> <span class="s">"$PWD/zed/themes/count-darcula.json"</span> <span class="o">\</span>
+  ~/.config/zed/themes/count-darcula.json</pre>
+            </div>
+            <p style="margin-top:16px"><kbd>⌘</kbd> <kbd>K</kbd> then <kbd>⌘</kbd> <kbd>T</kbd>
+              and pick a variant. <code>zed/</code> is also a valid extension, so
+              <b style="color:var(--fg)">Extensions ▸ Install Dev Extension</b> pointed at that
+              folder works too.</p>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:6px">Same palette, different vocabulary</h3>
+            <p style="margin-bottom:14px">Zed addresses syntax through tree-sitter captures rather
+              than TextMate scopes, and its surface is smaller and flatter. The colours are
+              identical because both editors are generated from
+              <code>src/palette.js</code>.</p>
+            <div class="table-scroll">
+              <table style="min-width:0">
+                <thead><tr><th></th><th class="num">VS&nbsp;Code</th><th class="num">Zed</th></tr></thead>
+                <tbody>
+                  <tr><td>UI colour keys</td><td class="num">687</td><td class="num">139</td></tr>
+                  <tr><td>Syntax targets</td><td class="num">124 + 47</td><td class="num">46</td></tr>
+                  <tr><td>Collaborator cursors</td><td class="num muted">—</td><td class="num">8</td></tr>
+                  <tr><td>Bracket-pair colours</td><td class="num">6</td><td class="num muted">—</td></tr>
+                  <tr><td>Contrast audited</td><td class="num" style="color:var(--success)">✓</td><td class="num" style="color:var(--success)">✓</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:14px;font-size:13px" class="muted">Zed accepts unknown keys
+              silently instead of erroring, so the build checks every key it emits against a
+              snapshot of Zed&rsquo;s schema — 139/139 style, 46/46 syntax, nothing left to
+              defaults.</p>
           </div>
         </div>
 

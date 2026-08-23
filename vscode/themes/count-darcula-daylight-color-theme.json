@@ -603,13 +603,13 @@
     "terminal.ansiBlack": "#2f323e",
     "terminal.ansiBlue": "#006ab0",
     "terminal.ansiBrightBlack": "#5e6b8c",
-    "terminal.ansiBrightBlue": "#0076cb",
-    "terminal.ansiBrightCyan": "#008691",
-    "terminal.ansiBrightGreen": "#23851b",
-    "terminal.ansiBrightMagenta": "#ac30a1",
-    "terminal.ansiBrightRed": "#c6263d",
+    "terminal.ansiBrightBlue": "#004f95",
+    "terminal.ansiBrightCyan": "#005d66",
+    "terminal.ansiBrightGreen": "#005c00",
+    "terminal.ansiBrightMagenta": "#7c0b73",
+    "terminal.ansiBrightRed": "#900020",
     "terminal.ansiBrightWhite": "#121521",
-    "terminal.ansiBrightYellow": "#9a6200",
+    "terminal.ansiBrightYellow": "#6d3f00",
     "terminal.ansiCyan": "#007780",
     "terminal.ansiGreen": "#297623",
     "terminal.ansiMagenta": "#97338d",
@@ -808,7 +808,7 @@
         "entity.name.tag.doc"
       ],
       "settings": {
-        "foreground": "#009299",
+        "foreground": "#227d81",
         "fontStyle": "italic"
       }
     },
@@ -818,7 +818,7 @@
         "comment.block.documentation variable.other"
       ],
       "settings": {
-        "foreground": "#af702b",
+        "foreground": "#936332",
         "fontStyle": "italic"
       }
     },
@@ -829,7 +829,7 @@
         "meta.preprocessor.region"
       ],
       "settings": {
-        "foreground": "#8d6cc2",
+        "foreground": "#7860a1",
         "fontStyle": "italic"
       }
     },
@@ -862,7 +862,7 @@
         "punctuation.definition.string.template.end"
       ],
       "settings": {
-        "foreground": "#56914f"
+        "foreground": "#4f7c4a"
       }
     },
     {
@@ -1347,7 +1347,7 @@
         "meta.tag.metadata.doctype"
       ],
       "settings": {
-        "foreground": "#8d6cc2",
+        "foreground": "#7860a1",
         "fontStyle": "italic"
       }
     },
@@ -1711,7 +1711,7 @@
         "punctuation.definition.markdown"
       ],
       "settings": {
-        "foreground": "#56914f"
+        "foreground": "#4f7c4a"
       }
     },
     {
@@ -1720,7 +1720,7 @@
         "markup.fenced_code.block.markdown support"
       ],
       "settings": {
-        "foreground": "#009299",
+        "foreground": "#227d81",
         "fontStyle": "italic"
       }
     },
