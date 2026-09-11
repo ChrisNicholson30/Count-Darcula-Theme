@@ -9,7 +9,7 @@
 Every syntax colour sits at one perceptual lightness, every text colour passes WCAG AA,
 and the true-black *Nocturne* variant cuts modelled OLED panel power by ~48%.
 
-**[countdarcula.com](https://countdarcula.com)** · [Install](#installation) · [Why](#why-another-dark-theme) · [Palette](#the-palette)
+**[countdarcula.com](https://countdarcula.com)** · [Install](#installation) · [Why](#why-another-dark-theme) · [Palette](#the-palette) · [Bloodline](#count-darcula-bloodline--the-special-edition)
 
 <img src="assets/screenshot-dark.png" alt="Count Darcula in VS Code" width="900">
 
@@ -44,7 +44,7 @@ re-adapting every few characters, and hour nine feels like hour two.
 The background is not a compromise either — `#282b35` is the literal perceptual midpoint of
 `#282c34` and `#282a36`.
 
-## The three variants
+## The four variants
 
 ### Count Darcula
 
@@ -52,6 +52,38 @@ The everyday. Canvas `#282b35`, foreground `#d4d7e0` at 9.8:1 — bright enough 
 enough not to glare.
 
 <img src="assets/screenshot-dark.png" alt="Count Darcula" width="900">
+
+### Count Darcula Bloodline — the special edition
+
+The flagship splits the difference between its two parents. **Bloodline** walks back down the
+Dracula side of the family, and turns the contrast up a notch while it's there.
+
+Every hue moves towards its Dracula counterpart, chroma goes up across the board — hardest on
+rose and violet, the two colours nobody mistakes for another theme — and the neutral ramp sits on
+Dracula's 278° rather than the 272° midpoint, so the greys read blue-violet rather than slate.
+The canvas drops to `#20222e`, three and a half L\* below the flagship.
+
+|  | flagship | Bloodline | Dracula's own |
+|---|---|---|---|
+| 🌹 rose · keywords | `#e58ed9` 332° | `#fb80cc` **344°** | `#ff79c6` 347° |
+| 🔮 violet · flow | `#be9df7` 300° | `#c399ff` **302°** | `#bd93f9` 302° |
+| 💧 azure · functions | `#5dbbf8` 240° | `#68b7ff` **248°** | — |
+| 🕯 gold · types | `#d3ab54` 85° | `#c1b440` **103°** | `#f1fa8c` 113° |
+| 🩸 coral · properties | `#fb8c8d` 20° | `#ff8985` **23°** | `#ff5555` 24° |
+| 🌿 green · strings | `#86c47f` 142° | `#72c87d` **147°** | `#50fa7b` 148° |
+| 🔥 amber · numbers | `#e4a15f` 64° | `#eb9e49` **66°** | `#ffb86c` 67° |
+| ⚗️ teal · operators | `#4fc5cb` 200° | `#19c7de` **210°** | `#8be9fd` 213° |
+
+The extra contrast comes from the canvas, not from the text. Dropping the background lifts the
+whole syntax band from 6.19–6.87:1 to **6.81–7.73:1** — six of the eight accents clear AAA — and
+the foreground goes from 9.8:1 to 11.3:1, while every accent stays exactly where it was in
+lightness: **75.9–76.1 L\***, the same 0.2 L\* spread as the flagship. Raising the accents
+instead would have cost chroma, because red, blue and violet run out of sRGB gamut above L\* 76,
+and that is the opposite of the point.
+
+It is also, incidentally, 7.5% cheaper than the flagship on an OLED panel.
+
+<img src="assets/screenshot-bloodline.png" alt="Count Darcula Bloodline" width="900">
 
 ### Count Darcula Nocturne
 
@@ -142,12 +174,12 @@ ln -s "$PWD/vscode" ~/.vscode/extensions/count-darcula
 ### Package a VSIX — best for another machine
 
 ```bash
-npm run package    # writes count-darcula-1.1.0.vsix, ~120 KB
+npm run package    # writes count-darcula-1.2.0.vsix, ~120 KB
 
-code --install-extension count-darcula-1.1.0.vsix
-# cursor   --install-extension count-darcula-1.1.0.vsix
-# windsurf --install-extension count-darcula-1.1.0.vsix
-# codium   --install-extension count-darcula-1.1.0.vsix
+code --install-extension count-darcula-1.2.0.vsix
+# cursor   --install-extension count-darcula-1.2.0.vsix
+# windsurf --install-extension count-darcula-1.2.0.vsix
+# codium   --install-extension count-darcula-1.2.0.vsix
 ```
 
 Or in the UI: **Extensions ▸ ⋯ ▸ Install from VSIX…**
@@ -167,7 +199,7 @@ ln -s "$PWD/vscode" ~/.cursor/extensions/count-darcula
 
 # …or install a VSIX
 npm run package
-cursor --install-extension count-darcula-1.1.0.vsix
+cursor --install-extension count-darcula-1.2.0.vsix
 ```
 
 Then **Developer: Reload Window**.
@@ -182,8 +214,8 @@ above.
 ### Pick a variant
 
 <kbd>Ctrl</kbd>+<kbd>K</kbd> then <kbd>Ctrl</kbd>+<kbd>T</kbd> (<kbd>⌘</kbd>+<kbd>K</kbd>
-<kbd>⌘</kbd>+<kbd>T</kbd> on macOS), and choose Count Darcula, Count Darcula Nocturne or
-Count Darcula Daylight.
+<kbd>⌘</kbd>+<kbd>T</kbd> on macOS), and choose Count Darcula, Count Darcula Bloodline,
+Count Darcula Nocturne or Count Darcula Daylight.
 
 One caveat on the forks: they add chrome VS Code doesn't have — Cursor's AI pane and inline-edit
 widget, for instance. Where those reuse standard VS Code colour tokens they're themed (this sets
@@ -239,7 +271,7 @@ The same theme, generated from the same palette, in Zed's own vocabulary — 139
 tree-sitter syntax captures and 8 collaborator cursors. `keyword` is rose in both editors because
 it is rose in `src/palette.js`, not because it was typed twice.
 
-All three variants ship in one file; Zed lists each as a separate entry in its theme picker.
+All four variants ship in one file; Zed lists each as a separate entry in its theme picker.
 
 ```bash
 mkdir -p ~/.config/zed/themes
@@ -279,20 +311,22 @@ in WCAG 2.1 ratios and APCA Lc. APCA models light-on-dark text far better than W
 a dark theme is nothing but light-on-dark text.
 
 ```
-✓ all 51 palette colours meet WCAG AA (>= 4.5:1)
-  syntax band: contrast 6.19–6.87:1 (spread 0.68), lightness 75.9–76.1 L*
+✓ all 68 palette colours meet WCAG AA (>= 4.5:1)
+  syntax band: contrast 6.19–6.87:1 (spread 0.68), lightness 75.9–76.1 L*   Count Darcula
+               contrast 6.81–7.73:1 (spread 0.91), lightness 75.9–76.1 L*   Bloodline
 ```
 
 **The generated theme** — because a swatch that passes on the canvas can still fail inside a
 widget or on a filled badge, and the palette pass would never see it. So every foreground key in
 the built JSON is re-measured against the surface it actually renders on, compositing alpha on
-both sides: 221 keys per variant, 17 of them translucent.
+both sides: 259 keys per variant, 21 of them translucent.
 
 ```
 variant                  measured   body text   ui/icons   de-emphasised   fails
-Count Darcula                 221         111         88              22       0
-Count Darcula Nocturne        221         111         88              22       0
-Count Darcula Daylight        221         111         88              22       0
+Count Darcula                 259         143         88              28       0
+Count Darcula Bloodline       259         143         88              28       0
+Count Darcula Nocturne        259         143         88              28       0
+Count Darcula Daylight        259         143         88              28       0
 ```
 
 Not everything is held to the same bar, because WCAG doesn't:
@@ -304,7 +338,7 @@ Not everything is held to the same bar, because WCAG doesn't:
 | de-emphasised | disabled, inactive, placeholders, inline suggestions | reported, not required |
 | decoration | scrollbar marks, indent guides, rules, sliders | not text, not measured |
 
-The de-emphasised tier is where honesty matters, so the audit prints every one of those 22 with
+The de-emphasised tier is where honesty matters, so the audit prints every one of those 28 with
 its measured ratio rather than quietly excluding them. WCAG 1.4.3 exempts disabled controls, and
 an inline AI suggestion that met 4.5:1 would read as code you'd already written. Inactive line
 numbers sit at 3.31:1 and inline suggestions at 3.48:1; the floor is 1.46:1, for the line numbers
@@ -315,7 +349,7 @@ Comments are deliberately **not** in that tier: they're held above AA at 4.60:1.
 still text, and a comment nobody can read is a comment nobody maintains — the recession comes
 from lower chroma and italics, not from making it dim.
 
-Full per-colour numbers for all three variants: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
+Full per-colour numbers for all four variants: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
 
 ## Battery
 
@@ -328,6 +362,7 @@ because blue emitters are the least efficient) applied to a modelled full-screen
 | **Count Darcula Nocturne** | **51.5%** |
 | Default Dark+ | 77.4% |
 | One Dark Pro | 83.7% |
+| **Count Darcula Bloodline** | **92.5%** |
 | **Count Darcula** | **100%** (baseline) |
 | Dracula | 121% |
 | A stock light theme | 1347% |
@@ -369,7 +404,7 @@ assets/  docs/  preview.html
 ```
 
 ```
-src/palette.js     the single source of truth: OKLCH coordinates for all three variants
+src/palette.js     the single source of truth: OKLCH coordinates for all four variants
 src/color.js       sRGB ⇄ OKLab ⇄ OKLCH, WCAG 2.1 contrast, APCA 0.1.9 Lc  (no dependencies)
 src/workbench.js   687 UI colours per variant, derived from the palette
 src/terminal.js    the terminal, including the 16 ANSI slots
@@ -392,7 +427,7 @@ npm run preview    # refresh preview.html from the palette
 npm run package    # build a VSIX for installing elsewhere
 ```
 
-Change one number in `src/palette.js` and all three variants stay consistent, the audit
+Change one number in `src/palette.js` and all four variants stay consistent, the audit
 re-measures itself, and the preview page cannot drift from the theme it is advertising.
 
 The generated theme files are committed, so both editors work with no build step.

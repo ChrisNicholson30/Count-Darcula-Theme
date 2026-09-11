@@ -35,6 +35,15 @@ const ACCENT_ROLE = {
   teal: 'operators · built-ins',
 };
 
+/** One line per variant, shown under the switcher. */
+const TAGLINE = {
+  dark: 'The everyday. One Dark\u2019s calm, Dracula\u2019s character, measured.',
+  bloodline:
+    'Special edition. The same discipline, spent entirely on the Dracula side of the family.',
+  nocturne: 'True black. Every large surface is #000000 \u2014 pixels off, power down.',
+  daylight: 'Paper, not paper-white. Same hues, tuned for daylight and LCDs.',
+};
+
 const UI_ROLE = {
   chrome: 'activity bar · status bar',
   surface: 'side bar · panel',
@@ -103,12 +112,7 @@ for (const key of Object.keys(VARIANTS)) {
     id: p.id,
     label: p.label,
     type: p.type,
-    tagline:
-      key === 'dark'
-        ? 'The everyday. One Dark’s calm, Dracula’s character, measured.'
-        : key === 'nocturne'
-        ? 'True black. Every large surface is #000000 — pixels off, power down.'
-        : 'Paper, not paper-white. Same hues, tuned for daylight and LCDs.',
+    tagline: TAGLINE[key],
     bg,
     accents: Object.keys(HUE).map((name) => ({
       name,
@@ -184,7 +188,8 @@ const powerRows = [
     }),
   },
 ];
-const baseline = powerRows[0].power;
+const powerOf = (name) => powerRows.find((r) => r.name === name).power;
+const baseline = powerOf(buildPalette('dark').label);
 data.power = powerRows.map((r) => ({
   name: r.name,
   bg: r.bg,
@@ -193,10 +198,11 @@ data.power = powerRows.map((r) => ({
   relative: round((r.power / baseline) * 100, 1),
   vsFlagship: round((r.power / baseline - 1) * 100, 1),
 }));
+const nocturnePower = powerOf(buildPalette('nocturne').label);
 data.powerNote = {
-  nocturneVsFlagship: round((1 - powerRows[1].power / baseline) * 100, 1),
-  nocturneVsDracula: round((1 - powerRows[1].power / powerRows[4].power) * 100, 1),
-  nocturneVsLight: round((1 - powerRows[1].power / powerRows[5].power) * 100, 1),
+  nocturneVsFlagship: round((1 - nocturnePower / baseline) * 100, 1),
+  nocturneVsDracula: round((1 - nocturnePower / powerOf('Dracula')) * 100, 1),
+  nocturneVsLight: round((1 - nocturnePower / powerOf('A stock light theme')) * 100, 1),
 };
 
 const built = buildTheme('dark').theme;

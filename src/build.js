@@ -74,7 +74,7 @@ function main() {
     });
   }
 
-  // Zed ships all three variants in one file; the editor lists each themes[] entry
+  // Zed ships every variant in one file; the editor lists each themes[] entry
   const zed = buildZed();
   fs.mkdirSync(path.dirname(ZED_FILE), { recursive: true });
   fs.writeFileSync(ZED_FILE, JSON.stringify(zed, null, 2) + '\n');
@@ -94,7 +94,7 @@ function main() {
   }
   const zedStyle = Object.keys(zed.themes[0].style).filter((k) => !['players', 'syntax'].includes(k));
   console.log(
-    `  ${'Zed (all three)'.padEnd(24)} ${'—'.padEnd(7)}  ${String(zedStyle.length).padStart(3)} style · ` +
+    `  ${`Zed (all ${zed.themes.length})`.padEnd(24)} ${'—'.padEnd(7)}  ${String(zedStyle.length).padStart(3)} style · ` +
       `${String(Object.keys(zed.themes[0].style.syntax).length).padStart(3)} syntax · ` +
       ` 8 players  ->  ${path.relative(ROOT, ZED_FILE)}`
   );

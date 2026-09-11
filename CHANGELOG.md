@@ -3,6 +3,42 @@
 All notable changes to Count Darcula are documented here.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-09-11
+
+### Added
+
+- **Count Darcula Bloodline** — a special edition that walks back down the Dracula side of the
+  family and turns the contrast up a notch. Every hue moves towards its Dracula counterpart
+  (rose 332° → 344°, gold 85° → 103°, teal 200° → 210°), chroma goes up across the board —
+  hardest on rose and violet — and the neutral ramp sits on Dracula's 278° rather than the 272°
+  midpoint, so the greys read blue-violet rather than slate.
+
+  The extra contrast comes from the canvas rather than the text: `#20222e` is 3.5 L\* below the
+  flagship, which lifts the syntax band from 6.19–6.87:1 to **6.81–7.73:1** (six of eight accents
+  clear AAA) and the foreground from 9.8:1 to 11.3:1, while every accent stays at **75.9–76.1
+  L\***, the same spread as the flagship. Raising the accents instead would have cost chroma —
+  red, blue and violet run out of sRGB gamut above L\* 76 — which is the opposite of the point.
+  It also draws 7.5% less modelled OLED power than the flagship.
+
+  Ships in both editors: `Count Darcula Bloodline` in the VS Code picker, a fourth entry in the
+  Zed theme family.
+- A variant may now override the family's hues, per-hue chroma weights and neutral hue via
+  `hue`, `chroma` and `neutralHue` in its palette spec. Bloodline is the only one that does; the
+  other three inherit the shared tables unchanged.
+- `assets/screenshot-bloodline.png`, and a fourth switch on the preview page.
+
+### Fixed
+
+- The audit's variant list was hardcoded, so a new variant would have been built, validated and
+  shipped without ever being measured. It now comes from `src/palette.js`, as does the variant
+  count in the report's verdict.
+- The power model in `src/audit.js` and `src/preview.js` addressed its comparison rows by index,
+  so adding a variant silently shifted "Dracula" and "a stock light theme" onto the wrong rows.
+  Both now look rows up by name.
+- The README's coverage table and the preview page's sample terminal still carried pre-1.1.0
+  figures (221 keys / 111 body text / 22 de-emphasised). The real numbers, unchanged by this
+  release, are 259 / 143 / 28 per variant.
+
 ## [1.1.0] — 2026-08-23
 
 ### Added

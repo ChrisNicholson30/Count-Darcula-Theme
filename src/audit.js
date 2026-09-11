@@ -15,14 +15,16 @@
 const fs = require('fs');
 const path = require('path');
 const { contrastRatio, apca, hexToOklch, blend } = require('./color.js');
-const { buildPalette } = require('./palette.js');
+const { buildPalette, VARIANTS: SPECS } = require('./palette.js');
 const { buildTheme } = require('./build.js');
 const { auditTheme } = require('./coverage.js');
 const { buildZed } = require('./zed.js');
 const { screenPower, pixelPower } = require('./power.js');
 
 const AA = 4.5;
-const VARIANTS = ['dark', 'nocturne', 'daylight'];
+/* Every variant declared in the palette, in declaration order, so adding one
+   there adds it to the report rather than silently going unaudited. */
+const VARIANTS = Object.keys(SPECS);
 
 const REFERENCE = {
   'One Dark Pro': {
@@ -266,7 +268,8 @@ for (const key of VARIANTS) {
 for (const [name, frame] of Object.entries(REFERENCE)) {
   powers.push([name, screenPower(frame), pixelPower(frame.editor)]);
 }
-const flagship = powers[0][1];
+const byName = (name) => powers.find((r) => r[0] === name)[1];
+const flagship = byName(buildPalette('dark').label);
 for (const [name, power, canvas] of powers) {
   const delta = ((power / flagship - 1) * 100);
   say(
@@ -276,11 +279,11 @@ for (const [name, power, canvas] of powers) {
   );
 }
 
-const nocturne = powers[1][1];
+const nocturne = byName(buildPalette('nocturne').label);
 say('');
 say(`  Nocturne draws ${((1 - nocturne / flagship) * 100).toFixed(1)}% less than the flagship,`);
-say(`  ${((1 - nocturne / powers.find((r) => r[0] === 'Dracula')[1]) * 100).toFixed(1)}% less than Dracula, and`);
-say(`  ${((1 - nocturne / powers.find((r) => r[0] === 'Default Light+')[1]) * 100).toFixed(1)}% less than a stock light theme, on the model in src/power.js.`);
+say(`  ${((1 - nocturne / byName('Dracula')) * 100).toFixed(1)}% less than Dracula, and`);
+say(`  ${((1 - nocturne / byName('Default Light+')) * 100).toFixed(1)}% less than a stock light theme, on the model in src/power.js.`);
 say('  On an LCD, panel power is set by the backlight and is content-independent.');
 
 /* ── verdict ────────────────────────────────────────────────────────────── */
@@ -291,7 +294,7 @@ if (failures.length) {
   say(`  ${failures.length} colour(s) below WCAG AA:`);
   failures.forEach((f) => say(`    ✗ ${f}`));
 } else {
-  say(`  ✓ ${rows.filter((r) => r.text).length} palette colours and every body-text key in all three`);
+  say(`  ✓ ${rows.filter((r) => r.text).length} palette colours and every body-text key in all ${VARIANTS.length}`);
   say(`    generated themes meet WCAG AA (>= ${AA}:1) on the surface they render on.`);
 }
 say('');
