@@ -1,7 +1,7 @@
 {
   "name": "count-darcula",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Build tooling for the Count Darcula themes — one OKLCH palette, VS Code and Zed.",
   "license": "MIT",
   "repository": {

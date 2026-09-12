@@ -4,8 +4,9 @@ The same theme, in Zed's vocabulary: 139 style keys, 46 tree-sitter syntax captu
 collaborator cursors, generated from the same OKLCH palette as the VS Code build. `keyword` is
 rose in both editors because it is rose in `src/palette.js`, not because it was typed twice.
 
-All three variants live in one file — Zed themes are families, and the editor lists each entry
-separately in its picker.
+All four variants live in one file — Zed themes are families, and the editor lists each entry
+separately in its picker: the flagship, the **Bloodline** special edition, **Nocturne** and
+**Daylight**.
 
 ## Install
 

@@ -10,7 +10,7 @@
  * L*76 band, the same role table. `keyword` is rose in both editors because it is
  * rose in `src/palette.js`, not because it was typed twice.
  *
- * All three variants ship in one file — Zed themes are families, and the editor
+ * Every variant ships in one file — Zed themes are families, and the editor
  * lists each `themes[]` entry separately in its picker.
  */
 

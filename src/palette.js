@@ -3,7 +3,7 @@
  *
  * Nothing here is a hand-picked hex value. Every colour is declared as an OKLCH
  * coordinate (lightness, chroma, hue) and rendered to sRGB at build time. Change
- * a number here and all three variants stay internally consistent.
+ * a number here and all four variants stay internally consistent.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * THE HYBRID, IN ONE PARAGRAPH
@@ -25,6 +25,10 @@
  *   • Nothing is pure white and nothing is fully saturated, which is what makes
  *     a 10-hour session survivable and what keeps emitted luminance (and OLED
  *     power) down.
+ *
+ * The Bloodline special edition is the one variant that does not split the
+ * difference: it keeps the L* discipline exactly, and spends everything else —
+ * hue, chroma, the neutral ramp — on the Dracula side of the family.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -32,7 +36,8 @@
 
 const { oklch, alpha, mix } = require('./color.js');
 
-/** Hue of the neutral ramp: midway between One Dark's 264° and Dracula's 277°. */
+/** Hue of the neutral ramp: midway between One Dark's 264° and Dracula's 277°.
+ *  A variant may override it with `neutralHue` — Bloodline sits on Dracula's. */
 const NEUTRAL_HUE = 272;
 
 /**
@@ -62,7 +67,8 @@ const HUE = {
 
 /** Per-hue chroma weighting. Equal OKLCH chroma does not look equally saturated;
  *  reds and violets carry more before they read as "loud", yellows and teals
- *  carry less. These multipliers even that out by eye. */
+ *  carry less. These multipliers even that out by eye. A variant may override
+ *  any of them with `chroma`, and any hue with `hue`. */
 const CHROMA = {
   coral: 1.17,
   amber: 1.0,
@@ -108,6 +114,60 @@ const VARIANTS = {
     },
     // Opacity of overlays; tuned per variant so they read the same over any base.
     veil: { faint: 0.06, soft: 0.1, medium: 0.16, strong: 0.26, heavy: 0.4 },
+  },
+
+  /* ── Count Darcula Bloodline ───────── special edition: the Dracula side */
+  bloodline: {
+    id: 'count-darcula-bloodline',
+    label: 'Count Darcula Bloodline',
+    type: 'dark',
+    // The flagship splits the difference between its two parents. Bloodline
+    // walks back down the Dracula side of the family without giving up what
+    // makes this theme work:
+    //
+    //   • Every hue moves towards its Dracula counterpart — rose 332° -> 344°
+    //     (#ff79c6 is 347°), gold 85° -> 103° (#f1fa8c is 113°), teal 200° ->
+    //     210° (#8be9fd is 213°). Azure has no Dracula counterpart, so it leans
+    //     into the violet Dracula does have.
+    //   • Chroma goes up across the board, most of all on rose and violet, the
+    //     two colours nobody mistakes for another theme.
+    //   • The neutral ramp sits on Dracula's 278° rather than the 272° midpoint,
+    //     and carries more chroma, so the greys read blue-violet, not slate.
+    //
+    // The extra contrast comes from the canvas, not from the text: dropping it
+    // 3.5 L* below the flagship lifts the whole syntax band from 6.2–6.9:1 to
+    // 6.8–7.7:1 while leaving every accent exactly where it was in lightness.
+    // Raising the accents instead would have cost chroma — red, blue and violet
+    // run out of sRGB gamut above L* 76 — which is the opposite of the point.
+    neutralHue: 278,
+    hue: { coral: 23, amber: 66, gold: 103, green: 147, teal: 210, azure: 248, violet: 302, rose: 344 },
+    chroma: { coral: 1.07, teal: 0.95, azure: 0.97, violet: 1.1, rose: 1.28 },
+    ramp: {
+      deep: [0.125, 0.018],
+      chrome: [0.175, 0.02],
+      surface: [0.212, 0.021],
+      editor: [0.255, 0.023], // #20222e — a shade under Dracula's own #282a36
+      raised: [0.3, 0.026],
+      overlay: [0.35, 0.029],
+      line: [0.405, 0.032], // lands on Dracula's #44475a selection grey
+      subtle: [0.48, 0.028],
+      comment: [0.655, 0.075, 272], // the most Dracula thing here: #6272a4 is C 0.08
+      dim: [0.775, 0.018],
+      fg: [0.89, 0.014], // #d8dae4 — 11.3:1, brighter than the flagship, dimmer than #f8f8f2
+      bright: [0.96, 0.008],
+    },
+    accent: { L: 0.76, C: 0.135 },
+    accentMuted: { L: 0.7, C: 0.118 },
+    accentBright: { L: 0.86, C: 0.12 },
+    accentStrong: { L: 0.685, C: 0.165 },
+    status: {
+      error: [0.73, 0.165, 24],
+      warning: [0.795, 0.14, 70],
+      info: [0.755, 0.125, 248],
+      success: [0.755, 0.14, 147],
+    },
+    // A darker canvas swallows a wash, so every veil is a little more present.
+    veil: { faint: 0.07, soft: 0.11, medium: 0.17, strong: 0.27, heavy: 0.42 },
   },
 
   /* ── Count Darcula Nocturne ─────────────────────── true black, for OLED */
@@ -181,19 +241,25 @@ const VARIANTS = {
   },
 };
 
-/** Render a ramp entry: [L, C] uses the neutral hue, [L, C, H] overrides it. */
-const neutral = ([L, C, H]) => oklch(L, C, H === undefined ? NEUTRAL_HUE : H);
-
 function buildPalette(variantKey) {
   const spec = VARIANTS[variantKey];
   if (!spec) throw new Error(`Unknown variant: ${variantKey}`);
+
+  /* A variant inherits the family's hues and chroma weights and may bend either.
+     Only Bloodline does, and only to walk the hues further towards Dracula. */
+  const hue = { ...HUE, ...spec.hue };
+  const chroma = { ...CHROMA, ...spec.chroma };
+  const neutralHue = spec.neutralHue === undefined ? NEUTRAL_HUE : spec.neutralHue;
+
+  /** Render a ramp entry: [L, C] uses the neutral hue, [L, C, H] overrides it. */
+  const neutral = ([L, C, H]) => oklch(L, C, H === undefined ? neutralHue : H);
 
   const ui = {};
   for (const [key, value] of Object.entries(spec.ramp)) ui[key] = neutral(value);
 
   const tier = ({ L, C }) => {
     const out = {};
-    for (const [name, h] of Object.entries(HUE)) out[name] = oklch(L, C * CHROMA[name], h);
+    for (const [name, h] of Object.entries(hue)) out[name] = oklch(L, C * chroma[name], h);
     return out;
   };
 

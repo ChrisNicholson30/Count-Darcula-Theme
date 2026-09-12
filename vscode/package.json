@@ -1,8 +1,8 @@
 {
   "name": "count-darcula",
   "displayName": "Count Darcula",
-  "description": "A hybrid of One Dark and Dracula, engineered for long sessions: every syntax colour sits at one perceptual lightness, every text colour passes WCAG AA, and a true-black Nocturne variant cuts OLED panel power ~48%.",
-  "version": "1.1.0",
+  "description": "A hybrid of One Dark and Dracula, engineered for long sessions: every syntax colour sits at one perceptual lightness, every text colour passes WCAG AA, a Bloodline special edition leans hard into Dracula, and a true-black Nocturne variant cuts OLED panel power ~48%.",
+  "version": "1.2.0",
   "publisher": "cn-design",
   "license": "MIT",
   "engines": {
@@ -40,6 +40,11 @@
         "label": "Count Darcula",
         "uiTheme": "vs-dark",
         "path": "./themes/count-darcula-color-theme.json"
+      },
+      {
+        "label": "Count Darcula Bloodline",
+        "uiTheme": "vs-dark",
+        "path": "./themes/count-darcula-bloodline-color-theme.json"
       },
       {
         "label": "Count Darcula Nocturne",
