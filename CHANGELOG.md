@@ -3,6 +3,38 @@
 All notable changes to Count Darcula are documented here.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [2.0.0] — 2026-09-27
+
+A new identity, and a narrower focus. Count Darcula is now its own palette rather than a blend
+of other themes, ships for Zed only, and comes in two variants: **Dark** and **Light**.
+
+### Changed
+
+- **New palette.** Eight accents with their own names, hues and roles — Volt (205°, the signature
+  colour, keywords), Citrine (110°, functions), Tangerine (68°, types), Cobalt (258°,
+  properties), Mint (162°, strings), Orchid (345°, numbers and parameters), Ember (35°,
+  operators) and Iris (295°, booleans and preprocessor). Every accent is pushed to the sRGB gamut
+  edge at one shared lightness, so the syntax band is both more vivid and more even: Dark's is
+  now **7.78–8.93:1** (was 6.19–6.87:1), every accent AAA.
+- **New neutrals.** Dark sits on a midnight canvas with a wine undertone (`#241b21`); Light on
+  warm porcelain (`#faf6f3`).
+- **Variants renamed** to `Count Darcula Dark` and `Count Darcula Light`. Update the `theme`
+  setting in Zed if you had the old names selected.
+- `oklch()` now gamut-maps — it gives up chroma to fit sRGB rather than clipping channels, which
+  used to shift the hue and lightness of the most saturated accents.
+
+### Added
+
+- `assets/palette-dark.svg` and `assets/palette-light.svg`, generated palette cards that CI keeps
+  in step with the theme.
+
+### Removed
+
+- **VS Code and Cursor support** — the `vscode/` extension, its generators (`workbench.js`,
+  `terminal.js`, `syntax.js`, `coverage.js`) and VSIX packaging.
+- **Bloodline** and **Nocturne** variants, the OLED power model (`power.js`), and the preview page
+  (`preview.html`, `preview.js`) with its screenshots.
+
 ## [1.2.0] — 2026-09-11
 
 ### Added

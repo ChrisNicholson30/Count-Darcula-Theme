@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="300" viewBox="0 0 880 300" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <rect width="880" height="300" rx="16" fill="#241b21"/>
+  <text x="32" y="46" fill="#f4f0f3" font-size="20" font-weight="700">Count Darcula Dark</text>
+  <text x="848" y="46" fill="#9f8aa4" font-size="13" text-anchor="end">canvas #241b21 / text #e3dbe1</text>
+  <rect x="32" y="72" width="94" height="72" rx="10" fill="#ff977d"/>
+  <text x="32" y="166" fill="#e3dbe1" font-size="13" font-weight="600">ember</text>
+  <text x="32" y="184" fill="#b7aeb5" font-size="12">#ff977d</text>
+  <rect x="136" y="72" width="94" height="72" rx="10" fill="#f6a337"/>
+  <text x="136" y="166" fill="#e3dbe1" font-size="13" font-weight="600">tangerine</text>
+  <text x="136" y="184" fill="#b7aeb5" font-size="12">#f6a337</text>
+  <rect x="240" y="72" width="94" height="72" rx="10" fill="#bebf28"/>
+  <text x="240" y="166" fill="#e3dbe1" font-size="13" font-weight="600">citrine</text>
+  <text x="240" y="184" fill="#b7aeb5" font-size="12">#bebf28</text>
+  <rect x="344" y="72" width="94" height="72" rx="10" fill="#4cd49b"/>
+  <text x="344" y="166" fill="#e3dbe1" font-size="13" font-weight="600">mint</text>
+  <text x="344" y="184" fill="#b7aeb5" font-size="12">#4cd49b</text>
+  <rect x="448" y="72" width="94" height="72" rx="10" fill="#00cfe0"/>
+  <text x="448" y="166" fill="#e3dbe1" font-size="13" font-weight="600">volt</text>
+  <text x="448" y="184" fill="#b7aeb5" font-size="12">#00cfe0</text>
+  <rect x="552" y="72" width="94" height="72" rx="10" fill="#8ab9ff"/>
+  <text x="552" y="166" fill="#e3dbe1" font-size="13" font-weight="600">cobalt</text>
+  <text x="552" y="184" fill="#b7aeb5" font-size="12">#8ab9ff</text>
+  <rect x="656" y="72" width="94" height="72" rx="10" fill="#bda7ff"/>
+  <text x="656" y="166" fill="#e3dbe1" font-size="13" font-weight="600">iris</text>
+  <text x="656" y="184" fill="#b7aeb5" font-size="12">#bda7ff</text>
+  <rect x="760" y="72" width="94" height="72" rx="10" fill="#fe8acf"/>
+  <text x="760" y="166" fill="#e3dbe1" font-size="13" font-weight="600">orchid</text>
+  <text x="760" y="184" fill="#b7aeb5" font-size="12">#fe8acf</text>
+  <clipPath id="ramp"><rect x="32" y="214" width="816" height="40" rx="8"/></clipPath>
+  <g clip-path="url(#ramp)">
+  <rect x="32.0" y="214" width="68.0" height="40" fill="#0f090d"/>
+  <rect x="100.0" y="214" width="68.0" height="40" fill="#181117"/>
+  <rect x="168.0" y="214" width="68.0" height="40" fill="#1d151b"/>
+  <rect x="236.0" y="214" width="68.0" height="40" fill="#241b21"/>
+  <rect x="304.0" y="214" width="68.0" height="40" fill="#2e242c"/>
+  <rect x="372.0" y="214" width="68.0" height="40" fill="#362b33"/>
+  <rect x="440.0" y="214" width="68.0" height="40" fill="#4b3e47"/>
+  <rect x="508.0" y="214" width="68.0" height="40" fill="#635660"/>
+  <rect x="576.0" y="214" width="68.0" height="40" fill="#9f8aa4"/>
+  <rect x="644.0" y="214" width="68.0" height="40" fill="#b7aeb5"/>
+  <rect x="712.0" y="214" width="68.0" height="40" fill="#e3dbe1"/>
+  <rect x="780.0" y="214" width="68.0" height="40" fill="#f4f0f3"/>
+  </g>
+  <rect x="32" y="214" width="816" height="40" rx="8" fill="none" stroke="#4b3e47"/>
+  <text x="32" y="280" fill="#9f8aa4" font-size="12">neutral ramp, deep to bright</text>
+</svg>

@@ -1,12 +1,11 @@
 # Count Darcula — Zed
 
-The same theme, in Zed's vocabulary: 139 style keys, 46 tree-sitter syntax captures and 8
-collaborator cursors, generated from the same OKLCH palette as the VS Code build. `keyword` is
-rose in both editors because it is rose in `src/palette.js`, not because it was typed twice.
+A midnight-wine dark theme and a warm porcelain light theme, led by electric **Volt**. Eight vivid
+accents at one perceptual lightness, WCAG AA throughout — 139 style keys, 46 tree-sitter syntax
+captures and 8 collaborator cursors, all generated from one OKLCH palette.
 
-All four variants live in one file — Zed themes are families, and the editor lists each entry
-separately in its picker: the flagship, the **Bloodline** special edition, **Nocturne** and
-**Daylight**.
+Both variants live in one file; Zed lists each separately in its picker:
+**Count Darcula Dark** and **Count Darcula Light**.
 
 ## Install
 

@@ -1,8 +1,8 @@
 {
   "name": "count-darcula",
   "private": true,
-  "version": "1.2.0",
-  "description": "Build tooling for the Count Darcula themes — one OKLCH palette, VS Code and Zed.",
+  "version": "2.0.0",
+  "description": "Build tooling for the Count Darcula Zed theme — one OKLCH palette, Light and Dark.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,8 +15,6 @@
   "scripts": {
     "build": "node src/build.js",
     "audit": "node src/audit.js --write",
-    "test": "node src/validate.js && node src/audit.js",
-    "preview": "node src/preview.js",
-    "package": "node src/build.js && cd vscode && npx --yes @vscode/vsce@3.9.2 package --out .."
+    "test": "node src/validate.js && node src/audit.js"
   }
 }

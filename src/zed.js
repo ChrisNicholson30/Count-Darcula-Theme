@@ -1,16 +1,11 @@
 /**
- * zed.js — the same palette, spoken in Zed's vocabulary.
+ * zed.js — the palette, spoken in Zed's vocabulary.
  *
- * Zed is not VS Code with different key names. It has a smaller, flatter surface
- * (139 style keys against VS Code's 687), it addresses syntax through tree-sitter
- * captures rather than TextMate scopes, every colour carries an explicit alpha
- * byte, and it has no equivalent for a good deal of VS Code's chrome.
+ * Zed addresses syntax through tree-sitter captures, every colour carries an
+ * explicit alpha byte, and it ignores keys it does not recognise rather than
+ * erroring — so validate.js checks every emitted key against zed-schema.js.
  *
- * What does carry over unchanged is the argument: the same OKLCH palette, the same
- * L*76 band, the same role table. `keyword` is rose in both editors because it is
- * rose in `src/palette.js`, not because it was typed twice.
- *
- * Every variant ships in one file — Zed themes are families, and the editor
+ * Both variants ship in one file — Zed themes are families, and the editor
  * lists each `themes[]` entry separately in its picker.
  */
 
@@ -42,8 +37,8 @@ function zedTheme(variantKey) {
     /* borders — alpha, so panes read as folds rather than a grid of boxes */
     border: c(a(ui.line, light ? 0.55 : 0.5)),
     'border.variant': c(a(ui.line, light ? 0.32 : 0.28)),
-    'border.focused': c(a(base.rose, 0.55)),
-    'border.selected': c(a(base.violet, 0.55)),
+    'border.focused': c(a(base.volt, 0.55)),
+    'border.selected': c(a(base.iris, 0.55)),
     'border.transparent': '#00000000',
     'border.disabled': c(a(ui.line, 0.25)),
 
@@ -56,28 +51,28 @@ function zedTheme(variantKey) {
     'element.background': c(a(ui.subtle, 0.1)),
     'element.hover': c(a(ui.subtle, 0.2)),
     'element.active': c(a(ui.subtle, 0.3)),
-    'element.selected': c(a(base.violet, light ? 0.16 : 0.2)),
+    'element.selected': c(a(base.iris, light ? 0.16 : 0.2)),
     'element.disabled': c(a(ui.subtle, 0.06)),
-    'drop_target.background': c(a(base.violet, 0.24)),
+    'drop_target.background': c(a(base.iris, 0.24)),
 
     'ghost_element.background': '#00000000',
     'ghost_element.hover': c(a(ui.subtle, 0.16)),
     'ghost_element.active': c(a(ui.subtle, 0.26)),
-    'ghost_element.selected': c(a(base.violet, light ? 0.14 : 0.18)),
+    'ghost_element.selected': c(a(base.iris, light ? 0.14 : 0.18)),
     'ghost_element.disabled': '#00000000',
 
-    /* text — the same tiers the VS Code audit holds to AA */
+    /* text — every tier audit.js holds to AA */
     text: c(ui.fg),
     'text.muted': c(ui.dim),
     'text.placeholder': c(ui.comment),
     'text.disabled': c(a(ui.dim, 0.5)),
-    'text.accent': c(base.rose),
+    'text.accent': c(base.volt),
 
     icon: c(ui.dim),
     'icon.muted': c(ui.comment),
     'icon.disabled': c(a(ui.dim, 0.5)),
     'icon.placeholder': c(ui.comment),
-    'icon.accent': c(base.rose),
+    'icon.accent': c(base.volt),
 
     /* chrome */
     'status_bar.background': c(ui.chrome),
@@ -88,12 +83,12 @@ function zedTheme(variantKey) {
     'tab.inactive_background': c(ui.surface),
     'tab.active_background': c(ui.editor),
 
-    'search.match_background': c(a(base.amber, light ? 0.3 : 0.34)),
-    'search.active_match_background': c(a(base.amber, light ? 0.44 : 0.5)),
+    'search.match_background': c(a(base.tangerine, light ? 0.3 : 0.34)),
+    'search.active_match_background': c(a(base.tangerine, light ? 0.44 : 0.5)),
 
     'panel.background': c(ui.surface),
-    'panel.focused_border': c(a(base.rose, 0.6)),
-    'pane.focused_border': c(a(base.rose, 0.6)),
+    'panel.focused_border': c(a(base.volt, 0.6)),
+    'pane.focused_border': c(a(base.volt, 0.6)),
 
     'scrollbar.thumb.background': c(a(ui.subtle, 0.28)),
     'scrollbar.thumb.hover_background': c(a(ui.subtle, 0.45)),
@@ -107,16 +102,16 @@ function zedTheme(variantKey) {
     'editor.gutter.background': c(ui.editor),
     'editor.subheader.background': c(ui.surface),
     'editor.active_line.background': c(a(ui.raised, light ? 0.75 : 0.9)),
-    'editor.highlighted_line.background': c(a(base.violet, 0.12)),
-    // matches the VS Code build: recessive, but not the near-invisible 1.9:1 it was
+    'editor.highlighted_line.background': c(a(base.iris, 0.12)),
+    // recessive, but never near-invisible
     'editor.line_number': c(p.mix(ui.subtle, ui.comment, 0.5)),
     'editor.active_line_number': c(ui.fg),
     'editor.hover_line_number': c(ui.dim),
     'editor.invisible': c(a(ui.subtle, light ? 0.4 : 0.32)),
     'editor.wrap_guide': c(a(ui.line, 0.4)),
     'editor.active_wrap_guide': c(a(ui.line, 0.7)),
-    'editor.document_highlight.read_background': c(a(base.violet, light ? 0.12 : 0.16)),
-    'editor.document_highlight.write_background': c(a(base.green, light ? 0.12 : 0.16)),
+    'editor.document_highlight.read_background': c(a(base.iris, light ? 0.12 : 0.16)),
+    'editor.document_highlight.write_background': c(a(base.mint, light ? 0.12 : 0.16)),
 
     /* terminal — the 16 ANSI slots, plus Zed's dim tier */
     'terminal.background': c(ui.surface),
@@ -126,36 +121,36 @@ function zedTheme(variantKey) {
     'terminal.ansi.black': c(light ? ui.fg : ui.overlay),
     'terminal.ansi.bright_black': c(ui.comment),
     'terminal.ansi.dim_black': c(light ? ui.dim : ui.line),
-    'terminal.ansi.red': c(base.coral),
-    'terminal.ansi.bright_red': c(bright.coral),
-    'terminal.ansi.dim_red': c(muted.coral),
-    'terminal.ansi.green': c(base.green),
-    'terminal.ansi.bright_green': c(bright.green),
-    'terminal.ansi.dim_green': c(muted.green),
-    'terminal.ansi.yellow': c(base.gold),
-    'terminal.ansi.bright_yellow': c(bright.gold),
-    'terminal.ansi.dim_yellow': c(muted.gold),
-    'terminal.ansi.blue': c(base.azure),
-    'terminal.ansi.bright_blue': c(bright.azure),
-    'terminal.ansi.dim_blue': c(muted.azure),
-    'terminal.ansi.magenta': c(base.rose),
-    'terminal.ansi.bright_magenta': c(bright.rose),
-    'terminal.ansi.dim_magenta': c(muted.rose),
-    'terminal.ansi.cyan': c(base.teal),
-    'terminal.ansi.bright_cyan': c(bright.teal),
-    'terminal.ansi.dim_cyan': c(muted.teal),
+    'terminal.ansi.red': c(base.ember),
+    'terminal.ansi.bright_red': c(bright.ember),
+    'terminal.ansi.dim_red': c(muted.ember),
+    'terminal.ansi.green': c(base.mint),
+    'terminal.ansi.bright_green': c(bright.mint),
+    'terminal.ansi.dim_green': c(muted.mint),
+    'terminal.ansi.yellow': c(base.citrine),
+    'terminal.ansi.bright_yellow': c(bright.citrine),
+    'terminal.ansi.dim_yellow': c(muted.citrine),
+    'terminal.ansi.blue': c(base.cobalt),
+    'terminal.ansi.bright_blue': c(bright.cobalt),
+    'terminal.ansi.dim_blue': c(muted.cobalt),
+    'terminal.ansi.magenta': c(base.orchid),
+    'terminal.ansi.bright_magenta': c(bright.orchid),
+    'terminal.ansi.dim_magenta': c(muted.orchid),
+    'terminal.ansi.cyan': c(base.volt),
+    'terminal.ansi.bright_cyan': c(bright.volt),
+    'terminal.ansi.dim_cyan': c(muted.volt),
     'terminal.ansi.white': c(ui.dim),
     'terminal.ansi.bright_white': c(ui.bright),
     'terminal.ansi.dim_white': c(ui.comment),
 
-    'link_text.hover': c(bright.azure),
+    'link_text.hover': c(bright.cobalt),
 
     /* source control */
     'version_control.added': c(status.success),
-    'version_control.modified': c(base.gold),
+    'version_control.modified': c(base.citrine),
     'version_control.deleted': c(status.error),
-    'version_control.conflict_marker.ours': c(a(base.azure, 0.24)),
-    'version_control.conflict_marker.theirs': c(a(base.violet, 0.24)),
+    'version_control.conflict_marker.ours': c(a(base.cobalt, 0.24)),
+    'version_control.conflict_marker.theirs': c(a(base.iris, 0.24)),
     'version_control.word_added': c(a(status.success, 0.24)),
     'version_control.word_deleted': c(a(status.error, 0.24)),
   };
@@ -166,81 +161,92 @@ function zedTheme(variantKey) {
     style[`${name}.background`] = c(a(colour, wash));
     style[`${name}.border`] = c(a(colour, 0.4));
   };
-  statusTriple('conflict', base.rose);
+  statusTriple('conflict', base.orchid);
   statusTriple('created', status.success);
   statusTriple('deleted', status.error);
   statusTriple('error', status.error);
   statusTriple('hidden', ui.comment, 0.08);
-  statusTriple('hint', base.teal, 0.1);
+  statusTriple('hint', base.cobalt, 0.1);
   statusTriple('ignored', ui.comment, 0.08);
   statusTriple('info', status.info);
-  statusTriple('modified', base.gold);
+  statusTriple('modified', base.citrine);
   statusTriple('predictive', ui.comment, 0.08);
-  statusTriple('renamed', base.teal);
+  statusTriple('renamed', base.volt);
   statusTriple('success', status.success);
   statusTriple('unreachable', ui.comment, 0.08);
   statusTriple('warning', status.warning);
 
   /* Collaborator cursors — one per accent, so eight people never collide. */
-  const playerHues = ['rose', 'azure', 'green', 'gold', 'violet', 'teal', 'coral', 'amber'];
+  const playerHues = ['volt', 'orchid', 'mint', 'citrine', 'iris', 'cobalt', 'ember', 'tangerine'];
   const players = playerHues.slice(0, PLAYER_SLOTS).map((hue) => ({
     cursor: c(base[hue]),
     background: c(base[hue]),
     selection: c(a(base[hue], 0.24)),
   }));
 
-  /* The role table from src/syntax.js, in tree-sitter's names. */
+  /* The role table. Colour means one thing in every language:
+       volt       keywords & storage        the shape of the program
+       citrine    things you call           functions, methods
+       tangerine  things you instantiate    types, classes, namespaces
+       cobalt     things you address        properties, keys, tags
+       mint       literal text              strings
+       orchid     literal values            numbers, constants, parameters
+       ember      machinery                 operators, escapes, symbols
+       iris       the language's own words  booleans, preprocessor, pseudo-selectors
+       fg         your own variables        the default, and deliberately the quietest
+     Italics only where slant carries information colour cannot: comments,
+     parameters, attributes, `self`/`this`. */
   const syntax = {
-    keyword: tok(base.rose),
-    'variable.special': tok(base.rose, 'italic'),
-    boolean: tok(base.violet),
-    constant: tok(base.amber),
-    number: tok(base.amber),
-    variant: tok(base.amber),
+    keyword: tok(base.volt),
+    'variable.special': tok(base.volt, 'italic'),
+    boolean: tok(base.iris),
+    constant: tok(base.orchid),
+    number: tok(base.orchid),
+    variant: tok(base.orchid),
 
-    string: tok(base.green),
-    'string.escape': tok(base.teal),
-    'string.regex': tok(base.green),
-    'string.special': tok(base.teal),
-    'string.special.symbol': tok(base.teal),
-    'text.literal': tok(base.green),
+    string: tok(base.mint),
+    'string.escape': tok(base.ember),
+    'string.regex': tok(base.mint),
+    'string.special': tok(base.ember),
+    'string.special.symbol': tok(base.ember),
+    'text.literal': tok(base.mint),
 
     comment: tok(ui.comment, 'italic'),
     'comment.doc': tok(ui.comment, 'italic'),
 
-    function: tok(base.azure),
-    constructor: tok(base.gold),
-    type: tok(base.gold),
-    enum: tok(base.gold),
-    namespace: tok(base.gold),
-    selector: tok(base.gold),
-    'selector.pseudo': tok(base.violet),
+    function: tok(base.citrine),
+    constructor: tok(base.tangerine),
+    type: tok(base.tangerine),
+    enum: tok(base.tangerine),
+    namespace: tok(base.tangerine),
+    selector: tok(base.tangerine),
+    'selector.pseudo': tok(base.iris),
 
-    property: tok(base.coral),
-    tag: tok(base.coral),
-    label: tok(base.coral),
-    attribute: tok(base.amber, 'italic'),
+    property: tok(base.cobalt),
+    tag: tok(base.cobalt),
+    label: tok(base.cobalt),
+    attribute: tok(base.orchid, 'italic'),
 
     variable: tok(ui.fg),
-    'variable.parameter': tok(base.amber, 'italic'),
+    'variable.parameter': tok(base.orchid, 'italic'),
     primary: tok(ui.fg),
     embedded: tok(ui.fg),
 
-    operator: tok(base.teal),
-    preproc: tok(base.violet),
+    operator: tok(base.ember),
+    preproc: tok(base.iris),
 
     punctuation: tok(ui.dim),
     'punctuation.bracket': tok(ui.dim),
     'punctuation.delimiter': tok(ui.dim),
-    'punctuation.list_marker': tok(base.rose),
-    'punctuation.markup': tok(light ? base.green : muted.green),
-    'punctuation.special': tok(base.rose),
+    'punctuation.list_marker': tok(base.volt),
+    'punctuation.markup': tok(light ? base.mint : muted.mint),
+    'punctuation.special': tok(base.volt),
 
-    title: tok(base.rose, null, 700),
-    emphasis: tok(base.amber, 'italic'),
-    'emphasis.strong': tok(base.amber, null, 700),
-    link_text: tok(base.azure, 'italic'),
-    link_uri: tok(base.teal),
+    title: tok(base.volt, null, 700),
+    emphasis: tok(base.orchid, 'italic'),
+    'emphasis.strong': tok(base.tangerine, null, 700),
+    link_text: tok(base.cobalt, 'italic'),
+    link_uri: tok(base.volt),
 
     hint: tok(ui.comment, 'italic'),
     predictive: tok(a(ui.comment, light ? 0.85 : 0.8), 'italic'),
