@@ -1,6 +1,6 @@
 id = "count-darcula"
 name = "Count Darcula"
-description = "A midnight-wine dark theme and a warm porcelain light theme, led by electric Volt. Eight vivid accents at one perceptual lightness, WCAG AA throughout."
+description = "Cool slate dark and light themes, led by electric Volt. Eight vivid accents at one perceptual lightness, WCAG AA throughout."
 version = "2.0.0"
 schema_version = 1
 authors = ["Chris Nicholson <chris@cn-design.co.uk>"]

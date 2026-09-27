@@ -9,11 +9,11 @@ Version 2.0.0 · 27 September 2026 · Zed only · Dark and Light
 | Identity | A blend of Dracula's hues and One Dark's restraint | Its own palette, names and colour roles |
 | Editors | VS Code, Cursor, Zed | Zed only |
 | Variants | Count Darcula, Bloodline, Nocturne, Daylight | Count Darcula Dark, Count Darcula Light |
-| Dark background | `#282b35`, slate blue-grey | `#241b21`, midnight with a wine undertone |
-| Light background | `#f5f7fb`, cool paper | `#faf6f3`, warm porcelain |
+| Dark background | `#282b35`, slate blue-grey | `#282b35`, unchanged |
+| Light background | `#f5f7fb`, cool paper | `#f5f7fb`, unchanged |
 | Signature colour | Rose pink | Volt, an electric cyan |
-| Dark syntax contrast | 6.19 to 6.87:1 | 7.78 to 8.93:1, every accent AAA |
-| Light syntax contrast | 4.96 to 6.17:1 | 5.28 to 6.26:1 |
+| Dark syntax contrast | 6.19 to 6.87:1 | 6.56 to 7.53:1 |
+| Light syntax contrast | 4.96 to 6.17:1 | 5.29 to 6.28:1 |
 
 ## How it looks
 
@@ -61,15 +61,15 @@ itself is a mock-up, not a screenshot of Zed.
 
 | Role | Dark | Light |
 |---|---|---|
-| Canvas (editor background) | `#241b21` | `#faf6f3` |
-| Panels and terminal | `#1d151b` | `#f4efeb` |
-| Title and status bar | `#181117` | `#ede7e2` |
-| Current line | `#2e242c` | `#f2ebe6` |
-| Borders and selection | `#4b3e47` | `#d8cfc8` |
-| Comments | `#9f8aa4` | `#79637e` |
-| Secondary text | `#b7aeb5` | `#5c534d` |
-| Text | `#e3dbe1` | `#332921` |
-| Emphasis | `#f4f0f3` | `#190f08` |
+| Canvas (editor background) | `#282b35` | `#f5f7fb` |
+| Panels and terminal | `#1d2029` | `#eef0f6` |
+| Title and status bar | `#14171f` | `#e5e8ef` |
+| Current line | `#30343f` | `#eaedf3` |
+| Borders and selection | `#4b4f5d` | `#cdd1da` |
+| Comments | `#8693b3` | `#5e6b8c` |
+| Secondary text | `#adb1bc` | `#545864` |
+| Text | `#d4d7e0` | `#2f323e` |
+| Emphasis | `#eceef4` | `#121521` |
 
 ### Status
 
@@ -102,8 +102,8 @@ Dark values shown. Italics still appear only on comments, parameters, attributes
 
 ### Changed
 
-- **New palette.** It has eight named accents, new hues, a new role table and new neutral
-  ramps for both variants.
+- **New accents.** Eight named accents with new hues and a new role table. The greys (canvas,
+  panels, borders, text) are the original slate ramps, unchanged.
 - **Variants renamed** to `Count Darcula Dark` and `Count Darcula Light`. Anyone who had the old
   names selected needs to pick the theme again in Zed.
 - **Better colour maths.** When a colour is too saturated for a normal screen, it now gives up

@@ -1,6 +1,6 @@
 # Count Darcula — Zed
 
-A midnight-wine dark theme and a warm porcelain light theme, led by electric **Volt**. Eight vivid
+Cool slate dark and light themes, led by electric **Volt**. Eight vivid
 accents at one perceptual lightness, WCAG AA throughout — 139 style keys, 46 tree-sitter syntax
 captures and 8 collaborator cursors, all generated from one OKLCH palette.
 

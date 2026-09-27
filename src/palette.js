@@ -8,8 +8,8 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * THE IDENTITY, IN ONE PARAGRAPH
  *
- * A midnight canvas with a wine undertone, lit by eight saturated accents and
- * led by one electric colour, Volt. Three rules make it comfortable as well as
+ * A cool slate canvas lit by eight saturated accents and led by one electric
+ * colour, Volt. Three rules make it comfortable as well as
  * vivid:
  *
  *   • One lightness for every syntax colour. Each accent sits at the same OKLCH
@@ -19,7 +19,7 @@
  *     sRGB gamut at that lightness (see `oklch()` in color.js), which is where
  *     the vibrancy comes from without anything getting brighter.
  *   • Nothing is pure white and nothing is pure black. The foreground stops at
- *     L 90, the canvas at L 23, and every text colour still clears WCAG AA.
+ *     L 88, the canvas at L 29, and every text colour still clears WCAG AA.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -72,22 +72,21 @@ const VARIANTS = {
     id: 'count-darcula-dark',
     label: 'Count Darcula Dark',
     type: 'dark',
-    // Midnight with a wine undertone: hue 335, chroma just high enough to warm
-    // the greys without reading as red.
-    neutralHue: 335,
+    // The slate greys of the original Count Darcula: hue 272, low chroma.
+    neutralHue: 272,
     ramp: {
-      deep: [0.15, 0.014], // drop shadows, deepest wells
-      chrome: [0.19, 0.016], // title bar, status bar
-      surface: [0.21, 0.017], // panels, tab strip, terminal
-      editor: [0.235, 0.018], // the editor canvas
-      raised: [0.275, 0.02], // current line, hover
-      overlay: [0.305, 0.022], // popovers, inputs
-      line: [0.38, 0.024], // borders, selection
-      subtle: [0.47, 0.022], // guides, disabled chrome
-      comment: [0.66, 0.045, 320], // AA-compliant, still recessive
-      dim: [0.76, 0.014], // secondary text
-      fg: [0.9, 0.012], // primary text
-      bright: [0.96, 0.006], // headings, maximum emphasis
+      deep: [0.155, 0.016], // drop shadows, deepest wells
+      chrome: [0.205, 0.017], // title bar, status bar
+      surface: [0.245, 0.017], // panels, tab strip, terminal
+      editor: [0.29, 0.019], // the editor canvas
+      raised: [0.325, 0.02], // current line, hover
+      overlay: [0.37, 0.022], // popovers, inputs
+      line: [0.43, 0.024], // borders, selection
+      subtle: [0.5, 0.022], // guides, disabled chrome
+      comment: [0.665, 0.05, 268], // AA-compliant, still recessive
+      dim: [0.76, 0.016], // secondary text
+      fg: [0.88, 0.013], // primary text
+      bright: [0.95, 0.008], // headings, maximum emphasis
     },
     // Syntax band: one lightness for every hue.
     accent: { L: 0.78, C: 0.16 },
@@ -108,22 +107,22 @@ const VARIANTS = {
     id: 'count-darcula-light',
     label: 'Count Darcula Light',
     type: 'light',
-    // Warm porcelain, not paper-white: L 97.5 takes the glare edge off without
-    // costing contrast. The accents drop to one darker band of the same hues.
-    neutralHue: 60,
+    // Paper, not paper-white: L 97.5 takes the glare edge off without costing
+    // contrast. Same slate hue as Dark; the accents drop to one darker band.
+    neutralHue: 272,
     ramp: {
-      deep: [0.9, 0.01], // title bar, status bar
-      chrome: [0.93, 0.009],
+      deep: [0.9, 0.012], // title bar, status bar
+      chrome: [0.93, 0.01],
       surface: [0.955, 0.008], // panels
       editor: [0.975, 0.006], // the canvas
-      raised: [0.945, 0.01], // current line, hover
+      raised: [0.945, 0.009], // current line, hover
       overlay: [1.0, 0.0], // popovers float above the page
       line: [0.86, 0.014], // borders, selection
-      subtle: [0.74, 0.016],
-      comment: [0.53, 0.05, 320],
-      dim: [0.45, 0.016],
-      fg: [0.29, 0.02],
-      bright: [0.18, 0.022],
+      subtle: [0.74, 0.018],
+      comment: [0.53, 0.055, 268],
+      dim: [0.46, 0.02],
+      fg: [0.32, 0.022],
+      bright: [0.2, 0.024],
     },
     accent: { L: 0.5, C: 0.2 },
     accentMuted: { L: 0.56, C: 0.13 },
