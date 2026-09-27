@@ -3,32 +3,23 @@
  *
  * Nothing here is a hand-picked hex value. Every colour is declared as an OKLCH
  * coordinate (lightness, chroma, hue) and rendered to sRGB at build time. Change
- * a number here and all four variants stay internally consistent.
+ * a number here and both variants stay internally consistent.
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * THE HYBRID, IN ONE PARAGRAPH
+ * THE IDENTITY, IN ONE PARAGRAPH
  *
- * One Dark is restrained: low chroma, low luminance spread, easy to sit in for
- * hours, but its reds and purples fall below WCAG AA and its foreground is dim.
- * Dracula is characterful: unmistakable hues (pink keywords, violet, acid
- * green), but its palette spans L 68 -> 96, so a line of code flickers between
- * near-white yellow and mid-tone red, and its near-white #f8f8f2 foreground is
- * glary in a dark room.
+ * A midnight canvas with a wine undertone, lit by eight saturated accents and
+ * led by one electric colour, Volt. Three rules make it comfortable as well as
+ * vivid:
  *
- * Count Darcula keeps Dracula's HUES and One Dark's DISCIPLINE:
- *
- *   • The background is the literal perceptual midpoint of #282c34 (One Dark)
- *     and #282a36 (Dracula) -> #282b35.
- *   • Every syntax colour is pinned to L = 76 with per-hue chroma tuned so no
- *     token outshines another. Result: all eight accents land in a 6.2–6.9:1
- *     contrast band. Meaning is carried by hue, never by brightness.
- *   • Nothing is pure white and nothing is fully saturated, which is what makes
- *     a 10-hour session survivable and what keeps emitted luminance (and OLED
- *     power) down.
- *
- * The Bloodline special edition is the one variant that does not split the
- * difference: it keeps the L* discipline exactly, and spends everything else —
- * hue, chroma, the neutral ramp — on the Dracula side of the family.
+ *   • One lightness for every syntax colour. Each accent sits at the same OKLCH
+ *     L, so a line of code never flickers between loud and quiet tokens —
+ *     meaning is carried by hue, never by brightness.
+ *   • Chroma is spent, not rationed. Each accent is pushed to the edge of the
+ *     sRGB gamut at that lightness (see `oklch()` in color.js), which is where
+ *     the vibrancy comes from without anything getting brighter.
+ *   • Nothing is pure white and nothing is pure black. The foreground stops at
+ *     L 90, the canvas at L 23, and every text colour still clears WCAG AA.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -36,206 +27,112 @@
 
 const { oklch, alpha, mix } = require('./color.js');
 
-/** Hue of the neutral ramp: midway between One Dark's 264° and Dracula's 277°.
- *  A variant may override it with `neutralHue` — Bloodline sits on Dracula's. */
-const NEUTRAL_HUE = 272;
-
 /**
- * Accent hues. Each is a deliberate blend of the two parents, so the family
- * reads as Dracula at a glance and behaves like One Dark under the eyes.
+ * The eight accents, one per slice of the wheel, and the role each plays.
+ * The names are the palette's own; they are what the README and the website use.
  *
- *   role      One Dark        Dracula          Count Darcula
- *   coral     #e06c75  17°    #ff5555   24°    20°  properties, tags, errors
- *   amber     #d19a66  64°    #ffb86c   67°    64°  numbers, constants, params
- *   gold      #e5c07b  82°    #f1fa8c  113°    85°  classes, types
- *   green     #98c379 133°    #50fa7b  148°   142°  strings
- *   teal      #56b6c2 206°    #8be9fd  213°   200°  operators, regex, escapes
- *   azure     #61afef 245°    (—)             240°  functions, methods
- *   violet    #c678dd 318°    #bd93f9  302°   300°  control flow, decorators
- *   rose      (—)             #ff79c6  347°   332°  keywords, storage
+ *   name       hue   syntax role                        also
+ *   ember       35°  operators, escapes, built-ins      ANSI red
+ *   tangerine   68°  types, classes, namespaces         search matches
+ *   citrine    110°  functions, methods                 ANSI yellow, modified
+ *   mint       162°  strings                            ANSI green
+ *   volt       205°  keywords — the signature colour    ANSI cyan, focus, accents
+ *   cobalt     258°  properties, tags, links            ANSI blue
+ *   iris       295°  booleans, preprocessor, pseudo     selection
+ *   orchid     345°  numbers, constants, parameters     ANSI magenta
  */
 const HUE = {
-  coral: 20,
-  amber: 64,
-  gold: 85,
-  green: 142,
-  teal: 200,
-  azure: 240,
-  violet: 300,
-  rose: 332,
+  ember: 35,
+  tangerine: 68,
+  citrine: 110,
+  mint: 162,
+  volt: 205,
+  cobalt: 258,
+  iris: 295,
+  orchid: 345,
 };
 
-/** Per-hue chroma weighting. Equal OKLCH chroma does not look equally saturated;
- *  reds and violets carry more before they read as "loud", yellows and teals
- *  carry less. These multipliers even that out by eye. A variant may override
- *  any of them with `chroma`, and any hue with `hue`. */
+/** Per-hue chroma weighting. Equal OKLCH chroma does not look equally saturated:
+ *  yellow and cyan read loud early, blue and violet late. Anything asked for
+ *  beyond the gamut is trimmed back to its edge by `oklch()`. */
 const CHROMA = {
-  coral: 1.17,
-  amber: 1.0,
-  gold: 1.0,
-  green: 1.0,
-  teal: 0.91,
-  azure: 1.09,
-  violet: 1.13,
-  rose: 1.22,
+  ember: 1.0,
+  tangerine: 0.95,
+  citrine: 1.0,
+  mint: 0.9,
+  volt: 0.9,
+  cobalt: 1.1,
+  iris: 1.1,
+  orchid: 1.0,
 };
 
 const VARIANTS = {
-  /* ── Count Darcula ─────────────────────────────────────────── the flagship */
+  /* ── Count Darcula Dark ─────────────────────────────────────────────── */
   dark: {
-    id: 'count-darcula',
-    label: 'Count Darcula',
+    id: 'count-darcula-dark',
+    label: 'Count Darcula Dark',
     type: 'dark',
-    // Neutral ramp. `editor` is the anchor: the midpoint of both parent themes.
+    // Midnight with a wine undertone: hue 335, chroma just high enough to warm
+    // the greys without reading as red.
+    neutralHue: 335,
     ramp: {
-      deep: [0.155, 0.016], // drop shadows, deepest wells
-      chrome: [0.205, 0.017], // activity bar, title bar, status bar
-      surface: [0.245, 0.017], // side bar, panel, tab strip
-      editor: [0.29, 0.019], // #282b35 — the editor canvas
-      raised: [0.325, 0.02], // current line, hover, inactive tab
-      overlay: [0.37, 0.022], // widgets, inputs, dropdowns
-      line: [0.43, 0.024], // borders, selection, scrollbar
-      subtle: [0.5, 0.022], // indent guides, disabled chrome
-      comment: [0.665, 0.05, 268], // ── AA-compliant, still recessive
-      dim: [0.76, 0.016], // secondary text
-      fg: [0.88, 0.013], // #d4d7e0 — primary text (9.8:1)
-      bright: [0.95, 0.008], // headings, maximum emphasis
+      deep: [0.15, 0.014], // drop shadows, deepest wells
+      chrome: [0.19, 0.016], // title bar, status bar
+      surface: [0.21, 0.017], // panels, tab strip, terminal
+      editor: [0.235, 0.018], // the editor canvas
+      raised: [0.275, 0.02], // current line, hover
+      overlay: [0.305, 0.022], // popovers, inputs
+      line: [0.38, 0.024], // borders, selection
+      subtle: [0.47, 0.022], // guides, disabled chrome
+      comment: [0.66, 0.045, 320], // AA-compliant, still recessive
+      dim: [0.76, 0.014], // secondary text
+      fg: [0.9, 0.012], // primary text
+      bright: [0.96, 0.006], // headings, maximum emphasis
     },
     // Syntax band: one lightness for every hue.
-    accent: { L: 0.76, C: 0.115 },
-    accentMuted: { L: 0.69, C: 0.1 },
-    accentBright: { L: 0.855, C: 0.109 },
-    accentStrong: { L: 0.68, C: 0.14 }, // squiggles, badges, ANSI
+    accent: { L: 0.78, C: 0.16 },
+    accentMuted: { L: 0.68, C: 0.13 },
+    accentBright: { L: 0.86, C: 0.14 },
     status: {
-      error: [0.7, 0.155, 22],
-      warning: [0.78, 0.135, 72],
-      info: [0.74, 0.12, 240],
-      success: [0.74, 0.13, 145],
+      error: [0.7, 0.19, 22],
+      warning: [0.8, 0.16, 82],
+      info: [0.76, 0.13, 240],
+      success: [0.78, 0.17, 150],
     },
     // Opacity of overlays; tuned per variant so they read the same over any base.
     veil: { faint: 0.06, soft: 0.1, medium: 0.16, strong: 0.26, heavy: 0.4 },
   },
 
-  /* ── Count Darcula Bloodline ───────── special edition: the Dracula side */
-  bloodline: {
-    id: 'count-darcula-bloodline',
-    label: 'Count Darcula Bloodline',
-    type: 'dark',
-    // The flagship splits the difference between its two parents. Bloodline
-    // walks back down the Dracula side of the family without giving up what
-    // makes this theme work:
-    //
-    //   • Every hue moves towards its Dracula counterpart — rose 332° -> 344°
-    //     (#ff79c6 is 347°), gold 85° -> 103° (#f1fa8c is 113°), teal 200° ->
-    //     210° (#8be9fd is 213°). Azure has no Dracula counterpart, so it leans
-    //     into the violet Dracula does have.
-    //   • Chroma goes up across the board, most of all on rose and violet, the
-    //     two colours nobody mistakes for another theme.
-    //   • The neutral ramp sits on Dracula's 278° rather than the 272° midpoint,
-    //     and carries more chroma, so the greys read blue-violet, not slate.
-    //
-    // The extra contrast comes from the canvas, not from the text: dropping it
-    // 3.5 L* below the flagship lifts the whole syntax band from 6.2–6.9:1 to
-    // 6.8–7.7:1 while leaving every accent exactly where it was in lightness.
-    // Raising the accents instead would have cost chroma — red, blue and violet
-    // run out of sRGB gamut above L* 76 — which is the opposite of the point.
-    neutralHue: 278,
-    hue: { coral: 23, amber: 66, gold: 103, green: 147, teal: 210, azure: 248, violet: 302, rose: 344 },
-    chroma: { coral: 1.07, teal: 0.95, azure: 0.97, violet: 1.1, rose: 1.28 },
-    ramp: {
-      deep: [0.125, 0.018],
-      chrome: [0.175, 0.02],
-      surface: [0.212, 0.021],
-      editor: [0.255, 0.023], // #20222e — a shade under Dracula's own #282a36
-      raised: [0.3, 0.026],
-      overlay: [0.35, 0.029],
-      line: [0.405, 0.032], // lands on Dracula's #44475a selection grey
-      subtle: [0.48, 0.028],
-      comment: [0.655, 0.075, 272], // the most Dracula thing here: #6272a4 is C 0.08
-      dim: [0.775, 0.018],
-      fg: [0.89, 0.014], // #d8dae4 — 11.3:1, brighter than the flagship, dimmer than #f8f8f2
-      bright: [0.96, 0.008],
-    },
-    accent: { L: 0.76, C: 0.135 },
-    accentMuted: { L: 0.7, C: 0.118 },
-    accentBright: { L: 0.86, C: 0.12 },
-    accentStrong: { L: 0.685, C: 0.165 },
-    status: {
-      error: [0.73, 0.165, 24],
-      warning: [0.795, 0.14, 70],
-      info: [0.755, 0.125, 248],
-      success: [0.755, 0.14, 147],
-    },
-    // A darker canvas swallows a wash, so every veil is a little more present.
-    veil: { faint: 0.07, soft: 0.11, medium: 0.17, strong: 0.27, heavy: 0.42 },
-  },
-
-  /* ── Count Darcula Nocturne ─────────────────────── true black, for OLED */
-  nocturne: {
-    id: 'count-darcula-nocturne',
-    label: 'Count Darcula Nocturne',
-    type: 'dark',
-    // Every large surface is #000000 so those pixels draw no current at all.
-    // Only small elements (line highlight, popups) lift off black, and the
-    // whole foreground is stepped down ~8 L* versus the flagship: less emitted
-    // light per glyph, less halation at night, measurably less panel power.
-    ramp: {
-      deep: [0, 0],
-      chrome: [0, 0],
-      surface: [0, 0],
-      editor: [0, 0],
-      raised: [0.12, 0.014],
-      overlay: [0.175, 0.016],
-      line: [0.245, 0.02],
-      subtle: [0.38, 0.02],
-      comment: [0.615, 0.05, 268],
-      dim: [0.7, 0.014],
-      fg: [0.8, 0.012],
-      bright: [0.88, 0.008],
-    },
-    accent: { L: 0.7, C: 0.11 },
-    accentMuted: { L: 0.635, C: 0.096 },
-    accentBright: { L: 0.79, C: 0.104 },
-    accentStrong: { L: 0.63, C: 0.135 },
-    status: {
-      error: [0.65, 0.15, 22],
-      warning: [0.72, 0.13, 72],
-      info: [0.68, 0.115, 240],
-      success: [0.68, 0.125, 145],
-    },
-    veil: { faint: 0.07, soft: 0.12, medium: 0.18, strong: 0.28, heavy: 0.44 },
-  },
-
-  /* ── Count Darcula Daylight ────────────────── same hues, sunlight legible */
-  daylight: {
-    id: 'count-darcula-daylight',
-    label: 'Count Darcula Daylight',
+  /* ── Count Darcula Light ────────────────────────────────────────────── */
+  light: {
+    id: 'count-darcula-light',
+    label: 'Count Darcula Light',
     type: 'light',
-    // Paper, not paper-white: L 97.5 instead of 100 takes the glare edge off
-    // without losing contrast, the light-mode equivalent of not using #f8f8f2.
+    // Warm porcelain, not paper-white: L 97.5 takes the glare edge off without
+    // costing contrast. The accents drop to one darker band of the same hues.
+    neutralHue: 60,
     ramp: {
-      deep: [0.9, 0.012], // title bar, activity bar
-      chrome: [0.93, 0.01],
-      surface: [0.955, 0.008], // side bar, panel
+      deep: [0.9, 0.01], // title bar, status bar
+      chrome: [0.93, 0.009],
+      surface: [0.955, 0.008], // panels
       editor: [0.975, 0.006], // the canvas
-      raised: [0.945, 0.009], // current line, hover
-      overlay: [1.0, 0.0], // popups float above the page
+      raised: [0.945, 0.01], // current line, hover
+      overlay: [1.0, 0.0], // popovers float above the page
       line: [0.86, 0.014], // borders, selection
-      subtle: [0.74, 0.018],
-      comment: [0.53, 0.055, 268],
-      dim: [0.46, 0.02],
-      fg: [0.32, 0.022],
-      bright: [0.2, 0.024],
+      subtle: [0.74, 0.016],
+      comment: [0.53, 0.05, 320],
+      dim: [0.45, 0.016],
+      fg: [0.29, 0.02],
+      bright: [0.18, 0.022],
     },
-    accent: { L: 0.5, C: 0.14 },
-    accentMuted: { L: 0.54, C: 0.09 },
-    accentBright: { L: 0.41, C: 0.145 },
-    accentStrong: { L: 0.54, C: 0.165 },
+    accent: { L: 0.5, C: 0.2 },
+    accentMuted: { L: 0.56, C: 0.13 },
+    accentBright: { L: 0.42, C: 0.19 },
     status: {
-      error: [0.52, 0.185, 25],
-      warning: [0.54, 0.15, 62],
-      info: [0.52, 0.15, 245],
-      success: [0.51, 0.145, 148],
+      error: [0.52, 0.2, 25],
+      warning: [0.53, 0.14, 65],
+      info: [0.5, 0.16, 250],
+      success: [0.5, 0.15, 150],
     },
     veil: { faint: 0.05, soft: 0.08, medium: 0.13, strong: 0.2, heavy: 0.32 },
   },
@@ -245,28 +142,17 @@ function buildPalette(variantKey) {
   const spec = VARIANTS[variantKey];
   if (!spec) throw new Error(`Unknown variant: ${variantKey}`);
 
-  /* A variant inherits the family's hues and chroma weights and may bend either.
-     Only Bloodline does, and only to walk the hues further towards Dracula. */
-  const hue = { ...HUE, ...spec.hue };
-  const chroma = { ...CHROMA, ...spec.chroma };
-  const neutralHue = spec.neutralHue === undefined ? NEUTRAL_HUE : spec.neutralHue;
-
   /** Render a ramp entry: [L, C] uses the neutral hue, [L, C, H] overrides it. */
-  const neutral = ([L, C, H]) => oklch(L, C, H === undefined ? neutralHue : H);
+  const neutral = ([L, C, H]) => oklch(L, C, H === undefined ? spec.neutralHue : H);
 
   const ui = {};
   for (const [key, value] of Object.entries(spec.ramp)) ui[key] = neutral(value);
 
   const tier = ({ L, C }) => {
     const out = {};
-    for (const [name, h] of Object.entries(hue)) out[name] = oklch(L, C * chroma[name], h);
+    for (const [name, h] of Object.entries(HUE)) out[name] = oklch(L, C * CHROMA[name], h);
     return out;
   };
-
-  const base = tier(spec.accent);
-  const muted = tier(spec.accentMuted);
-  const bright = tier(spec.accentBright);
-  const strong = tier(spec.accentStrong);
 
   const status = {};
   for (const [key, value] of Object.entries(spec.status)) status[key] = oklch(...value);
@@ -278,10 +164,9 @@ function buildPalette(variantKey) {
     variant: variantKey,
     isLight: spec.type === 'light',
     ui,
-    base,
-    muted,
-    bright,
-    strong,
+    base: tier(spec.accent),
+    muted: tier(spec.accentMuted),
+    bright: tier(spec.accentBright),
     status,
     veil: spec.veil,
     /** `a(color, 'medium')` or `a(color, 0.24)` -> 8-digit hex */
@@ -291,4 +176,4 @@ function buildPalette(variantKey) {
   };
 }
 
-module.exports = { buildPalette, VARIANTS, HUE, CHROMA, NEUTRAL_HUE };
+module.exports = { buildPalette, VARIANTS, HUE, CHROMA };

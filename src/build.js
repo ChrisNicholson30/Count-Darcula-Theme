@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * build.js — renders themes/*.json from the palette.
+ * build.js — renders the Zed theme and the palette cards from the palette.
  *
  *   npm run build
  *
- * The generated files are committed so the extension works with no build step;
+ * The generated files are committed so the theme installs with no build step;
  * regenerate whenever src/palette.js changes and commit the result.
  */
 
@@ -12,95 +12,81 @@
 
 const fs = require('fs');
 const path = require('path');
-const { buildPalette, VARIANTS } = require('./palette.js');
+const { buildPalette, VARIANTS, HUE } = require('./palette.js');
 const { buildZed } = require('./zed.js');
-const workbench = require('./workbench.js');
-const terminal = require('./terminal.js');
-const syntax = require('./syntax.js');
 
 const ROOT = path.join(__dirname, '..');
-/* Each editor gets a self-contained directory: vscode/ is a packageable extension,
-   zed/ is a Zed extension you can point "Install Dev Extension" at. Both are
-   generated from src/, so neither can drift from the palette. */
-const OUT_DIR = path.join(ROOT, 'vscode', 'themes');
 const ZED_FILE = path.join(ROOT, 'zed', 'themes', 'count-darcula.json');
-const VSCODE_LICENSE = path.join(ROOT, 'vscode', 'LICENSE');
-const VSCODE_ICON = path.join(ROOT, 'vscode', 'assets', 'icon.png');
+const cardFile = (key) => path.join(ROOT, 'assets', `palette-${key}.svg`);
 
-/** Drop nulls (used to mean "let VS Code decide") and normalise case. */
-function clean(colors) {
-  const out = {};
-  for (const key of Object.keys(colors).sort()) {
-    const value = colors[key];
-    if (value === null || value === undefined) continue;
-    out[key] = String(value).toLowerCase();
-  }
-  return out;
+/** A palette card: the eight accents, then the neutral ramp, drawn on the canvas. */
+function paletteCard(key) {
+  const p = buildPalette(key);
+  const W = 880;
+  const H = 300;
+  const chip = 94;
+  const gap = 10;
+  const x0 = 32;
+  const esc = (s) => s.replace(/&/g, '&amp;');
+
+  const accents = Object.keys(HUE)
+    .map((name, i) => {
+      const x = x0 + i * (chip + gap);
+      const hex = p.base[name];
+      return (
+        `  <rect x="${x}" y="72" width="${chip}" height="72" rx="10" fill="${hex}"/>\n` +
+        `  <text x="${x}" y="166" fill="${p.ui.fg}" font-size="13" font-weight="600">${name}</text>\n` +
+        `  <text x="${x}" y="184" fill="${p.ui.dim}" font-size="12">${hex}</text>`
+      );
+    })
+    .join('\n');
+
+  const ramp = Object.entries(p.ui);
+  const rw = (W - 2 * x0) / ramp.length;
+  const neutrals = ramp
+    .map(([, hex], i) => `  <rect x="${(x0 + i * rw).toFixed(1)}" y="214" width="${rw.toFixed(1)}" height="40" fill="${hex}"/>`)
+    .join('\n');
+
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" ` +
+      `font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">`,
+    `  <rect width="${W}" height="${H}" rx="16" fill="${p.ui.editor}"/>`,
+    `  <text x="${x0}" y="46" fill="${p.ui.bright}" font-size="20" font-weight="700">${esc(p.label)}</text>`,
+    `  <text x="${W - x0}" y="46" fill="${p.ui.comment}" font-size="13" text-anchor="end">canvas ${p.ui.editor} / text ${p.ui.fg}</text>`,
+    accents,
+    `  <clipPath id="ramp"><rect x="${x0}" y="214" width="${W - 2 * x0}" height="40" rx="8"/></clipPath>`,
+    `  <g clip-path="url(#ramp)">`,
+    neutrals,
+    `  </g>`,
+    `  <rect x="${x0}" y="214" width="${W - 2 * x0}" height="40" rx="8" fill="none" stroke="${p.ui.line}"/>`,
+    `  <text x="${x0}" y="280" fill="${p.ui.comment}" font-size="12">neutral ramp, deep to bright</text>`,
+    `</svg>`,
+    '',
+  ].join('\n');
 }
 
-function buildTheme(variantKey) {
-  const p = buildPalette(variantKey);
-  const { tokenColors, semanticTokenColors } = syntax(p);
-
-  return {
-    theme: {
-      $schema: 'vscode://schemas/color-theme',
-      name: p.label,
-      type: p.type,
-      semanticHighlighting: true,
-      colors: clean({ ...workbench(p), ...terminal(p) }),
-      semanticTokenColors,
-      tokenColors,
-    },
-    palette: p,
-    file: path.join(OUT_DIR, `${p.id}-color-theme.json`),
-  };
+/** Every generated file and its expected contents, for build.js and validate.js alike. */
+function outputs() {
+  const files = [[ZED_FILE, JSON.stringify(buildZed(), null, 2) + '\n']];
+  for (const key of Object.keys(VARIANTS)) files.push([cardFile(key), paletteCard(key)]);
+  return files;
 }
 
 function main() {
-  fs.mkdirSync(OUT_DIR, { recursive: true });
-  const summary = [];
-
-  for (const key of Object.keys(VARIANTS)) {
-    const { theme, palette, file } = buildTheme(key);
-    fs.writeFileSync(file, JSON.stringify(theme, null, 2) + '\n');
-    summary.push({
-      name: theme.name,
-      file: path.relative(ROOT, file),
-      colors: Object.keys(theme.colors).length,
-      rules: theme.tokenColors.length,
-      semantic: Object.keys(theme.semanticTokenColors).length,
-      bg: palette.ui.editor,
-    });
-  }
-
-  // Zed ships every variant in one file; the editor lists each themes[] entry
-  const zed = buildZed();
-  fs.mkdirSync(path.dirname(ZED_FILE), { recursive: true });
-  fs.writeFileSync(ZED_FILE, JSON.stringify(zed, null, 2) + '\n');
-
-  /* vsce packages relative to vscode/package.json and cannot reach outside it, so
-     the licence and icon are copied in rather than maintained twice by hand. */
-  fs.mkdirSync(path.dirname(VSCODE_ICON), { recursive: true });
-  fs.copyFileSync(path.join(ROOT, 'LICENSE'), VSCODE_LICENSE);
-  fs.copyFileSync(path.join(ROOT, 'assets', 'icon.png'), VSCODE_ICON);
-
   console.log('\n  Count Darcula — build\n');
-  for (const s of summary) {
-    console.log(
-      `  ${s.name.padEnd(24)} ${s.bg}  ${String(s.colors).padStart(3)} ui · ` +
-        `${String(s.rules).padStart(3)} textmate · ${String(s.semantic).padStart(2)} semantic  ->  ${s.file}`
-    );
+  for (const [file, body] of outputs()) {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, body);
+    console.log(`  -> ${path.relative(ROOT, file)}`);
   }
-  const zedStyle = Object.keys(zed.themes[0].style).filter((k) => !['players', 'syntax'].includes(k));
-  console.log(
-    `  ${`Zed (all ${zed.themes.length})`.padEnd(24)} ${'—'.padEnd(7)}  ${String(zedStyle.length).padStart(3)} style · ` +
-      `${String(Object.keys(zed.themes[0].style.syntax).length).padStart(3)} syntax · ` +
-      ` 8 players  ->  ${path.relative(ROOT, ZED_FILE)}`
-  );
+  console.log('');
+  for (const key of Object.keys(VARIANTS)) {
+    const p = buildPalette(key);
+    console.log(`  ${p.label.padEnd(22)} canvas ${p.ui.editor}  text ${p.ui.fg}`);
+  }
   console.log('');
 }
 
 if (require.main === module) main();
 
-module.exports = { buildTheme, ZED_FILE };
+module.exports = { outputs, ZED_FILE };

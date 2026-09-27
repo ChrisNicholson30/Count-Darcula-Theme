@@ -1,7 +1,7 @@
 id = "count-darcula"
 name = "Count Darcula"
-description = "A hybrid of One Dark and Dracula. One perceptual lightness for every syntax colour, WCAG AA throughout, a Bloodline special edition that leans into Dracula, and a true-black Nocturne variant for OLED battery life."
-version = "1.2.0"
+description = "A midnight-wine dark theme and a warm porcelain light theme, led by electric Volt. Eight vivid accents at one perceptual lightness, WCAG AA throughout."
+version = "2.0.0"
 schema_version = 1
 authors = ["Chris Nicholson <chris@cn-design.co.uk>"]
 repository = "https://github.com/ChrisNicholson30/Count-Darcula-Theme"

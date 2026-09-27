@@ -7,7 +7,8 @@
  *
  * Exits non-zero if any text colour falls below WCAG AA (4.5:1) on the surface
  * it is actually rendered on, so a careless palette edit fails CI rather than
- * shipping.
+ * shipping. Two passes: the palette itself, then every text colour in the
+ * generated Zed theme, composited against the surface Zed draws it on.
  */
 
 'use strict';
@@ -16,47 +17,12 @@ const fs = require('fs');
 const path = require('path');
 const { contrastRatio, apca, hexToOklch, blend } = require('./color.js');
 const { buildPalette, VARIANTS: SPECS } = require('./palette.js');
-const { buildTheme } = require('./build.js');
-const { auditTheme } = require('./coverage.js');
 const { buildZed } = require('./zed.js');
-const { screenPower, pixelPower } = require('./power.js');
 
 const AA = 4.5;
 /* Every variant declared in the palette, in declaration order, so adding one
    there adds it to the report rather than silently going unaudited. */
 const VARIANTS = Object.keys(SPECS);
-
-const REFERENCE = {
-  'One Dark Pro': {
-    editor: '#282c34', surface: '#21252b', chrome: '#21252b', fg: '#abb2bf',
-    comment: '#5c6370', string: '#98c379', keyword: '#c678dd', function: '#61afef',
-    property: '#e06c75', type: '#e5c07b', number: '#d19a66', operator: '#56b6c2',
-  },
-  Dracula: {
-    editor: '#282a36', surface: '#21222c', chrome: '#191a21', fg: '#f8f8f2',
-    comment: '#6272a4', string: '#f1fa8c', keyword: '#ff79c6', function: '#50fa7b',
-    property: '#f8f8f2', type: '#8be9fd', number: '#bd93f9', operator: '#ff79c6',
-  },
-  'Default Dark+': {
-    editor: '#1f1f1f', surface: '#181818', chrome: '#181818', fg: '#cccccc',
-    comment: '#6a9955', string: '#ce9178', keyword: '#569cd6', function: '#dcdcaa',
-    property: '#9cdcfe', type: '#4ec9b0', number: '#b5cea8', operator: '#d4d4d4',
-  },
-  'Default Light+': {
-    editor: '#ffffff', surface: '#f8f8f8', chrome: '#f8f8f8', fg: '#3b3b3b',
-    comment: '#008000', string: '#a31515', keyword: '#0000ff', function: '#795e26',
-    property: '#001080', type: '#267f99', number: '#098658', operator: '#000000',
-  },
-};
-
-function frameOf(p) {
-  return {
-    editor: p.ui.editor, surface: p.ui.surface, chrome: p.ui.chrome,
-    fg: p.ui.fg, comment: p.ui.comment, string: p.base.green, keyword: p.base.rose,
-    function: p.base.azure, property: p.base.coral, type: p.base.gold,
-    number: p.base.amber, operator: p.base.teal,
-  };
-}
 
 const rows = [];
 const failures = [];
@@ -121,56 +87,11 @@ for (const key of VARIANTS) {
   );
 }
 
-/* ── generated-theme coverage ───────────────────────────────────────────── */
-
-/* The block above measures the palette. This one measures what actually shipped:
-   every foreground key in the built JSON, composited against the surface it
-   really renders on. A swatch that passes on the canvas can still fail inside a
-   widget or on a filled badge, and only this pass would catch it. */
-
-say('');
-say('');
-say('  Generated theme — every foreground, on its real surface');
-say('  ' + '─'.repeat(74));
-say('  variant                  measured   body text   ui/icons   de-emphasised   fails');
-
-const deemphasised = [];
-for (const key of VARIANTS) {
-  const { theme } = buildTheme(key);
-  const { rows, failures: bad, counts } = auditTheme(theme);
-  const measured = rows.filter((r) => !r.skipped).length;
-  say(
-    `  ${theme.name.padEnd(24)} ${String(measured).padStart(6)}   ` +
-    `${String(counts.text).padStart(9)}   ${String(counts.nonText).padStart(8)}   ` +
-    `${String(counts.deemphasised).padStart(13)}   ${String(bad.length).padStart(5)}`
-  );
-  bad.forEach((f) =>
-    failures.push(
-      `${theme.name}: ${f.key} ${f.raw} on ${f.bgKey} = ${f.ratio.toFixed(2)}:1 (needs ${f.required}:1)`
-    )
-  );
-  if (key === 'dark') {
-    rows
-      .filter((r) => r.tier === 'deemphasised')
-      .sort((a, b) => a.ratio - b.ratio)
-      .forEach((r) => deemphasised.push(r));
-  }
-}
-
-say('');
-say('  Body text is held to WCAG AA (4.5:1), icons and controls to 1.4.11 (3:1).');
-say('  Scrollbar marks, guides and rules are not text and are not measured.');
-say('');
-say('  Deliberately below AA — disabled and inactive states, which WCAG 1.4.3');
-say('  exempts, plus inline suggestions that are meant to read as not-yet-yours:');
-for (const r of deemphasised) {
-  say(`    ${r.key.padEnd(44)} ${r.ratio.toFixed(2).padStart(5)}:1`);
-}
-
 /* ── Zed ────────────────────────────────────────────────────────────────── */
 
-/* Zed's vocabulary is its own, so coverage.js does not apply — but the standard
-   does. Every syntax capture and every text tier, on the surface Zed draws it on. */
+/* The palette passing is not the same as the theme passing: a colour can clear
+   AA on the canvas and fail on a panel, or once its alpha is composited. Every
+   syntax capture and every text tier, on the surface Zed actually draws it on. */
 
 say('');
 say('');
@@ -252,40 +173,6 @@ for (const theme of buildZed().themes) {
   bad.forEach((b) => failures.push(b));
 }
 
-/* ── power model ────────────────────────────────────────────────────────── */
-
-say('');
-say('');
-say('  Estimated OLED panel power (relative; full white = 1.00)');
-say('  ' + '─'.repeat(74));
-say('  theme                          screen power   vs. flagship   canvas pixel');
-
-const powers = [];
-for (const key of VARIANTS) {
-  const p = buildPalette(key);
-  powers.push([p.label, screenPower(frameOf(p)), pixelPower(p.ui.editor)]);
-}
-for (const [name, frame] of Object.entries(REFERENCE)) {
-  powers.push([name, screenPower(frame), pixelPower(frame.editor)]);
-}
-const byName = (name) => powers.find((r) => r[0] === name)[1];
-const flagship = byName(buildPalette('dark').label);
-for (const [name, power, canvas] of powers) {
-  const delta = ((power / flagship - 1) * 100);
-  say(
-    `  ${name.padEnd(30)} ${power.toFixed(4).padStart(9)}      ` +
-    `${(delta >= 0 ? '+' : '') + delta.toFixed(1) + '%'}`.padStart(9) +
-    `   ${canvas.toFixed(4).padStart(9)}`
-  );
-}
-
-const nocturne = byName(buildPalette('nocturne').label);
-say('');
-say(`  Nocturne draws ${((1 - nocturne / flagship) * 100).toFixed(1)}% less than the flagship,`);
-say(`  ${((1 - nocturne / byName('Dracula')) * 100).toFixed(1)}% less than Dracula, and`);
-say(`  ${((1 - nocturne / byName('Default Light+')) * 100).toFixed(1)}% less than a stock light theme, on the model in src/power.js.`);
-say('  On an LCD, panel power is set by the backlight and is content-independent.');
-
 /* ── verdict ────────────────────────────────────────────────────────────── */
 
 say('');
@@ -294,14 +181,14 @@ if (failures.length) {
   say(`  ${failures.length} colour(s) below WCAG AA:`);
   failures.forEach((f) => say(`    ✗ ${f}`));
 } else {
-  say(`  ✓ ${rows.filter((r) => r.text).length} palette colours and every body-text key in all ${VARIANTS.length}`);
-  say(`    generated themes meet WCAG AA (>= ${AA}:1) on the surface they render on.`);
+  say(`  ✓ ${rows.filter((r) => r.text).length} palette colours and every text colour in both generated`);
+  say(`    themes meet WCAG AA (>= ${AA}:1) on the surface they render on.`);
 }
 say('');
 
 if (process.argv.includes('--write')) {
   const md = [
-    '# Accessibility & power report',
+    '# Accessibility report',
     '',
     'Generated by `npm run audit` — do not edit by hand.',
     '',

@@ -43,18 +43,24 @@ function rgbToHex(r, g, b) {
   return '#' + [r, g, b].map((c) => clamp(Math.round(c), 0, 255).toString(16).padStart(2, '0')).join('');
 }
 
-function oklabToHex(L, a, b) {
+/** OKLab -> linear-light sRGB, unclipped, so callers can tell when it is out of gamut. */
+function oklabToLinear(L, a, b) {
   const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
   const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
   const s_ = L - 0.0894841775 * a - 1.291485548 * b;
   const l = l_ * l_ * l_;
   const m = m_ * m_ * m_;
   const s = s_ * s_ * s_;
-  return rgbToHex(
-    linearToSrgb(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s),
-    linearToSrgb(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s),
-    linearToSrgb(-0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s)
-  );
+  return [
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
+  ];
+}
+
+function oklabToHex(L, a, b) {
+  const [r, g, bl] = oklabToLinear(L, a, b);
+  return rgbToHex(linearToSrgb(r), linearToSrgb(g), linearToSrgb(bl));
 }
 
 function hexToOklab(hex) {
@@ -75,12 +81,27 @@ function hexToOklab(hex) {
 /**
  * OKLCH -> hex.
  * @param {number} L lightness 0..1
- * @param {number} C chroma (0 = grey, ~0.37 = most saturated sRGB can hold)
+ * @param {number} C chroma (0 = grey); reduced to the sRGB gamut edge if it exceeds it
  * @param {number} H hue in degrees
  */
 function oklch(L, C, H) {
   const rad = (H * Math.PI) / 180;
-  return oklabToHex(L, C * Math.cos(rad), C * Math.sin(rad));
+  const lab = (c) => [L, c * Math.cos(rad), c * Math.sin(rad)];
+  const fits = (c) => oklabToLinear(...lab(c)).every((v) => v >= -1e-4 && v <= 1 + 1e-4);
+  /* Gamut mapping: a colour sRGB cannot show keeps its lightness and hue and gives
+     up chroma instead. Clipping channels would shift both, and the syntax band is
+     only a band while every accent keeps its L. */
+  if (!fits(C)) {
+    let lo = 0;
+    let hi = C;
+    for (let i = 0; i < 24; i++) {
+      const mid = (lo + hi) / 2;
+      if (fits(mid)) lo = mid;
+      else hi = mid;
+    }
+    C = lo;
+  }
+  return oklabToHex(...lab(C));
 }
 
 function hexToOklch(hex) {
