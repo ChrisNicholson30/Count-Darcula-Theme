@@ -15,9 +15,9 @@ of other themes, ships for Zed only, and comes in two variants: **Dark** and **L
   properties), Mint (162°, strings), Orchid (345°, numbers and parameters), Ember (35°,
   operators) and Iris (295°, booleans and preprocessor). Every accent is pushed to the sRGB gamut
   edge at one shared lightness, so the syntax band is both more vivid and more even: Dark's is
-  now **7.78–8.93:1** (was 6.19–6.87:1), every accent AAA.
-- **New neutrals.** Dark sits on a midnight canvas with a wine undertone (`#241b21`); Light on
-  warm porcelain (`#faf6f3`).
+  now **6.56–7.53:1** (was 6.19–6.87:1).
+- **Same greys.** Both variants keep the original slate neutral ramps (Dark canvas `#282b35`,
+  Light canvas `#f5f7fb`); only the accents are new.
 - **Variants renamed** to `Count Darcula Dark` and `Count Darcula Light`. Update the `theme`
   setting in Zed if you had the old names selected.
 - `oklch()` now gamut-maps — it gives up chroma to fit sRGB rather than clipping channels, which

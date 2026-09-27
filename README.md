@@ -4,7 +4,7 @@
 
 # Count Darcula
 
-**A Zed theme with a midnight-wine canvas and eight vivid accents, led by electric Volt.**
+**A Zed theme with cool slate greys and eight vivid accents, led by electric Volt.**
 
 Every syntax colour sits at one perceptual lightness, and every text colour passes WCAG AA.
 Two variants: **Dark** and **Light**.
@@ -27,13 +27,13 @@ removes that side effect instead of the vividness.
   (L 78 in Dark, L 50 in Light). Meaning is carried by hue, never by brightness.
 - **Chroma is spent, not rationed.** Each accent is pushed to the edge of the sRGB gamut at that
   lightness — that is where the vibrancy comes from, without anything getting brighter.
-- **Nothing pure.** No `#ffffff` text, no `#000000` canvas. The Dark canvas carries a faint wine
-  undertone; the Light canvas is warm porcelain rather than paper-white.
+- **Nothing pure.** No `#ffffff` text, no `#000000` canvas. Both variants sit on cool slate
+  greys; the Light canvas is soft paper rather than paper-white.
 
 | variant | canvas | text | syntax band (WCAG) |
 |---|---|---|---|
-| **Count Darcula Dark** | `#241b21` | `#e3dbe1` · 12.4:1 | 7.78 – 8.93:1 |
-| **Count Darcula Light** | `#faf6f3` | `#332921` · 13.2:1 | 5.28 – 6.26:1 |
+| **Count Darcula Dark** | `#282b35` | `#d4d7e0` · 9.8:1 | 6.56 – 7.53:1 |
+| **Count Darcula Light** | `#f5f7fb` | `#2f323e` · 11.9:1 | 5.29 – 6.28:1 |
 
 ## The palette
 
@@ -53,14 +53,14 @@ removes that side effect instead of the vividness.
 
 | neutral | Dark | Light |
 |---|---|---|
-| canvas | `#241b21` | `#faf6f3` |
-| panels | `#1d151b` | `#f4efeb` |
-| title & status bar | `#181117` | `#ede7e2` |
-| current line | `#2e242c` | `#f2ebe6` |
-| borders & selection | `#4b3e47` | `#d8cfc8` |
-| comments | `#9f8aa4` | `#79637e` |
-| secondary text | `#b7aeb5` | `#5c534d` |
-| text | `#e3dbe1` | `#332921` |
+| canvas | `#282b35` | `#f5f7fb` |
+| panels | `#1d2029` | `#eef0f6` |
+| title & status bar | `#14171f` | `#e5e8ef` |
+| current line | `#30343f` | `#eaedf3` |
+| borders & selection | `#4b4f5d` | `#cdd1da` |
+| comments | `#8693b3` | `#5e6b8c` |
+| secondary text | `#adb1bc` | `#545864` |
+| text | `#d4d7e0` | `#2f323e` |
 
 | status | Dark | Light |
 |---|---|---|
