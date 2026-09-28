@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo.png" width="220" alt="Count Darcula">
+<img src="assets/logo.png" width="260" alt="Count Darcula: a grinning vampire with slicked black hair, pointed ears and a high magenta collar, framed in a Volt-cyan ring">
 
 # Count Darcula
 
